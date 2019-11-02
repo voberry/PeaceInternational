@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using PeaceInternational.Infrastructure;
 
-namespace goalza.booking.infrastructure.Repository
+namespace PeaceInternational.Infrastructure.Repository
 {
     public class RawSqlRepository : IRawSqlRepository
     {

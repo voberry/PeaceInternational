@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace PeaceInternational.Infrastructure
+namespace PeaceInternational.Infrastructure.Repository
 {
     public class CrudService<TEntity> : ICrudService<TEntity> where TEntity : BaseEntity
     {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace goalza.booking.infrastructure.Repository
+namespace PeaceInternational.Infrastructure.Repository
 {
     public class UnitOfWorK :IUnitOfWork
     {
