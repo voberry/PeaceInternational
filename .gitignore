@@ -261,4 +261,4 @@ __pycache__/
 *.pyc
 
 #User folders
-[Mm]igrations/
+PeaceInternational.Infrastructure/Migrations/
