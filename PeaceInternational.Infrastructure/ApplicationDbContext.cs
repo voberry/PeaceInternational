@@ -17,7 +17,8 @@ namespace PeaceInternational.Infrastructure
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new HotelConfig());
-            //builder.ApplyConfiguration(new InvoiceConfig());
+            builder.ApplyConfiguration(new InvoiceConfig());
+            builder.ApplyConfiguration(new InvoiceDetailConfig());
 
         }
     }

@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PeaceInternational.Infrastructure;
+using PeaceInternational.Core.IRepository;
+using PeaceInternational.Infrastructure.Repository;
 
 namespace PeaceInternational
 {
@@ -43,13 +45,15 @@ namespace PeaceInternational
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            DependencyResolver(services);
         }
 
-        //private void DependencyResolver(IServiceCollection services)
-        //{
-        //    services.AddTransient<IUnitOfWork, UnitOfWorK>();
-        //    services.AddTransient(typeof(ICrudService<>), typeof(CrudService<>));
-        //}
+        private void DependencyResolver(IServiceCollection services)
+        {
+            services.AddTransient<IUnitOfWork, UnitOfWorK>();
+            services.AddTransient(typeof(ICrudService<>), typeof(CrudService<>));
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

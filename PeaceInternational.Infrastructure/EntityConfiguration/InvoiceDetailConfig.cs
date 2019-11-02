@@ -16,6 +16,10 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
 
             builder.Property(p => p.Amount)
                 .HasColumnType("float");
+
+            builder.HasOne(p => p.Invoice)
+                .WithMany(i => i.InvoiceDetails)
+                .HasForeignKey(p => p.InvoiceId);
         }
     }
 }

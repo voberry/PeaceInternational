@@ -65,14 +65,14 @@ namespace PeaceInternational.Infrastructure.Repository
             return await _context.Set<TEntity>().Where(expression).SingleOrDefaultAsync();
         }
 
-        public int? Insert(TEntity entity)
+        public int Insert(TEntity entity)
         {
             var result = _context.Set<TEntity>().Add(entity);
             _context.SaveChanges();
             return result.Entity.Id;
         }
 
-        public async Task<int?> InsertAsync(TEntity entity)
+        public async Task<int> InsertAsync(TEntity entity)
         {
             var sql = await _context.Set<TEntity>().AddAsync(entity);
             await _context.SaveChangesAsync();

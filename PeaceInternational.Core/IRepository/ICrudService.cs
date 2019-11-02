@@ -8,8 +8,8 @@ namespace PeaceInternational.Core.IRepository
 {
     public interface ICrudService<TEntity> where TEntity : BaseEntity
     {
-        int? Insert(TEntity entity);
-        Task<int?> InsertAsync(TEntity entity);
+        int Insert(TEntity entity);
+        Task<int> InsertAsync(TEntity entity);
         int Update(TEntity entity);
         TEntity Get(int? id);
         TEntity Get(Expression<Func<TEntity, bool>> expression);
