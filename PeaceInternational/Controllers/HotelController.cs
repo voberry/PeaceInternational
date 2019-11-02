@@ -11,7 +11,7 @@ using PeaceInternational.Web.Models;
 
 namespace PeaceInternational.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HotelController : Controller
     {
         private readonly ICrudService<Hotel> _hotelCrudService;
@@ -34,7 +34,7 @@ namespace PeaceInternational.Web.Controllers
 
         //GET Hotel
         [HttpGet]
-        public async Task<IActionResult> GetHotel(int? id)
+        public async Task<IActionResult> Get(int? id)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace PeaceInternational.Web.Controllers
                         Name = hotel.Name,
                         PhoneNo = hotel.PhoneNo,
                         Address = hotel.Address,
-                        CreatedBy = user.Id
+                        CreatedBy = "Default"
                     });
 
                     notification.Type = "success";
@@ -102,7 +102,7 @@ namespace PeaceInternational.Web.Controllers
                 record.Name = hotel.Name;
                 record.Address = hotel.Address;
                 record.PhoneNo = hotel.PhoneNo;
-                record.ModifiedBy = user.Id;
+                record.ModifiedBy = "Default";
                 record.ModifiedDate = DateTime.Now;
 
                 _hotelCrudService.Update(record);

@@ -11,7 +11,7 @@ using PeaceInternational.Web.Models;
 
 namespace PeaceInternational.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class InvoiceController : Controller
     {
         private readonly ICrudService<Invoice> _invoiceCrudService;
