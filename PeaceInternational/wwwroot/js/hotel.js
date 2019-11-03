@@ -4,9 +4,9 @@
 const columnDefs = [
     { headerName: 'Name', field: 'name' }, 
     { headerName: 'Address', field: 'address' },
-    { headerName: 'PhoneNo', field: 'phoneNo' },
+    { headerName: 'PhoneNo', field: 'phoneNo', sortable: false, filter: false },
     {
-        headerName: 'Edit', maxWidth: 200,
+        headerName: 'Edit', maxWidth: 200, sortable: 'false', filter: false,
         cellRenderer: function () {
             return '<i class="btn fas fa-edit" id="editButton"></i>';
         },
@@ -110,8 +110,15 @@ const Save = () => {
             method: 'POST',
             data: { hotel: record },
             success: function (data) {
-                setGridData();                
+                console.log(data);
+                noty({
+                    type: data.type,
+                    text: data.message,
+                    layout: 'topCenter',
+                    timeout: 2000
+                });
                 $('#createHotel').modal('toggle');
+                setGridData();  
             }
         });
 

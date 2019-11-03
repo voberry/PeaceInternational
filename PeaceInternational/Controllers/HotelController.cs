@@ -11,7 +11,7 @@ using PeaceInternational.Web.Models;
 
 namespace PeaceInternational.Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HotelController : Controller
     {
         private readonly ICrudService<Hotel> _hotelCrudService;
