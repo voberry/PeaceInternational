@@ -79,6 +79,7 @@ const hotelValidation = () => {
 
 const Edit = (data) => {
 
+    Clear();
     $('#hotelTitle').html("Edit Hotel");
     $('#id').val(data.id);
     $('#name').val(data.name);

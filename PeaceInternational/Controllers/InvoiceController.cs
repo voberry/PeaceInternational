@@ -61,6 +61,21 @@ namespace PeaceInternational.Web.Controllers
             }
         }
 
+        //GET Invoice Detail
+        [HttpGet]
+        public async Task<IActionResult> GetInvoiceDetail(int invoiceId)
+        {
+            try
+            {
+                var result = await _invoiceDetailCrudService.GetAllAsync(p => p.InvoiceId == invoiceId);
+                return Json(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         //Save InvoiceInfo and InvoiceDetail
         [HttpPost]
         public async Task<IActionResult> Save(Invoice invoice)

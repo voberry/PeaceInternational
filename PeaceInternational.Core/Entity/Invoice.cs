@@ -19,6 +19,8 @@ namespace PeaceInternational.Core.Entity
         public string ClientName { get; set; }
         public string Currency { get; set; }
         public int PAX { get; set; }
+        public string Guide { get; set; }
+        public string Vehicle { get; set; }
 
         public ICollection<InvoiceDetail> InvoiceDetails { get; set; }
     }

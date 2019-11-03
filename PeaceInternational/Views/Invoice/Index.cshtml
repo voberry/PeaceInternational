@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "Invoice";
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <h1 class="display-4">Invoice</h1>
+    </div>
+    <div class="col-md-2">
+        <input type="button" class="btn btn-dark mt-4 w-100" data-toggle="modal" data-target="#createInvoice" id="addInvoiceBtn" value="Add Invoice" />
+    </div>
+</div>
+<div style="height: 100%; box-sizing: border-box; padding-top:20px;">
+    <div id="invoiceGrid" style="width: 100%; height:450px" class="ag-theme-balham"></div>
+</div>
+<div class="modal fade" id="createInvoice" tabindex="-1" role="dialog" aria-labelledby="invoiceTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form id="invoiceForm">
+            <div class="modal-content">
+                <div class="modal-header bg-dark">
+                    <h5 class="modal-title text-light" id="invoiceTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="text-light" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="id" />
+                    <div class="form-row">
+                        <div class="col-md-2">
+                            <label for="date"> Date <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="date" id="date" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="dr"> Dr. <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="dr" id="dr" />
+                        </div>
+                        <div class="col-md-2">
+                            <label for="refrenceNo"> Reference No. <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="refrenceNo" id="refrenceNo" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="date"> Agent Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="date" id="date" />
+                        </div>
+                        <div class="col-md-1">
+                            <label for="currency"> Currency <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="currency" id="currency" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <label for="dr"> Client Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="dr" id="dr" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="refrenceNo"> PAX <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="refrenceNo" id="refrenceNo" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="currency"> Guide </label>
+                            <input type="text" class="form-control" name="currency" id="currency" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="vehicle"> Vehicle </label>
+                            <input type="text" class="form-control" name="vehicle" id="vehicle" />
+                        </div>                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/invoice.js"></script>
+}
+
+
+
+
