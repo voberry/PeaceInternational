@@ -207,7 +207,7 @@ function calcTotal() {
         $('#discount').removeClass('is-invalid');
     }
 
-    $('#amount').val(amount);
+    $('#dueAmount').val(amount);
     $('#netAmount').val(netAmount);
 
     return [amount, netAmount];
@@ -221,6 +221,10 @@ $(document).ready(function () {
 
     $('#addProduct').on('click', function () {
         addParticularsValidation();
+    });
+
+    $('#currency').on('keyup', () => {
+        $('.currency').html($('#currency').val());
     });
 
     $('#discount').on('keyup', () => { calcTotal(); });

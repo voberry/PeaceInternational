@@ -19,6 +19,7 @@
     <link href="~/lib/ag-grid/ag-theme-balham.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/fontawesome-free-5.11.2-web/css/all.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -32,11 +33,23 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Hotel" asp-action="Index">Hotel</a>
+                        <li class="nav-item ml-2">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Hotel" asp-action="Index"><i class="fas fa-hotel"></i> Hotel </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Invoice" asp-action="Index">Invoice</a>
+                        <li class="nav-item ml-2">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Invoice" asp-action="Index"><i class="fas fa-file-invoice-dollar"></i> Invoice</a>
+                        </li>
+                        <li class="nav-item ml-2">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Reciept" asp-action="Index"><i class="fas fa-receipt"></i> Receipt</a>
+                        </li>
+                        <li class="nav-item ml-2">
+                            <a class="nav-link text-light" asp-area="" asp-controller="TourCost" asp-action="Index"><i class="fas fa-dollar-sign"></i> Tour Cost</a>
+                        </li>
+                        <li class="nav-item ml-2">
+                            <a class="nav-link text-light" asp-area="" asp-controller="RateSheet" asp-action="Index"><i class="fas fa-clipboard"></i> Rate Sheet</a>
+                        </li>
+                        <li class="nav-item ml-2">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Users" asp-action="Index"><i class="fas fa-users"></i> Users</a>
                         </li>
                     </ul>
                 </div>
@@ -52,7 +65,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - PeaceInternational - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2019 - Voberry Technologies
         </div>
     </footer>
 
@@ -79,6 +92,7 @@
     <script src="~/lib/ag-grid/ag-grid-community.min.noStyle.js"></script>
     <script src="~/lib/noty-2.4.1/js/noty/packaged/jquery.noty.packaged.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/js/mdb.min.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

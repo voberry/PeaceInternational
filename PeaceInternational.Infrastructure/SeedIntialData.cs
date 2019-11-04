@@ -28,7 +28,7 @@ namespace PeaceInternational.Infrastructure
             {
                 var user = new IdentityUser()
                 {
-                    UserName = "admin@admin.com",
+                    UserName = "admin",
                     Email = "admin@admin.com",
                     PhoneNumber = "4413262"                  
                 };
