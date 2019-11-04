@@ -104,6 +104,9 @@ namespace PeaceInternational.Web.Controllers
                         ClientName = invoice.ClientName,
                         Currency = invoice.Currency,
                         PAX = invoice.PAX,
+                        TotalDue = invoice.TotalDue,
+                        Discount = invoice.Discount,
+                        NetAmount = invoice.NetAmount,
                         CreatedBy = user.Id
                     });
 
