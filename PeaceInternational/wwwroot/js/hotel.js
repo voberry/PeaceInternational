@@ -6,7 +6,7 @@ const columnDefs = [
     { headerName: 'Address', field: 'address' },
     { headerName: 'PhoneNo', field: 'phoneNo', sortable: false, filter: false },
     {
-        headerName: 'Edit', maxWidth: 200, sortable: 'false', filter: false,
+        headerName: 'Edit', maxWidth: 200, sortable: false, filter: false,
         cellRenderer: function () {
             return '<i class="btn fas fa-edit" id="editButton"></i>';
         },

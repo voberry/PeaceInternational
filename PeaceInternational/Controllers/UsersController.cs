@@ -34,8 +34,9 @@ namespace PeaceInternational.Web.Controllers
             {
                 if (id == null)
                 {
-                    var result = await _userManager.GetUsersInRoleAsync("USER");
-                    return Json(result);
+                    var result = await _userManager.GetUsersInRoleAsync("USER");                  
+
+                    return Json(result.Select(p => new { p.Id, p.UserName, p.PhoneNumber }));
                 }
                 else
                 {
@@ -49,7 +50,7 @@ namespace PeaceInternational.Web.Controllers
             }
         }
 
-        //Save Hotel
+        //Save User
         [HttpPost]
         public async Task<IActionResult> Save(CreateUserDTO newUser)
         {
@@ -83,5 +84,32 @@ namespace PeaceInternational.Web.Controllers
                 return Json(notification);
             }
         }
+
+        //Change Password
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword (ChangePasswordDTO changePassword)
+        {
+            try
+            {
+                notification = new Notification();
+                var user = await _userManager.FindByIdAsync(changePassword.UserId);
+
+                var newPasswordHash = _userManager.PasswordHasher.HashPassword(user, changePassword.NewPassword);
+                user.PasswordHash = newPasswordHash;
+                var res = await _userManager.UpdateAsync(user);
+
+                notification.Type = "success";
+                notification.Message = "Password successfully changed.";
+
+                return Json(notification);
+            }
+            catch (Exception exception)
+            {
+                notification.Type = "error";
+                notification.Message = $"Failed to change password. ";
+                return Json(notification);
+            }
+        }
+
     }
 }
