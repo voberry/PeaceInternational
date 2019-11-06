@@ -3,20 +3,23 @@
 //Column defination for InvoiceInfo Grid
 const invoiceColumnDefs = [
 
-    { headername: 'InvoiceNo', field: 'invoiceNo' },
-    { headername: 'Dr', field: 'dr' },
-    { headername: 'Agent Name', field: 'agentName' },
-    { headername: 'Client Name', field: 'clientName' },
-    { headername: 'Currency', field: 'currency' },
-    { headername: 'PAX', field: 'pax' },
+    { headerName: 'InvoiceNo', field: 'invoiceNo', maxWidth: 100 },
+    { headerName: 'Dr', field: 'dr', tooltipField: 'dr', maxWidth :200 },
+    { headerName: 'Agent Name', field: 'agentName', maxWidth: 150 },
+    { headerName: 'Client Name', field: 'clientName', maxWidth: 150 },
+    { headerName: 'Currency', field: 'currency', maxWidth: 80 },
+    { headerName: 'PAX', field: 'pax', maxWidth: 80 },
+    { headerName: 'Total Due', field: 'totalDue', maxWidth: 100 },
+    //{ headerName: 'Discount', field: 'discount', maxWidth: 80 },
+    { headerName: 'NetAmount', field: 'netAmount', maxWidth: 120 },
     {
-        headername: 'Details',
+        headerName: 'Details', width: 80,
         cellRenderer: function () {
             return '<i class="btn fas fa-clipboard" id="detailsButton"></i>';
         },
         onCellClicked(params) {
             console.log(params.data);
-            InvoiceDetails(params.data.Id);
+            InvoiceDetails(params.data.id);
         }
     }
 ];
@@ -26,7 +29,7 @@ const invoiceColumnDefs = [
 const invoiceDetailColumnDefs = [
 
     { headername: 'Particulars', field: 'particulars' },
-    { headername: 'Amount', field: 'amount' }
+    { headername: 'Amount', field: 'amount', maxWidth:200 }
 
 ];
 
@@ -46,7 +49,7 @@ const setInvoiceGridData = () => {
 
 //Function to set the data for the Invoice Detail grid
 const setInvoiceDetailGridData = (invoiceId) => {
-
+    console.log(invoiceId);
     $.ajax({
         url: 'Invoice/GetInvoiceDetail',
         method: 'GET',
@@ -69,6 +72,7 @@ const gridOptions = {
     paginationAutoPageSize: true,
     pagination: true,
     accentedSort: true,
+    enableBrowserTooltips: true,
     onGridSizeChanged: (params) => {
         params.api.sizeColumnsToFit();
     }
@@ -94,23 +98,26 @@ const invoiceDetailGridOptions = {
 //Invoice Details
 const InvoiceDetails = (invoiceId) => {
 
+    $('#invoiceDetailModal').modal('toggle');
     setInvoiceDetailGridData(invoiceId);
 
 };
 
 const itemListColumnDefs = [
-
+   
     {
-        headerName: 'Particulars', field: 'particulars', width: 450,
-        cellStyle: () => {
-            return { 'font-weight': 'bold', 'font-size':'16px' };
-        }
-    },
-    {
-        headerName: 'Amount', field: 'amount', width: 250, 
+        headerName: 'Particulars', field: 'Particulars', width: 450,
         cellStyle: () => {
             return { 'font-size': '16px' };
-        }
+        },
+        cellClass:['text-monospace']
+    },  
+    {
+        headerName: 'Amount', field: 'Amount', width: 250,
+        cellStyle: () => {
+            return { 'font-size': '16px' };
+        },
+        cellClass: ['text-monospace']
     },
     {
         headerName: 'Remove', width: 150,
@@ -129,8 +136,7 @@ const itemListGridOptions = {
 
     columnDefs: itemListColumnDefs,
     rowHeight: 50,
-    rowData: false,
-    getRowNodeId: function (data) { return data.Id; }
+    rowData: false   
 };
 
 function getItemList() {
@@ -145,9 +151,58 @@ function getItemList() {
 
 function clear() {
 
-    $('#particulars').val('');  
-    $('#particularAmount').val('');   
+    $('#particulars').val('');
+    $('#particularAmount').val('');
 }
+
+const ClearInvoiceForm = () => {
+
+    removeBorderClass();
+    $("#id").val('');    
+    $('#date').val(new Date().toISOString().slice(0, 10));
+    $('#referenceNo').val('');
+    $('#dr').val('');
+    $('#agentName').val('');
+    $('#currency').val('');
+    $('#clientName').val('');
+    $('#pax').val('');
+    $('#guide').val('');
+    $('#vehicle').val('');
+    $('#totalDue').val('');
+    $('#discount').val('');
+    $('#netAmount').val('');
+    itemListGridOptions.api.setRowData([]);
+};
+
+
+const invoiceFormValidation = () => {
+
+    $('#invoiceForm').validate({
+        rules: {           
+            date: {
+                required: true
+            },
+            dr: {
+                required: true                
+            },
+            referenceNo: {
+                required: true
+            },
+            agentName: {
+                required: true
+            },
+            currency: {
+                required: true
+            },
+            clientName: {
+                required: true
+            },
+            pax: {
+                required: true
+            }
+        }
+    });
+};
 
 const addParticularsValidation = () => {
 
@@ -173,19 +228,20 @@ const addParticularsValidation = () => {
             timeout: 1000,
             killer: true
         });
-    }    
+    }
 };
-    
+
 const addParticulars = () => {
 
-    const newData = {
-        particulars: $('#particulars').val(),
-        amount: parseInt($('#particularAmount').val())
+    const newData = {      
+        
+        Particulars: $('#particulars').val(),
+        Amount: parseInt($('#particularAmount').val())
     };
 
     itemListGridOptions.api.updateRowData({ add: [newData] });
     calcTotal();
-    clear();    
+    clear();
 };
 
 function calcTotal() {
@@ -195,11 +251,11 @@ function calcTotal() {
     let discount = $('#discount').val();
     let netAmount = 0;
 
-    $(itemList).each(function (idx, item) {
-        amount += item.amount;
+    $(itemList).each(function (idx, item) {        
+        amount += item.Amount;
     });
 
-    netAmount = amount - discount;    
+    netAmount = amount - discount;
     if ($('#discount').val() > amount) {
         $('#discount').addClass('is-invalid');
     }
@@ -207,14 +263,87 @@ function calcTotal() {
         $('#discount').removeClass('is-invalid');
     }
 
-    $('#dueAmount').val(amount);
+    $('#totalDue').val(amount);
     $('#netAmount').val(netAmount);
 
     return [amount, netAmount];
 
 }
 
+const getItemListData = () => {
+
+    let itemList = [];
+    itemListGridOptions.api.forEachNode(function (node) {
+        itemList.push(node.data);
+    });
+    return itemList;
+};
+
+const getCurrentNepaliYear = () => {
+
+    var year = new Date().getFullYear();
+    const startingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 1, 1);
+    const endingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 12, 31);
+    console.log(year, startingNepaliYear, endingNepaliYear);
+    var invoiceNoPrefix = startingNepaliYear.toString().slice(2, 4) + endingNepaliYear.toString().slice(2, 4)
+    return invoiceNoPrefix;
+};
+
+const Save = () => {
+
+    $('#invoiceForm').off('submit').on('submit', function (e) {
+
+        e.preventDefault();
+        
+        var record = {
+            Id: $('#id').val(),
+            InvoiceNo: getCurrentNepaliYear(),
+            //FileCodeNo: $('#fileCodeNo').val(),
+            ReferenceNo: $('#referenceNo').val(),
+            Dr: $('#dr').val(),
+            AgentName: $('#agentName').val(),
+            Currency: $('#currency').val(),
+            ClientName: $('#clientName').val(),
+            PAX: $('#pax').val(),
+            Guide: $('#guide').val(),
+            Vehicle: $('#vehicle').val(),
+            TotalDue: $('#totalDue').val(),
+            Discount: $('#discount').val(),
+            NetAmount: $('#netAmount').val(),
+            InvoiceDetails: getItemListData()
+        };       
+
+        console.log(record);
+
+        $.ajax({
+            url: 'Invoice/Save',
+            method: 'POST',
+            data: { invoice: record },
+            success: function (data) {
+                console.log(data);
+                noty({
+                    type: data.type,
+                    text: data.message,
+                    layout: 'topCenter',
+                    timeout: 2000
+                });
+                $('#createInvoice').modal('toggle');
+                setInvoiceGridData();
+            }
+        });
+
+    });
+};
+
 $(document).ready(function () {
+
+    var invoiceGrid = document.querySelector('#invoiceGrid');
+    new agGrid.Grid(invoiceGrid, gridOptions);
+
+    var itemDetailsGrid = document.querySelector('#invoiceDetailsGrid');
+    new agGrid.Grid(itemDetailsGrid, invoiceDetailGridOptions);
+
+    setInvoiceGridData();
 
     var itemListGrid = document.querySelector('#itemListGrid');
     new agGrid.Grid(itemListGrid, itemListGridOptions);
@@ -229,6 +358,21 @@ $(document).ready(function () {
 
     $('#discount').on('keyup', () => { calcTotal(); });
 
+    getCurrentNepaliYear();
+
+    $('#addInvoiceBtn').click(function () {
+        console.log('Button Pressed');        
+        ClearInvoiceForm();
+        $('#invoiceForm').validate().destroy();
+        invoiceFormValidation();
+        $('#invoiceForm').validate().resetForm();
+    });
+
+    $('#btnSave').off('click').on('click', function () {
+        if ($('#invoiceForm').valid()) {
+            Save();
+        }
+    });
 });
 
 

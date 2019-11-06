@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -92,13 +93,16 @@ namespace PeaceInternational.Web.Controllers
                 }
                 else
                 {
+
+                    int invoiceCount = _invoiceCrudService.GetAll(p => p.InvoiceNo.Contains(invoice.InvoiceNo)).Count();
+
                     _unitOfWork.BeginTransaction();
 
                     int InvoiceId = await _invoiceCrudService.InsertAsync(new Invoice
                     {
-                        InvoiceNo = invoice.InvoiceNo,
-                        FileCodeNo = invoice.FileCodeNo,
-                        RefrenceNo = invoice.RefrenceNo,
+                        InvoiceNo = $"{invoice.InvoiceNo}/{(invoiceCount+1).ToString().PadLeft(4, '0')}",
+                        FileCodeNo = 123,
+                        ReferenceNo = invoice.ReferenceNo,
                         Dr = invoice.Dr,
                         AgentName = invoice.AgentName,
                         ClientName = invoice.ClientName,
@@ -146,7 +150,7 @@ namespace PeaceInternational.Web.Controllers
             {
                 var record = await _invoiceCrudService.GetAsync(invoice.Id);
 
-                record.RefrenceNo = invoice.RefrenceNo;
+                record.ReferenceNo = invoice.ReferenceNo;
                 record.Dr = invoice.Dr;
                 record.AgentName = invoice.AgentName;
                 record.ClientName = invoice.ClientName;

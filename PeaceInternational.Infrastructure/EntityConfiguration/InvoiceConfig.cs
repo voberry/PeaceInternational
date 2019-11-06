@@ -21,7 +21,7 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
             builder.Property(p => p.FileCodeNo)
                 .IsRequired();
 
-            builder.Property(p => p.RefrenceNo)
+            builder.Property(p => p.ReferenceNo)
                .HasMaxLength(255)
                .IsRequired();
 

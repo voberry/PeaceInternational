@@ -13,7 +13,7 @@ namespace PeaceInternational.Core.Entity
        
         public string InvoiceNo { get; set; }
         public int FileCodeNo { get; set; }
-        public string RefrenceNo { get; set; }
+        public string ReferenceNo { get; set; }
         public string Dr { get; set; }
         public string AgentName { get; set; }
         public string ClientName { get; set; }

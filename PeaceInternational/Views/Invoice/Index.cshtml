@@ -39,7 +39,7 @@
                     <div class="form-row">
                         <div class="col-md-2">
                             <label for="date"> Date <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="date" id="date" />
+                            <output type="text" class="form-control" name="date" id="date" />
                         </div>
                         <div class="col-md-4">
                             <label for="dr"> Dr. <span class="text-danger">*</span></label>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="col-md-3">
                             <label for="date"> Agent Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="agentName" id="agentaName" />
+                            <input type="text" class="form-control" name="agentName" id="agentName" />
                         </div>
                         <div class="col-md-1">
                             <label for="currency"> Currency <span class="text-danger">*</span></label>
@@ -112,7 +112,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text currency"></span>
                                     </div>
-                                    <output type="number" class="form-control" name="dueAmount" id="dueAmount" />
+                                    <output type="number" class="form-control" name="totalDue" id="totalDue" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -138,6 +138,24 @@
 
             </div>
         </form>
+    </div>
+</div>
+
+<div class="modal fade" id="invoiceDetailModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="background: linear-gradient(225deg, rgba(255,255,255,1) 0%, rgba(232,227,227,1) 100%);">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-light">Invoice Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="text-light" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="height: 100%; box-sizing: border-box; padding-top:20px;">
+                    <div id="invoiceDetailsGrid" style="width: 100%; height:450px" class="ag-theme-balham"></div>
+                </div>
+            </div>            
+        </div>
     </div>
 </div>
 
