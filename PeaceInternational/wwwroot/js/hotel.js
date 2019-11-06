@@ -146,4 +146,13 @@ $(document).ready(function () {
             Save();
         }
     });
+
+    $('#searchField').on('keyup', function () {
+        var filter;
+        filter = {
+            name: { type: 'contains', filter: $('#searchField').val() }
+        };
+        gridOptions.api.setFilterModel(filter);
+        gridOptions.api.onFilterChanged();
+    });
 });

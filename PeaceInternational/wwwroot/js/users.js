@@ -227,4 +227,13 @@ $(document).ready(function () {
             SaveNewPassword();
         }
     });
+
+    $('#searchField').on('keyup', function () {
+        var filter;
+        filter = {
+            userName: { type: 'contains', filter: $('#searchField').val() }
+        };
+        gridOptions.api.setFilterModel(filter);
+        gridOptions.api.onFilterChanged();
+    });
 });
