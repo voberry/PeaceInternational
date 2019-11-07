@@ -80,7 +80,7 @@ namespace PeaceInternational.Web.Controllers
                     });
 
                     notification.Type = "success";
-                    notification.Message = "Hotel successfully created.";
+                    notification.Message = "Hotel created successfully.";
                 }
 
                 return Json(notification);
@@ -88,7 +88,7 @@ namespace PeaceInternational.Web.Controllers
             catch (Exception exception)
             {
                 notification.Type = "error";
-                notification.Message = "Hotel failed to create.";
+                notification.Message = "Hotel creation failed.";
                 return Json(notification);
             }
         }
@@ -107,12 +107,12 @@ namespace PeaceInternational.Web.Controllers
 
                 _hotelCrudService.Update(record);
 
-                return new Notification("success", "Hotel successfully updated.");
+                return new Notification("success", "Hotel updated successfully.");
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
-                return new Notification("error", "Hotel failed to update.");
+                return new Notification("error", "Hotel update failed.");
             }
         }
     }

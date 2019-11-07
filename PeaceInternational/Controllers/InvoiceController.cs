@@ -161,12 +161,12 @@ namespace PeaceInternational.Web.Controllers
 
                 _invoiceCrudService.Update(record);
 
-                return new Notification("success", "Invoice successfully updated");
+                return new Notification("success", "Invoice updated successfully.");
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
-                return new Notification("error", "Invoice failed to update.");
+                return new Notification("error", "Invoice update failed.");
             }
         }
     }
