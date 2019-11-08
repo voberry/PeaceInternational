@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PeaceInternational.Core.Entity;
 using PeaceInternational.Core.IRepository;
 using PeaceInternational.Web.Models;
@@ -17,17 +18,20 @@ namespace PeaceInternational.Web.Controllers
     public class HotelReceiptController : Controller
     {
 
-        private readonly ICrudService<HotelReceipt> _hotelReceiptCrudService;       
+        private readonly ICrudService<HotelReceipt> _hotelReceiptCrudService;
+        private readonly ICrudService<Hotel> _hotelCrudService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private Notification notification;
 
         public HotelReceiptController(
             ICrudService<HotelReceipt> hotelReceiptCrudService,
+            ICrudService<Hotel> hotelCrudService,
             UserManager<IdentityUser> userManager,           
             IUnitOfWork unitOfWork)
         {
-            _hotelReceiptCrudService = hotelReceiptCrudService;            
+            _hotelReceiptCrudService = hotelReceiptCrudService;
+            _hotelCrudService = hotelCrudService;
             _userManager = userManager;
             _unitOfWork = unitOfWork;
         }
@@ -45,7 +49,11 @@ namespace PeaceInternational.Web.Controllers
             {
                 if (id == null)
                 {
-                    var result = await _hotelReceiptCrudService.GetAllAsync();
+                    var result = await _hotelReceiptCrudService.GetAll()
+                        .AsNoTracking()
+                        .Include(h => h.Hotel)
+                        .ToListAsync(); 
+
                     return Json(result);
                 }
                 else
@@ -80,7 +88,7 @@ namespace PeaceInternational.Web.Controllers
                     {
                         ExchangeOrderNo = hotelReceipt.ExchangeOrderNo,
                         FileCodeNo = hotelReceipt.FileCodeNo,
-                        HotelId = hotelReceipt.Id,
+                        HotelId = hotelReceipt.HotelId,
                         ClientName = hotelReceipt.ClientName,
                         PAX = hotelReceipt.PAX,
                         ArrivalDate = hotelReceipt.ArrivalDate,

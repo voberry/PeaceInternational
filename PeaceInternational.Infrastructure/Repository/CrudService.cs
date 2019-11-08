@@ -35,12 +35,12 @@ namespace PeaceInternational.Infrastructure.Repository
             return _context.Set<TEntity>().Where(expression).SingleOrDefault();
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
-            return _context.Set<TEntity>().ToList();
+            return _context.Set<TEntity>();
         }
 
-        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> expression)
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> expression)
         {
             return _context.Set<TEntity>().Where(expression);
         }

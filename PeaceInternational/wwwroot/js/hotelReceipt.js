@@ -2,8 +2,10 @@
 
 //Column Defination for the grid
 const columnDefs = [
-    { headerName: 'Receipt No.', field: 'receipt' },
-    { headerName: 'Hotel', field: 'hotel' },
+    { headerName: 'Receipt No.', field: 'id', maxWidth: 120 },
+    {
+        headerName: 'Hotel', field: 'hotel.name'        
+    },
     { headerName: 'Client Name', field: 'clientName', sortable: false, filter: false },
     {
         headerName: 'Details', maxWidth: 200, sortable: false, filter: false,
@@ -34,8 +36,8 @@ const setGridData = () => {
         url: 'HotelReceipt/Get',
         method: 'GET',
         success: (data) => {
-            gridOptions.api.setRowData(data);
             console.log(data);
+            gridOptions.api.setRowData(data);            
         }
     });
 };
@@ -61,9 +63,19 @@ let gridOptions = {
 const Clear = () => {
     removeBorderClass();
     $("#id").val('');
-    $('#name').val('');
-    $('#address').val('');
-    $('#phoneNo').val('');
+    $('#date').val(new Date().toISOString().slice(0, 10));
+    $('#exchangeOrderNo').val('');
+    $('#fileCodeNo').val('');
+    $('#hotel').val('');
+    $('#clientName').val('');
+    $('#pax').val('');
+    $('#arrivalOn').val('');
+    $('#from').val('');
+    $('#arrivalFlight').val('');
+    $('#departureOn').val('');
+    $('#to').val('');
+    $('#departureFlight').val('');
+    $('#services').val('');
 };
 
 //Function specifying rules for validating the form
@@ -71,18 +83,47 @@ const hotelReceiptValidation = () => {
 
     $('#hotelReceiptForm').validate({
         rules: {
-            name: {
-                required: true,
-                maxlength: 100,
-                isOnlyWhiteSpace: true
-            },
-            address: {
-                required: true
-            },
-            phoneNo: {
+            exchangeOrderNo: {
                 required: true,
                 digits: true
+            },
+            fileCodeNo: {
+                required: true,
+                digits: true
+            },
+            hotel: {
+                required: true
+            },
+            clientName: {
+                required: true
+            },
+            pax: {
+                required: true
+            },
+            arrivalOn: {
+                required: true,
+                lesserDate: '#departureOn'
+            },
+            from: {
+                required: true
+            },
+            arrivalFlight: {
+                required: true
+            },
+            departureOn: {
+                required: true,
+                greaterDate: '#arrivalOn'
+            },
+            to: {
+                required: true
+            },
+            departureFlight: {
+                required: true
+            },
+            services: {
+                required: true
             }
+
         }
     });
 };
@@ -90,11 +131,21 @@ const hotelReceiptValidation = () => {
 const Edit = (data) => {
 
     Clear();
+    console.log(data);
     $('#hotelReceiptTitle').html("Edit Hotel Receipt");
     $('#id').val(data.id);
-    $('#name').val(data.name);
-    $('#address').val(data.address);
-    $('#phoneNo').val(data.phoneNo);
+    $('#exchangeOrderNo').val(data.exchangeOrderNo);
+    $('#fileCodeNo').val(data.fileCodeNo);
+    $('#hotel').val(data.hotelId);
+    $('#clientName').val(data.clientName);
+    $('#pax').val(data.pax);
+    $('#arrivalOn').val(data.arrivalDate.split('T')[0]);
+    $('#from').val(data.from);
+    $('#arrivalFlight').val(data.arrivalFlight);
+    $('#departureOn').val(data.departureDate.split('T')[0]);
+    $('#to').val(data.to);
+    $('#departureFlight').val(data.departureFlight);
+    $('#services').val(data.services);
     $('#hotelReceiptForm').validate().destroy();
     hotelReceiptValidation();
     $('#hotelReceiptForm').validate().resetForm();
@@ -110,9 +161,18 @@ const Save = () => {
 
         var record = {
             Id: $('#id').val(),
-            Name: $('#name').val(),
-            Address: $('#address').val(),
-            PhoneNo: $('#phoneNo').val()
+            ExchangeOrderNo: $('#exchangeOrderNo').val(),
+            FileCodeNo: $('#fileCodeNo').val(),
+            HotelId: $('#hotel').val(),
+            ClientName: $('#clientName').val(),
+            PAX: $('#pax').val(),
+            ArrivalDate: $('#arrivalOn').val(),
+            From: $('#from').val(),
+            ArrivalFlight: $('#arrivalFlight').val(),
+            DepartureDate: $('#departureOn').val(),
+            To: $('#to').val(),
+            DepartureFlight: $('#departureFlight').val(),
+            Services: $('#services').val()
         };
 
         $.ajax({
@@ -176,7 +236,7 @@ $(document).ready(function () {
     $('#searchField').on('keyup', function () {
         var filter;
         filter = {
-            name: { type: 'contains', filter: $('#searchField').val() }
+            id: { type: 'contains', filter: $('#searchField').val() }
         };
         gridOptions.api.setFilterModel(filter);
         gridOptions.api.onFilterChanged();

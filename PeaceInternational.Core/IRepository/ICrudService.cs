@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,8 @@ namespace PeaceInternational.Core.IRepository
         TEntity Get(Expression<Func<TEntity, bool>> expression);
         Task<TEntity> GetAsync(int? id);
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression);
-        IEnumerable<TEntity> GetAll();
-        IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> expression);
+        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> expression);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> expression);
         int Delete(TEntity entity);       

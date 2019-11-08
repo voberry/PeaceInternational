@@ -1,10 +1,9 @@
 ﻿
 function removeBorderClass() {
 
-    $('input').removeClass("is-valid");
-    $('select').removeClass("is-valid");
-    $('input').removeClass("is-invalid");
-    $('select').removeClass("is-invalid");
+    $('input').removeClass(["is-valid","is-invalid"]);
+    $('select').removeClass(["is-valid", "is-invalid"]);
+    $('textarea').removeClass(["is-valid", "is-invalid"]);  
 }
 
 $(document).ready(function () {
