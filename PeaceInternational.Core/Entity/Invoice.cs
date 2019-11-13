@@ -26,5 +26,10 @@ namespace PeaceInternational.Core.Entity
         public double NetAmount { get; set; }
 
         public ICollection<InvoiceDetail> InvoiceDetails { get; set; }
+
+        public object Join()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

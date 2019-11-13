@@ -3,7 +3,7 @@
 //Column defination for InvoiceInfo Grid
 const invoiceColumnDefs = [
 
-    { headerName: 'InvoiceNo', field: 'invoiceNo', maxWidth: 100 },
+    { headerName: 'Invoice No', field: 'invoiceNo', maxWidth: 100 },
     { headerName: 'Dr', field: 'dr', tooltipField: 'dr', maxWidth :200 },
     { headerName: 'Agent Name', field: 'agentName', maxWidth: 150 },
     { headerName: 'Client Name', field: 'clientName', maxWidth: 150 },
@@ -11,7 +11,7 @@ const invoiceColumnDefs = [
     { headerName: 'PAX', field: 'pax', maxWidth: 80 },
     { headerName: 'Total Due', field: 'totalDue', maxWidth: 100 },
     //{ headerName: 'Discount', field: 'discount', maxWidth: 80 },
-    { headerName: 'NetAmount', field: 'netAmount', maxWidth: 120 },
+    { headerName: 'Net Amount', field: 'netAmount', maxWidth: 120 },
     {
         headerName: 'Details', width: 80,
         cellRenderer: function () {
@@ -20,6 +20,15 @@ const invoiceColumnDefs = [
         onCellClicked(params) {
             console.log(params.data);
             InvoiceDetails(params.data.id);
+        }
+    },
+    {
+        headerName: 'Invoice', width: 80,
+        cellRenderer: function () {
+            return '<i class="btn fas fa-file-invoice-dollar" id="generatePdfButton"></i>';
+        },
+        onCellClicked(params) {            
+            GenerateInvoice(params.data);
         }
     }
 ];
@@ -92,6 +101,27 @@ const invoiceDetailGridOptions = {
     onGridSizeChanged: (params) => {
         params.api.sizeColumnsToFit();
     }
+};
+
+//Function to generate Invoice
+const GenerateInvoice = (invoiceData) => {
+    console.log(invoiceData);
+    $.ajax({
+        url: 'Invoice/GetInvoiceInfo',
+        method: 'GET',
+        data: { id: invoiceData.id },
+        success: (data) => {
+            
+            console.log(data);
+            var source = document.getElementById("entry-template").innerHTML;
+            var template = Handlebars.compile(source);
+            var result = template(data);
+            console.log(result);
+            $('#receiptTemplate').html(result);            
+            $('#viewInvoice').modal('toggle');
+        }
+    });
+   
 };
 
 

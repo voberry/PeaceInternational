@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PeaceInternational.Core.Entity;
 using PeaceInternational.Core.IRepository;
 using PeaceInternational.Web.Models;
@@ -55,6 +56,27 @@ namespace PeaceInternational.Web.Controllers
                     var result = _invoiceCrudService.Get(id);
                     return Json(result);
                 }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        //GET Invoice with Detail
+        [HttpGet]
+        public IActionResult GetInvoiceInfo(int? id)
+        {
+            try
+            {
+                var invoice = _invoiceCrudService.Get(id);
+                var invoiceDetail = _invoiceDetailCrudService.GetAll(p => p.InvoiceId == id);
+                var result = new
+                {
+                    invoice,
+                    invoiceDetail
+                };
+                return Json(result);
             }
             catch (Exception exception)
             {
