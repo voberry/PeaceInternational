@@ -15,7 +15,8 @@
     span {
         font-weight:bold;
     }
-</style>
+
+   </style>
 
 <div class="row">
     <div class="col-md-10">
@@ -230,8 +231,7 @@
 
         <div class="row text-monospace">
             <div class="col-md-8">
-                <h6><span>Dr:</span>&emsp;{{invoice.dr}}</h6>
-                <h6>&emsp;&emsp;&emsp;Kathmandu, Nepal</h6>
+                <h6><span>Dr:</span>&emsp;{{invoice.dr}}</h6>                
                 <h6><span>File Code No:</span>&emsp;{{invoice.fileCodeNo}}</h6>
                 <h6><span>Client Name:</span>&emsp;{{invoice.clientName}}</h6>
                 <h6><span>PAX:</span>&emsp;{{invoice.pax}}</h6>
@@ -267,15 +267,15 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="2" align="right">Total Due</td>
+                        <td colspan="2" align="right" class="font-weight-bold">Total Due</td>
                         <td>{{invoice.totalDue}}</td>
                     </tr>
                     <tr>
-                        <td colspan="2" align="right">Discount</td>
+                        <td colspan="2" align="right" class="font-weight-bold">Discount</td>
                         <td>{{invoice.discount}}</td>
                     </tr>
                     <tr>
-                        <td colspan="2" align="right">Net Amount</td>
+                        <td colspan="2" align="right" class="font-weight-bold">Net Amount</td>
                         <td>{{invoice.netAmount}} /-</td>
                     </tr>
                     <tr>

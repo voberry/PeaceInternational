@@ -3,17 +3,17 @@
 //Column defination for InvoiceInfo Grid
 const invoiceColumnDefs = [
 
-    { headerName: 'Invoice No', field: 'invoiceNo', maxWidth: 100 },
-    { headerName: 'Dr', field: 'dr', tooltipField: 'dr', maxWidth :200 },
-    { headerName: 'Agent Name', field: 'agentName', maxWidth: 150 },
+    { headerName: 'Invoice No', field: 'invoiceNo', maxWidth: 150 },
+    { headerName: 'Dr', field: 'dr', tooltipField: 'dr', maxWidth :220 },
+    //{ headerName: 'Agent Name', field: 'agentName', maxWidth: 150 },
     { headerName: 'Client Name', field: 'clientName', maxWidth: 150 },
-    { headerName: 'Currency', field: 'currency', maxWidth: 80 },
-    { headerName: 'PAX', field: 'pax', maxWidth: 80 },
-    { headerName: 'Total Due', field: 'totalDue', maxWidth: 100 },
+    { headerName: 'Currency', field: 'currency', maxWidth: 150 },
+    { headerName: 'PAX', field: 'pax', maxWidth: 100 },
+    //{ headerName: 'Total Due', field: 'totalDue', maxWidth: 100 },
     //{ headerName: 'Discount', field: 'discount', maxWidth: 80 },
-    { headerName: 'Net Amount', field: 'netAmount', maxWidth: 120 },
+    { headerName: 'Net Amount', field: 'netAmount', maxWidth: 140 },
     {
-        headerName: 'Details', width: 80,
+        headerName: 'Details', maxWidth: 100,
         cellRenderer: function () {
             return '<i class="btn fas fa-clipboard" id="detailsButton"></i>';
         },
@@ -23,7 +23,7 @@ const invoiceColumnDefs = [
         }
     },
     {
-        headerName: 'Invoice', width: 80,
+        headerName: 'Invoice', maxWidth: 100,
         cellRenderer: function () {
             return '<i class="btn fas fa-file-invoice-dollar" id="generatePdfButton"></i>';
         },
