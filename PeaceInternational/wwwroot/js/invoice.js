@@ -404,6 +404,36 @@ $(document).ready(function () {
         }
     });
 
+    $('#printInvoice').off('click').on('click', function () {
+
+        html2canvas($("#invoiceBody")[0], {
+            width: 1200,
+            height: 1200,
+            scale: 3
+        }).then(function (canvas) {
+            var myImage = canvas.toDataURL("image/png");
+            var tWindow = window.open("");
+            $(tWindow.document.body)
+                .html("<img id='Image' src=" + myImage + " style='width:100%;'></img>")
+                .ready(function () {
+                    tWindow.focus();
+                    tWindow.print();
+                });
+        });
+       
+      
+        //html2canvas($("#invoiceBody")[0]).then(function (canvas) {
+        //    var img = canvas.toDataURL();
+        //    window.open(img);
+        //});
+      
+        //$('#invoiceBody').html2canvas();
+        //var queue = html2canvas.Parse();
+        //var canvas = html2canvas.Renderer(queue, { elements: { length: 1 } });
+        //var img = canvas.toDataURL();
+        //window.open(img);
+    });
+
     $('#searchField').on('keyup', function () {
         var filter;
         filter = {

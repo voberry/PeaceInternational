@@ -3,17 +3,14 @@
     ViewData["Title"] = "Invoice";
 }
 <style>
-    #image-wrapper {
-        width: 500px;
-        height: 500px;
-        border: 1px solid #333;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
+  
     span {
         font-weight:bold;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
     }
 
    </style>
@@ -108,7 +105,7 @@
                             <hr />
                         </div>
                         <div class="col-md-3 col d-flex align-items-center justify-content-center" style="background-color:cornflowerblue" ;>
-                            <img src="~/img/logo.png" />
+                            <img src="~/img/logo.png"/>
                         </div>
                     </div>
 
@@ -177,19 +174,18 @@
 <div class="modal fade" id="viewInvoice" tabindex="-1" role="dialog" aria-labelledby="invoiceTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document" style="max-width:80%;border:double;" !important;>
         <div class="modal-content">
-            <div class="modal-header bg-info">
+            <div class="modal-header bg-info position-sticky">
                 <h5 class="modal-title text-light">Invoice</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span class="text-light" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="invoiceBody">
                 <div class="row">
                     <div class="col-md-8">
-                        <img src="~/img/logo.jpg" />
+                        <img src="~/img/logo.jpg" style="max-width:100%" />
                     </div>
-                    <div class="col-md-4 text-monospace">
-                        <br />
+                    <div class="col-md-4 text-monospace">                      
                         <h6>GPO Box: 9484</h6>
                         <h6>Hotel Marg, Lazimpat - 2</h6>
                         <h6>Kathmandu, Nepal</h6>
@@ -213,11 +209,11 @@
                     </div>
                     <div class="col-md-2">
                         <br />
-                        <h6>------------------------</h6>
-                        <h6>Authorized Signature: </h6>
+                        <h6 class="border-top border-dark">Authorized Signature: </h6>
                     </div>
                 </div>
             </div>
+            <button type="button" class="btn btn-danger" id="printInvoice">Print</button>
         </div>
     </div>
 </div>
