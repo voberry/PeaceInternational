@@ -406,9 +406,7 @@ $(document).ready(function () {
 
     $('#printInvoice').off('click').on('click', function () {
 
-        html2canvas($("#invoiceBody")[0], {
-            width: 1200,
-            height: 1200,
+        html2canvas($("#invoiceBody")[0], {            
             scale: 3
         }).then(function (canvas) {
             var myImage = canvas.toDataURL("image/png");
