@@ -5,7 +5,7 @@ const invoiceColumnDefs = [
 
     { headerName: 'Invoice No', field: 'invoiceNo', maxWidth: 150 },
     { headerName: 'Dr', field: 'dr', tooltipField: 'dr', maxWidth :220 },
-    //{ headerName: 'Agent Name', field: 'agentName', maxWidth: 150 },
+    { headerName: 'Agent Name', field: 'agentName', maxWidth: 150 },
     { headerName: 'Client Name', field: 'clientName', maxWidth: 150 },
     { headerName: 'Currency', field: 'currency', maxWidth: 150 },
     { headerName: 'PAX', field: 'pax', maxWidth: 100 },
@@ -37,8 +37,8 @@ const invoiceColumnDefs = [
 //Column defination for InvoiceDetails Grid
 const invoiceDetailColumnDefs = [
 
-    { headername: 'Particulars', field: 'particulars' },
-    { headername: 'Amount', field: 'amount', maxWidth:200 }
+    { headerName: 'Particulars', field: 'particulars' },
+    { headerName: 'Amount', field: 'amount', maxWidth:200 }
 
 ];
 
@@ -184,6 +184,18 @@ function clear() {
     $('#particulars').val('');
     $('#particularAmount').val('');
 }
+
+function call() {
+   let filter = {
+        invoiceNo: { type: 'contains', filter: $('#searchField').val() },
+        agentName: { type: 'contains', filter: $('#searchFieldAgent').val() },
+        clientName: { type: 'contains', filter: $('#searchFieldClient').val() }
+    };
+        gridOptions.api.setFilterModel(filter);
+        gridOptions.api.onFilterChanged();
+    }
+
+
 
 const ClearInvoiceForm = () => {
 
@@ -432,13 +444,19 @@ $(document).ready(function () {
         //window.open(img);
     });
 
-    $('#searchField').on('keyup', function () {
-        var filter;
-        filter = {
-            invoiceNo: { type: 'contains', filter: $('#searchField').val() }
-        };
-        gridOptions.api.setFilterModel(filter);
-        gridOptions.api.onFilterChanged();
+    $('#searchField').on('keyup', function ()
+    {
+        call();
+    });
+
+    $('#searchFieldAgent').on('keyup', function ()
+    {
+        call();
+    });
+
+    $('#searchFieldClient').on('keyup', function ()
+    {
+        call();
     });
 });
 
