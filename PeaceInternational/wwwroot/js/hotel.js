@@ -13,7 +13,7 @@ const columnDefs = [
         onCellClicked(params) {
             console.log(params.data);  
             Edit(params.data);
-        }
+        
     }
 ];
 

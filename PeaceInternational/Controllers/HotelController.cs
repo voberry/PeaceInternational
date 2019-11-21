@@ -54,7 +54,6 @@ namespace PeaceInternational.Web.Controllers
                 throw exception;
             }
         }
-
         //Save Hotel
         [HttpPost]
         public async Task<IActionResult> Save(Hotel hotel)
@@ -93,6 +92,24 @@ namespace PeaceInternational.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(Hotel hotel)
+        {
+            try
+            {
+                var user = _userManager.GetUserAsync(HttpContext.User).Result;
+                notification = new Notification();
+                  notification = await deleteHotel(hotel, user);
+                return Json(notification);
+            }
+            catch (Exception exception)
+            {
+                notification.Type = "error";
+                notification.Message = "Hotel deletion failed.";
+                return Json(notification);
+            }
+        }
+
         private async Task<Notification> EditHotel(Hotel hotel, IdentityUser user)
         {
             try
@@ -113,6 +130,22 @@ namespace PeaceInternational.Web.Controllers
             {
                 Console.WriteLine(exception.Message);
                 return new Notification("error", "Hotel update failed.");
+            }
+        }
+        private async Task<Notification> deleteHotel(Hotel hotel, IdentityUser user)
+        {
+            try
+            {
+                var record = await _hotelCrudService.GetAsync(hotel.Id);
+
+                _hotelCrudService.Delete(record);
+
+                return new Notification("success", "Hotel deleted successfully.");
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+                return new Notification("error", "Failed to delete hotel.");
             }
         }
     }

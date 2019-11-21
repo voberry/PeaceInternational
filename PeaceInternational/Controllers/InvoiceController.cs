@@ -70,7 +70,7 @@ namespace PeaceInternational.Web.Controllers
             try
             {
                 var invoice = _invoiceCrudService.Get(id);
-                var invoiceDetail = _invoiceDetailCrudService.GetAll(p => p.InvoiceId == id);
+                var invoiceDetail = _invoiceDetailCrudService.GetAll(p => p.InvoiceId == id).OrderByDescending(p => p.CreatedDate);
                 var result = new
                 {
                     invoice,
