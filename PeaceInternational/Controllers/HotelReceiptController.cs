@@ -52,9 +52,8 @@ namespace PeaceInternational.Web.Controllers
                     var result = await _hotelReceiptCrudService.GetAll()
                         .AsNoTracking()
                         .Include(h => h.Hotel)
-                        .ToListAsync(); 
-
-                    return Json(result);
+                        .ToListAsync();
+                    return Json(result.OrderByDescending(h => h.CreatedDate));
                 }
                 else
                 {
