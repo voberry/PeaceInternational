@@ -85,6 +85,25 @@ namespace PeaceInternational.Web.Controllers
             }
         }
 
+        //Delete User
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            try
+            {
+                notification = new Notification();
+                notification = await DeleteHotel(id);
+
+                return Json(notification);
+            }
+            catch (Exception exception)
+            {
+                notification.Type = "error";
+                notification.Message = "User deletion failed.";
+                return Json(notification);
+            }
+        }
+
         //Change Password
         [HttpPost]
         public async Task<IActionResult> ChangePassword (ChangePasswordDTO changePassword)
@@ -108,6 +127,22 @@ namespace PeaceInternational.Web.Controllers
                 notification.Type = "error";
                 notification.Message = $"Failed to change password. ";
                 return Json(notification);
+            }
+        }
+
+        private async Task<Notification> DeleteHotel(string id)
+        {
+            try
+            {
+                var record = await _userManager.FindByIdAsync(id);
+                await _userManager.DeleteAsync(record);
+
+                return new Notification("success", "User deleted successfully.");
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+                return new Notification("error", "Failed to delete user.");
             }
         }
 
