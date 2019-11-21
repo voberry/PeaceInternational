@@ -132,6 +132,7 @@ namespace PeaceInternational.Web.Controllers
                 return new Notification("error", "Hotel update failed.");
             }
         }
+
         private Notification DeleteHotel(int id)
         {
             try

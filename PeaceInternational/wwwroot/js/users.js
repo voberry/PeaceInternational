@@ -13,6 +13,17 @@ const columnDefs = [
             console.log(params.data);
             ChangePassword(params.data);
         }
+    },
+    {
+        headerName: 'Delete', maxWidth: 200, sortable: false, filter: false,
+        cellRenderer: function () {
+            return '<i class="btn fas fa-trash" id="trashButton"></i>';
+        },
+        onCellClicked(params) {
+            console.log(params.data);
+            Delete(params.data);
+
+        }
     }
 ];
 
@@ -198,6 +209,30 @@ const SaveNewPassword = () => {
 
     });
 
+};
+
+const Delete = (data) => {
+
+    var confirm = window.confirm("Are you sure you want to delete?");
+
+    if (confirm) {
+        $.ajax({
+            url: 'Users/Delete',
+            method: 'POST',
+            data: { id: data.id },
+            success: function (data) {
+                console.log(data);
+                noty({
+                    type: data.type,
+                    text: data.message,
+                    layout: 'topCenter',
+                    timeout: 2000
+                });
+
+                setGridData();
+            }
+        });
+    }
 };
 
 $(document).ready(function () {
