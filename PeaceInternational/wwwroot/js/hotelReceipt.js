@@ -43,6 +43,17 @@ const setGridData = () => {
 };
 
 
+function call() {
+    let filter = {
+        id: { type: 'contains', filter: $('#searchFieldReceipt').val() },
+        'hotel.name': { type: 'contains', filter: $('#searchFieldHotel').val() },
+        clientName: { type: 'contains', filter: $('#searchFieldClientname').val() }
+    };
+    gridOptions.api.setFilterModel(filter);
+    gridOptions.api.onFilterChanged();
+}
+
+
 //Settings for the HotelReceipt grid
 let gridOptions = {
     columnDefs: columnDefs,
@@ -233,12 +244,15 @@ $(document).ready(function () {
         }
     });
 
-    $('#searchField').on('keyup', function () {
-        var filter;
-        filter = {
-            id: { type: 'contains', filter: $('#searchField').val() }
-        };
-        gridOptions.api.setFilterModel(filter);
-        gridOptions.api.onFilterChanged();
+    $('#searchFieldReceipt').on('keyup', function () {
+        call();
+    });
+
+    $('#searchFieldHotel').on('keyup', function () {
+        call();
+    });
+
+    $('#searchFieldClientname').on('keyup', function () {
+        call();
     });
 });
