@@ -8,13 +8,13 @@ const columnDefs = [
     },
     { headerName: 'Client Name', field: 'clientName', sortable: false, filter: false },
     {
-        headerName: 'Details', maxWidth: 200, sortable: false, filter: false,
+        headerName: 'Reciept', maxWidth: 200, sortable: false, filter: false,
         cellRenderer: function () {
-            return '<i class="btn fas fa-clipboard" id="detailsButton"></i>';
+            return '<i class="btn fas fa-clipboard" id="receiptButton"></i>';
         },
         onCellClicked(params) {
-            console.log(params.data);
-            Edit(params.data);
+            
+            GenerateReceipt(params.data);
         }
     },
     {
@@ -68,6 +68,27 @@ let gridOptions = {
     onGridSizeChanged: (params) => {
         params.api.sizeColumnsToFit();
     }
+};
+
+//Function to generate reeipt
+const GenerateReceipt = (receiptData) => {
+    console.log(receiptData);
+    $.ajax({
+        url: 'Receipt/Get',
+        method: 'GET',
+        data: { id: receiptData.id },
+        success: (data) => {
+
+            console.log(data);
+            var source = document.getElementById("entry-template").innerHTML;
+            var template = Handlebars.compile(source);
+            var result = template(data);
+            console.log(result);
+            $('#receiptTemplate').html(result);
+            $('#viewReceipt').modal('toggle');
+        }
+    });
+
 };
 
 //Function to clear form

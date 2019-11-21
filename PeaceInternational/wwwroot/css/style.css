@@ -1,0 +1,280 @@
+﻿/*CSS for A4 print
+==================*/
+body {
+    font-size: 14px;
+}
+
+.invcontainer {
+    height: 1125px;
+    width: 800px;
+    /*background-color: grey;*/
+    padding-left: 130px;
+    padding-right: 30px;
+    padding-top: 45px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
+h6 {
+    font-size: 14px;
+    margin-bottom: 1px;
+}
+
+.h7 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.head {
+    height: 125px;
+    margin-bottom: 40px;
+}
+
+.logo img {
+    height: 140px;
+    width: 75%;
+}
+
+.detail {
+    margin-left: 3px;
+    margin-bottom: 22px;
+}
+
+.ptable {
+    height: 750px;
+    background-color: red;
+}
+
+.pend {
+    margin-top: 30px;
+}
+
+.foot {
+    margin-top: 10px;
+}
+
+/*==================================================
+==================================================*/
+
+/*Service Voucher CSS*/
+.svcontainer {
+    height: 1125px;
+    width: 800px;
+    /*background-color: grey;*/
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 45px;
+}
+
+.formsize {
+    height: 550px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    border-style: solid;
+    border-width: 2px;
+}
+
+.address h6 {
+    line-height: 18px;
+}
+
+.svcontainer header {
+    padding: 10px 10px 22px 10px;
+}
+
+.svcontainer .head {
+    margin-bottom: 15px;
+}
+
+.svcontainer strong {
+    margin-left: 15px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.svaddress {
+    margin: 10px 0px 10px 5px;
+}
+
+.svdata p {
+    padding-left: 10px;
+}
+
+.svrcol1 {
+    border-style: solid none solid none;
+    border-width: 2px;
+    width: 70%;
+    padding: 4px 0 2px 10px;
+    float: left;
+}
+
+.svrcol2 {
+    border-style: solid none solid solid;
+    border-width: 2px;
+    width: 30%;
+    padding: 4px 0 2px 10px;
+    float: right;
+}
+
+.svrcol3 {
+    border-style: none none solid none;
+    border-width: 2px;
+    width: 40%;
+    padding: 4px 0 2px 10px;
+    float: left;
+}
+
+.svrcol4 {
+    border-style: none none solid none;
+    border-width: 2px;
+    width: 30%;
+    padding: 4px 0 2px 10px;
+    float: left;
+}
+
+.svrcol5 {
+    border-style: none none solid none;
+    border-width: 2px;
+    width: 30%;
+    padding: 4px 0 2px 10px;
+    float: right;
+}
+
+footer {
+    height: 132px;
+}
+
+.svcomment {
+    border-style: none none solid none;
+    border-width: 2px;
+}
+
+    .svcomment .comment {
+        height: 65px;
+        margin: 10px 15px 16px 15px;
+    }
+
+p.footer {
+    margin-bottom: 0px;
+}
+
+.svcomment p {
+    margin-left: 15px;
+}
+
+.endfooter {
+    margin-top: 2px;
+}
+
+.endfooter1 p {
+    padding-left: 15px;
+}
+
+.endfooter1, .endfooter2 p {
+    font-size: 11px;
+}
+
+section {
+    overflow: hidden;
+}
+
+.svdetail {
+    margin-bottom: 15px;
+}
+
+/*====================================*/
+/*TABLE CSS*/
+
+.table {
+    display: table;
+    height: 700px;
+    table-layout: fixed;
+    position: relative;
+    width: 100%;
+    border: solid 1px black;
+    margin-bottom: 0px;
+}
+
+.td {
+    display: table-cell;
+    /* border-style: solid;
+    border-width: 0px 1px 0px 0px;*/
+    height: 8px;
+}
+
+.thead {
+    border-bottom: solid 1px;
+}
+
+.body {
+    height: 550px;
+}
+
+.sclass {
+    width: 30px;
+    text-align: right;
+    padding-right: 2px;
+}
+
+.pclass {
+    width: 640px;
+    padding: 5px;
+}
+
+.aclass {
+    width: 120px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.line1 {
+    height: 582px;
+    border-left: solid 1px black;
+    position: absolute;
+    left: 4%;
+}
+
+.line2 {
+    height: 657px;
+    border-left: solid 1px black;
+    position: absolute;
+    left: 85%;
+}
+
+.vclass {
+    width: 700px;
+    height: 25px;
+    text-align: right;
+    padding-right: 5px;
+    border-style: solid;
+    border-width: 1px 0 0 0;
+}
+
+.vaclass {
+    width: 130px;
+    height: 25px;
+    text-align: right;
+    padding-right: 5px;
+    border-style: solid;
+    border-width: 1px 0 0 0;
+}
+
+.wclass {
+    width: 830px;
+    border-style: solid;
+    border-width: 1px 0 0 0;
+    padding: 15px;
+    font-size: 14px;
+    word-spacing: 3px;
+}
+
+    .wclass span {
+        font-size: 11px;
+        word-spacing: 0px;
+    }
+
+    .wclass strong {
+        font-size: 13px;
+    }
