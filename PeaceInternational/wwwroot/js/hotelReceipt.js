@@ -74,7 +74,7 @@ let gridOptions = {
 const GenerateReceipt = (receiptData) => {
     console.log(receiptData);
     $.ajax({
-        url: 'Receipt/Get',
+        url: 'HotelReceipt/Get',
         method: 'GET',
         data: { id: receiptData.id },
         success: (data) => {
@@ -84,7 +84,8 @@ const GenerateReceipt = (receiptData) => {
             var template = Handlebars.compile(source);
             var result = template(data);
             console.log(result);
-            $('#receiptTemplate').html(result);
+            $('#receiptTemplate1').html(result);
+            $('#receiptTemplate2').html(result);
             $('#viewReceipt').modal('toggle');
         }
     });
