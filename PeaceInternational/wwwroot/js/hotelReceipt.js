@@ -4,7 +4,7 @@
 const columnDefs = [
     { headerName: 'Receipt No.', field: 'id', maxWidth: 120 },
     {
-        headerName: 'Hotel', field: 'hotel.name'        
+        headerName: 'Hotel', field: 'hotel.name'
     },
     { headerName: 'Client Name', field: 'clientName', sortable: false, filter: false },
     {
@@ -13,7 +13,7 @@ const columnDefs = [
             return '<i class="btn fas fa-clipboard" id="receiptButton"></i>';
         },
         onCellClicked(params) {
-            
+
             GenerateReceipt(params.data);
         }
     },
@@ -37,7 +37,7 @@ const setGridData = () => {
         method: 'GET',
         success: (data) => {
             console.log(data);
-            gridOptions.api.setRowData(data);            
+            gridOptions.api.setRowData(data);
         }
     });
 };
@@ -79,7 +79,7 @@ const GenerateReceipt = (receiptData) => {
         data: { id: receiptData.id },
         success: (data) => {
 
-            console.log(data);
+            console.log(receiptData);
             var source = document.getElementById("entry-template").innerHTML;
             var template = Handlebars.compile(source);
             var result = template(data);
@@ -91,6 +91,8 @@ const GenerateReceipt = (receiptData) => {
     });
 
 };
+
+
 
 //Function to clear form
 const Clear = () => {
@@ -237,7 +239,7 @@ const setHotelDropdown = () => {
             for (var i = 0; i < data.length; i++) {
                 options += "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
             }
-            $('#hotel').append(options);            
+            $('#hotel').append(options);
         }
     });
 }
@@ -259,7 +261,21 @@ $(document).ready(function () {
         hotelReceiptValidation();
         $('#hotelReceiptForm').validate().resetForm();
     });
+    $('#printInvoice').off('click').on('click', function () {
 
+        html2canvas($("#invoiceBody")[0], {
+            scale: 3
+        }).then(function (canvas) {
+            var myImage = canvas.toDataURL("image/png");
+            var tWindow = window.open("");
+            $(tWindow.document.body)
+                .html("<img id='Image' src=" + myImage + " style='width:100%;'></img>")
+                .ready(function () {
+                    tWindow.focus();
+                    tWindow.print();
+                });
+        });
+    });
     $('#btnSave').off('click').on('click', function () {
         if ($('#hotelReceiptForm').valid()) {
             Save();
