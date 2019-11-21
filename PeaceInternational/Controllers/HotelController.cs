@@ -75,7 +75,7 @@ namespace PeaceInternational.Web.Controllers
                         Name = hotel.Name,
                         PhoneNo = hotel.PhoneNo,
                         Address = hotel.Address,
-                        CreatedBy = "Default"
+                        CreatedBy = user.Id
                     });
 
                     notification.Type = "success";
@@ -93,13 +93,13 @@ namespace PeaceInternational.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(Hotel hotel)
+        public IActionResult Delete(int id)
         {
             try
-            {
-                var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            {               
                 notification = new Notification();
-                  notification = await deleteHotel(hotel, user);
+                notification = DeleteHotel(id);
+
                 return Json(notification);
             }
             catch (Exception exception)
@@ -119,7 +119,7 @@ namespace PeaceInternational.Web.Controllers
                 record.Name = hotel.Name;
                 record.Address = hotel.Address;
                 record.PhoneNo = hotel.PhoneNo;
-                record.ModifiedBy = "Default";
+                record.ModifiedBy = user.Id;
                 record.ModifiedDate = DateTime.Now;
 
                 _hotelCrudService.Update(record);
@@ -132,12 +132,11 @@ namespace PeaceInternational.Web.Controllers
                 return new Notification("error", "Hotel update failed.");
             }
         }
-        private async Task<Notification> deleteHotel(Hotel hotel, IdentityUser user)
+        private Notification DeleteHotel(int id)
         {
             try
             {
-                var record = await _hotelCrudService.GetAsync(hotel.Id);
-
+                var record = _hotelCrudService.Get(id);
                 _hotelCrudService.Delete(record);
 
                 return new Notification("success", "Hotel deleted successfully.");

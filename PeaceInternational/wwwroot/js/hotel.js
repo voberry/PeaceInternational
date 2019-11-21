@@ -11,9 +11,21 @@ const columnDefs = [
             return '<i class="btn fas fa-edit" id="editButton"></i>';
         },
         onCellClicked(params) {
-            console.log(params.data);  
+            console.log(params.data);
             Edit(params.data);
-        
+
+        }
+    },
+    {
+        headerName: 'Delete', maxWidth: 200, sortable: false, filter: false,
+        cellRenderer: function () {
+            return '<i class="btn fas fa-trash" id="trashButton"></i>';
+        },
+        onCellClicked(params) {
+            console.log(params.data);
+            Delete(params.data);
+
+        }
     }
 ];
 
@@ -89,6 +101,30 @@ const Edit = (data) => {
     hotelValidation();
     $('#hotelForm').validate().resetForm();
     $('#createHotel').modal('toggle');
+};
+
+const Delete = (data) => {
+
+    var confirm = window.confirm("Are you sure you want to delete?");
+
+    if (confirm) {
+        $.ajax({
+            url: 'Hotel/Delete',
+            method: 'POST',
+            data: { id: data.id },
+            success: function (data) {
+                console.log(data);
+                noty({
+                    type: data.type,
+                    text: data.message,
+                    layout: 'topCenter',
+                    timeout: 2000
+                });
+               
+                setGridData();
+            }
+        });
+    }   
 };
 
 
