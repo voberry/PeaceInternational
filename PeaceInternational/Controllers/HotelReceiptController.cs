@@ -67,6 +67,26 @@ namespace PeaceInternational.Web.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult GetServiceVoucher(int id)
+        {
+            try
+            {
+                var hotelReceipt = _hotelReceiptCrudService.Get(id);
+                var hotel = _hotelCrudService.Get(hotelReceipt.HotelId);
+                var result = new
+                {
+                    hotelReceipt,
+                    hotel
+                };
+                return Json(result);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         //Save HotelReceipt
         [HttpPost]
         public async Task<IActionResult> Save(HotelReceipt hotelReceipt)

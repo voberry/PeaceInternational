@@ -409,7 +409,7 @@
                     <span class="text-light" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body m-2" id="invoiceBody">
+            <div class="modal-body mr-2 ml-2" id="invoiceBody">
                 <div class="formsize">
                     <header>
                         <div class="row head">
@@ -487,12 +487,12 @@
             <strong>Services to be provided by:</strong>
             <div class="row svaddress">
                 <div class="col-md-8">
-                    <p class="h7"><strong>Raddison</strong></p>
-                    <p class="h7"><strong>Lazimpat,Kathmandu,Nepal</strong></p>
+                    <p class="h7"><strong>{{hotel.name}}</strong></p>
+                    <p class="h7"><strong>{{hotel.address}}</strong></p>
                 </div>
                 <div class="col-md-4">
-                    <p class="h7"><strong>Exchange Order No.{{exchangeOrderNo}}</strong></p>
-                    <p class="h7"><strong>Date {{arrivalDate}}</strong></p>
+                    <p class="h7"><strong>Exchange Order No.{{hotelReceipt.exchangeOrderNo}}</strong></p>
+                    <p class="h7"><strong>Date {{splitDate hotelReceipt.createdDate}}</strong></p>
                 </div>
             </div>
         </section>
@@ -500,32 +500,32 @@
             <div class="svdata">
                 <div class="svrow1">
                     <div class="svrcol1">
-                        <p class="h7">Name <strong>{{clientName}}</strong></p>
+                        <p class="h7">Name <strong>{{hotelReceipt.clientName}}</strong></p>
                     </div>
                     <div class="svrcol2">
-                        <p class="h7">File Code No. {{fileCodeNo}}</p>
+                        <p class="h7">File Code No. {{hotelReceipt.fileCodeNo}}</p>
                     </div>
                 </div>
                 <div class="svrow2">
                     <div class="svrcol3">
-                        <p class="h7">ARR. On <strong>{{arrivalDate}}</strong></p>
+                        <p class="h7">ARR. On <strong>{{splitDate hotelReceipt.arrivalDate}}</strong></p>
                     </div>
                     <div class="svrcol4">
-                        <p class="h7">From  <strong>{{from}}</strong></p>
+                        <p class="h7">From  <strong>{{hotelReceipt.from}}</strong></p>
                     </div>
                     <div class="svrcol5">
-                        <p class="h7">By <strong>{{arrivalFlight}}</strong></p>
+                        <p class="h7">By <strong>{{hotelReceipt.arrivalFlight}}</strong></p>
                     </div>
                 </div>
                 <div class="svrow2">
                     <div class="svrcol3">
-                        <p class="h7">DEP. On <strong>{{departureDate}}</strong></p>
+                        <p class="h7">DEP. On <strong>{{splitDate hotelReceipt.departureDate}}</strong></p>
                     </div>
                     <div class="svrcol4">
-                    <p class="h7">For <strong>{{to}}</strong></p>
+                    <p class="h7">For <strong>{{hotelReceipt.to}}</strong></p>
                 </div>
                 <div class="svrcol5">
-                    <p class="h7">By <strong>{{departureFlight}}</strong></p>
+                    <p class="h7">By <strong>{{hotelReceipt.departureFlight}}</strong></p>
                 </div>
                 </div>
             </div>
@@ -533,7 +533,7 @@
         <div class="svcomment">
             <strong>Please provide the following services</strong>
             <p class="comment">
-                {{services}}
+                {{hotelReceipt.services}}
             </p>
             @*<div class="row footer">
                 <div class="col-md-8">

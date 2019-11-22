@@ -13,6 +13,11 @@
         padding: 0;
     }
 
+
+    td{
+        font-size: 13px;        
+    } 
+
    </style>
 
 <div class="row">
@@ -256,7 +261,7 @@
         </div>
         <br />
         <div class="row">
-            <table class="table table-bordered ml-2 mr-2">
+            <table class="table table-bordered ml-2 mr-2" id="page">
                 <thead class="text-center thead-light">
                     <tr>
                         <th width="10%">S.NO</th>
@@ -267,13 +272,22 @@
                 <tbody>
                     {{#each invoiceDetail}}
                     <tr>
-                        
-                        <td height="70%">{{inc @@index}}</td>
-                        <td height="70%">{{this.particulars}}</td>
-                        <td height="70%">
-                            {{this.amount}}</td>
-                        </tr>
-                        {{/each}}
+
+                        <td height="40">{{inc @@index}}</td>
+                        <td height="40">{{this.particulars}}</td>
+                        <td height="40">
+                            {{this.amount}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                    {{#for invoiceDetail.length 9 1}}
+                    <tr>
+
+                        <td height="40"></td>
+                        <td height="40"></td>
+                        <td height="40"></td>
+                    </tr>
+                    {{/for}}
                 </tbody>
                 <tfoot>
                     <tr>

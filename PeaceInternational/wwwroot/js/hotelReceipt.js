@@ -74,7 +74,7 @@ let gridOptions = {
 const GenerateReceipt = (receiptData) => {
     console.log(receiptData);
     $.ajax({
-        url: 'HotelReceipt/Get',
+        url: 'HotelReceipt/GetServiceVoucher',
         method: 'GET',
         data: { id: receiptData.id },
         success: (data) => {
