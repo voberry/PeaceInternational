@@ -17,9 +17,17 @@ const invoiceColumnDefs = [
         cellRenderer: function () {
             return '<i class="btn fas fa-clipboard" id="detailsButton"></i>';
         },
-        onCellClicked(params) {
-            console.log(params.data);
+        onCellClicked(params) {           
             InvoiceDetails(params.data.id);
+        }
+    },
+    {
+        headerName: 'Edit', maxWidth: 100,       
+        cellRenderer: function () {
+            return '<i class="btn fas fa-edit" id="editButton"></i>';
+        },
+        onCellClicked(params) {            
+            Edit(params.data);
         }
     },
     {
@@ -49,23 +57,21 @@ const setInvoiceGridData = () => {
         url: 'Invoice/GetInvoice',
         method: 'GET',
         success: (data) => {
-            gridOptions.api.setRowData(data);
-            console.log(data);
+            gridOptions.api.setRowData(data);          
         }
     });
 };
 
 
 //Function to set the data for the Invoice Detail grid
-const setInvoiceDetailGridData = (invoiceId) => {
-    console.log(invoiceId);
+const setInvoiceDetailGridData = (invoiceId, callback) => {   
     $.ajax({
         url: 'Invoice/GetInvoiceDetail',
         method: 'GET',
         data: { invoiceId: invoiceId },
         success: (data) => {
-            invoiceDetailGridOptions.api.setRowData(data);
-            console.log(data);
+            invoiceDetailGridOptions.api.setRowData(data);         
+            callback(data);
         }
     });
 };
@@ -105,18 +111,17 @@ const invoiceDetailGridOptions = {
 
 //Function to generate Invoice
 const GenerateInvoice = (invoiceData) => {
-    console.log(invoiceData);
+  
     $.ajax({
         url: 'Invoice/GetInvoiceInfo',
         method: 'GET',
         data: { id: invoiceData.id },
-        success: (data) => {
-            
-            console.log(data);
+        success: (data) => {            
+        
             var source = document.getElementById("entry-template").innerHTML;
             var template = Handlebars.compile(source);
             var result = template(data);
-            console.log(result);
+         
             $('#receiptTemplate').html(result);            
             $('#viewInvoice').modal('toggle');
         }
@@ -129,21 +134,21 @@ const GenerateInvoice = (invoiceData) => {
 const InvoiceDetails = (invoiceId) => {
 
     $('#invoiceDetailModal').modal('toggle');
-    setInvoiceDetailGridData(invoiceId);
+    setInvoiceDetailGridData(invoiceId, () => { });
 
 };
 
 const itemListColumnDefs = [
    
     {
-        headerName: 'Particulars', field: 'Particulars', width: 450,
+        headerName: 'Particulars', field: 'particulars', width: 450,
         cellStyle: () => {
             return { 'font-size': '16px' };
         },
         cellClass:['text-monospace']
     },  
     {
-        headerName: 'Amount', field: 'Amount', width: 250,
+        headerName: 'Amount', field: 'amount', width: 250,
         cellStyle: () => {
             return { 'font-size': '16px' };
         },
@@ -175,7 +180,7 @@ function getItemList() {
     itemListGridOptions.api.forEachNode(function (node) {
         itemList.push(node.data);
     });
-    console.log(itemList);
+    
     return itemList;
 }
 
@@ -186,6 +191,7 @@ function clear() {
 }
 
 function call() {
+
    let filter = {
         invoiceNo: { type: 'contains', filter: $('#searchField').val() },
         agentName: { type: 'contains', filter: $('#searchFieldAgent').val() },
@@ -193,7 +199,30 @@ function call() {
     };
         gridOptions.api.setFilterModel(filter);
         gridOptions.api.onFilterChanged();
-    }
+}
+
+const Edit = (data) => {
+    
+    $('#createInvoice').modal('toggle');
+    $("#id").val(data.id);
+    $('#date').val(data.createdDate.split('T')[0]);
+    $('#referenceNo').val(data.referenceNo);
+    $('#dr').val(data.dr);
+    $('#agentName').val(data.agentName);
+    $('#currency').val(data.currency);
+    $('#clientName').val(data.clientName);
+    $('#pax').val(data.pax);
+    $('#guide').val(data.guide);
+    $('#vehicle').val(data.vehicle);
+    $('#totalDue').val(data.totalDue);
+    $('#discount').val(data.discount);
+    $('#netAmount').val(data.netAmount);
+    setInvoiceDetailGridData(data.id, setItemListData);
+};
+
+const setItemListData = (data) => {    
+    itemListGridOptions.api.setRowData(data);
+};
 
 
 
@@ -277,8 +306,8 @@ const addParticulars = () => {
 
     const newData = {      
         
-        Particulars: $('#particulars').val(),
-        Amount: parseInt($('#particularAmount').val())
+        particulars: $('#particulars').val(),
+        amount: parseInt($('#particularAmount').val())
     };
 
     itemListGridOptions.api.updateRowData({ add: [newData] });
@@ -294,7 +323,7 @@ function calcTotal() {
     let netAmount = 0;
 
     $(itemList).each(function (idx, item) {        
-        amount += item.Amount;
+        amount += item.amount;
     });
 
     netAmount = amount - discount;
@@ -307,7 +336,7 @@ function calcTotal() {
 
     $('#totalDue').val(amount);
     $('#netAmount').val(netAmount);
-
+    console.log(amount, netAmount);
     return [amount, netAmount];
 
 }
@@ -325,8 +354,7 @@ const getCurrentNepaliYear = () => {
 
     var year = new Date().getFullYear();
     const startingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 1, 1);
-    const endingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 12, 31);
-    console.log(year, startingNepaliYear, endingNepaliYear);
+    const endingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 12, 31);   
     var invoiceNoPrefix = startingNepaliYear.toString().slice(2, 4) + endingNepaliYear.toString().slice(2, 4)
     return invoiceNoPrefix;
 };
@@ -353,16 +381,13 @@ const Save = () => {
             Discount: $('#discount').val(),
             NetAmount: $('#netAmount').val(),
             InvoiceDetails: getItemListData()
-        };       
-
-        console.log(record);
+        };              
 
         $.ajax({
             url: 'Invoice/Save',
             method: 'POST',
             data: { invoice: record },
-            success: function (data) {
-                console.log(data);
+            success: function (data) {             
                 noty({
                     type: data.type,
                     text: data.message,
@@ -402,8 +427,7 @@ $(document).ready(function () {
 
     getCurrentNepaliYear();
 
-    $('#addInvoiceBtn').click(function () {
-        console.log('Button Pressed');        
+    $('#addInvoiceBtn').click(function () {             
         ClearInvoiceForm();
         $('#invoiceForm').validate().destroy();
         invoiceFormValidation();
