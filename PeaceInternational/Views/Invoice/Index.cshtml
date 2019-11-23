@@ -14,9 +14,16 @@
     }
 
 
-    td{
-        font-size: 13px;        
-    } 
+    #page {
+        border-collapse: collapse;
+    }
+
+        /* And this to your table's `td` elements. */
+        #page td {
+            padding-top: 1px;
+            margin: 0;
+            font-size: 13px;
+        }
 
    </style>
 
@@ -261,7 +268,7 @@
         </div>
         <br />
         <div class="row">
-            <table class="table table-bordered ml-2 mr-2" id="page">
+            <table class="table table-borderless ml-2 mr-2" id="page">
                 <thead class="text-center thead-light">
                     <tr>
                         <th width="10%">S.NO</th>
