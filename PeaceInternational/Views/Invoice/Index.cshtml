@@ -251,13 +251,14 @@
 
         <div class="row text-monospace">
             <div class="col-md-8">
-                <h6><span>Date:</span>&emsp;{{splitDate invoice.createdDate}}</h6>
+                <h6><span>Dr:</span>&emsp;{{invoice.dr}}</h6>
                 <h6><span>File Code No:</span>&emsp;{{invoice.fileCodeNo}}</h6>
                 <h6><span>Client Name:</span>&emsp;{{invoice.clientName}} X {{invoice.pax}}</h6>
                 <h6><span>Agent name:</span>&emsp;{{invoice.agentName}}</h6>
                 @*<h6><span>PAX:</span>&emsp;{{invoice.pax}}</h6>*@
             </div>
-            <div class="col-md-4">                
+            <div class="col-md-4">    
+                <h6><span>Date:</span>&emsp;{{splitDate invoice.createdDate}}</h6>
                 <h6><span>Invoice no:</span>&emsp;{{invoice.invoiceNo}}</h6>
                 <h6><span>Ref no:</span>&emsp;{{invoice.referenceNo}}</h6>                
                 <h6><span>Currency:</span>&emsp;{{invoice.currency}}</h6>

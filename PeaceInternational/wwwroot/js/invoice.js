@@ -4,10 +4,10 @@
 const invoiceColumnDefs = [
 
     { headerName: 'Invoice No', field: 'invoiceNo', maxWidth: 150 },
-    { headerName: 'Dr', field: 'dr', tooltipField: 'dr', maxWidth :220 },
+    { headerName: 'Date', field: 'createdDate', tooltipField: 'Date', maxWidth :220 },
     { headerName: 'Agent Name', field: 'agentName', maxWidth: 150 },
     { headerName: 'Client Name', field: 'clientName', maxWidth: 150 },
-    { headerName: 'Currency', field: 'currency', maxWidth: 150 },
+    //{ headerName: 'Currency', field: 'currency', maxWidth: 150 },
     { headerName: 'PAX', field: 'pax', maxWidth: 100 },
     //{ headerName: 'Total Due', field: 'totalDue', maxWidth: 100 },
     //{ headerName: 'Discount', field: 'discount', maxWidth: 80 },
