@@ -16,6 +16,7 @@
 
     #page {
         border-collapse: collapse;
+        border: 2px solid;
     }
 
         /* And this to your table's `td` elements. */
@@ -23,6 +24,17 @@
             padding-top: 1px;
             margin: 0;
             font-size: 13px;
+            border-right: 2px solid;
+        }
+
+        #page th {
+            border-right: 2px solid;
+            border-bottom: 2px solid;
+        }
+
+        #page tfoot {
+            
+            border-top: 2px solid;
         }
 
    </style>
@@ -299,11 +311,11 @@
                         <td colspan="2" align="right" class="font-weight-bold">Total Due</td>
                         <td>{{invoice.totalDue}}</td>
                     </tr>
-                    <tr>
+                    <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Discount</td>
                         <td>{{invoice.discount}}</td>
                     </tr>
-                    <tr>
+                    <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Net Amount</td>
                         <td>{{invoice.netAmount}} /-</td>
                     </tr>
