@@ -122,7 +122,7 @@ namespace PeaceInternational.Web.Controllers
 
                     int InvoiceId = await _invoiceCrudService.InsertAsync(new Invoice
                     {
-                        InvoiceNo = $"{invoice.InvoiceNo}/{(invoiceCount+1).ToString().PadLeft(4, '0')}",
+                        InvoiceNo = $"{invoice.InvoiceNo}/{(invoiceCount + 1).ToString().PadLeft(4, '0')}",
                         FileCodeNo = 123,
                         ReferenceNo = invoice.ReferenceNo,
                         Dr = invoice.Dr,
@@ -136,7 +136,7 @@ namespace PeaceInternational.Web.Controllers
                         CreatedBy = user.Id
                     });
 
-                    foreach(InvoiceDetail invoiceDetail in invoice.InvoiceDetails)
+                    foreach (InvoiceDetail invoiceDetail in invoice.InvoiceDetails)
                     {
                         await _invoiceDetailCrudService.InsertAsync(new InvoiceDetail
                         {
@@ -170,6 +170,8 @@ namespace PeaceInternational.Web.Controllers
         {
             try
             {
+                _unitOfWork.BeginTransaction();
+
                 var record = await _invoiceCrudService.GetAsync(invoice.Id);
 
                 record.ReferenceNo = invoice.ReferenceNo;
@@ -178,16 +180,46 @@ namespace PeaceInternational.Web.Controllers
                 record.ClientName = invoice.ClientName;
                 record.Currency = invoice.Currency;
                 record.PAX = invoice.PAX;
+                record.TotalDue = invoice.TotalDue;
+                record.Discount = invoice.Discount;
+                record.NetAmount = invoice.NetAmount;
                 record.ModifiedBy = user.Id;
                 record.ModifiedDate = DateTime.Now;
 
+                var invoiceDetails = _invoiceDetailCrudService.GetAll(p => p.InvoiceId == invoice.Id);
+
+                foreach (InvoiceDetail invoiceDetail in invoiceDetails)
+                {
+                    if (!invoice.InvoiceDetails.Any(x => x.Id == invoiceDetail.Id))
+                    {
+                        _invoiceDetailCrudService.Delete(invoiceDetail);
+                    }
+                }
+
+                foreach (InvoiceDetail invoiceDetail in invoice.InvoiceDetails)
+                {
+                    if (!invoiceDetails.Contains(invoiceDetail))
+                    {
+                        await _invoiceDetailCrudService.InsertAsync(new InvoiceDetail
+                        {
+                            InvoiceId = invoice.Id,
+                            Particulars = invoiceDetail.Particulars,
+                            Amount = invoiceDetail.Amount,
+                            CreatedBy = user.Id
+                        });
+                    }
+
+                }
+
                 _invoiceCrudService.Update(record);
+                _unitOfWork.Commit();
 
                 return new Notification("success", "Invoice updated successfully.");
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
+                _unitOfWork.Rollback();
                 return new Notification("error", "Invoice update failed.");
             }
         }

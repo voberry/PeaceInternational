@@ -50,6 +50,7 @@ const invoiceColumnDefs = [
 //Column defination for InvoiceDetails Grid
 const invoiceDetailColumnDefs = [
 
+    { headerName: 'Id', field: 'id', hide: true },
     { headerName: 'Particulars', field: 'particulars' },
     { headerName: 'Amount', field: 'amount', maxWidth:200 }
 
@@ -75,7 +76,8 @@ const setInvoiceDetailGridData = (invoiceId, callback) => {
         method: 'GET',
         data: { invoiceId: invoiceId },
         success: (data) => {
-            invoiceDetailGridOptions.api.setRowData(data);         
+            invoiceDetailGridOptions.api.setRowData(data);    
+            console.log(data);
             callback(data);
         }
     });
@@ -145,6 +147,13 @@ const InvoiceDetails = (invoiceId) => {
 
 const itemListColumnDefs = [
    
+    {
+        headerName: 'Id', field: 'id', hide: true,
+        cellStyle: () => {
+            return { 'font-size': '16px' };
+        },
+        cellClass: ['text-monospace']
+    },  
     {
         headerName: 'Particulars', field: 'particulars', width: 450,
         cellStyle: () => {
@@ -309,8 +318,9 @@ const addParticularsValidation = () => {
 
 const addParticulars = () => {
 
-    const newData = {      
-        
+    const newData = {
+
+        id: 0,
         particulars: $('#particulars').val(),
         amount: parseInt($('#particularAmount').val())
     };
@@ -352,6 +362,7 @@ const getItemListData = () => {
     itemListGridOptions.api.forEachNode(function (node) {
         itemList.push(node.data);
     });
+    console.log(itemList);
     return itemList;
 };
 
