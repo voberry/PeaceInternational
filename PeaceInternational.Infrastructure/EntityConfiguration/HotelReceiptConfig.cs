@@ -40,8 +40,7 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
                 .IsRequired()
                 .HasMaxLength(20);
 
-            builder.Property(p => p.Services)
-                .IsRequired();
+            builder.Property(p => p.Services);             
 
             builder.HasOne(p => p.Hotel)
                 .WithMany(h => h.HotelReceipt)

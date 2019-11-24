@@ -49,7 +49,7 @@ namespace PeaceInternational.Web.Controllers
                 if (id == null)
                 {
                     var result = await _invoiceCrudService.GetAllAsync();
-                    return Json(result);
+                    return Json(result.OrderByDescending(p => p.CreatedDate));
                 }
                 else
                 {

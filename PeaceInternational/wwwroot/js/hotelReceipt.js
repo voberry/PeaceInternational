@@ -154,11 +154,7 @@ const hotelReceiptValidation = () => {
             },
             departureFlight: {
                 required: true
-            },
-            services: {
-                required: true
             }
-
         }
     });
 };

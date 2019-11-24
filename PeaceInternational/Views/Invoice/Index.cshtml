@@ -74,11 +74,11 @@
                             <label for="dr"> Dr. <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="dr" id="dr" />
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="refrenceNo"> Reference No. <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="referenceNo" id="referenceNo" />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="agentName"> Agent Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="agentName" id="agentName" />
                         </div>
@@ -138,9 +138,9 @@
                             <div class="form-group">
                                 <label for="amount">Total Due <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
+                                    @*<div class="input-group-prepend">
                                         <span class="input-group-text currency"></span>
-                                    </div>
+                                    </div>*@
                                     <output type="number" class="form-control" name="totalDue" id="totalDue" />
                                 </div>
                             </div>
@@ -151,9 +151,9 @@
                             <div class="form-group">
                                 <label for="netAmount">Net Amount<span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
+                                    @*<div class="input-group-prepend">
                                         <span class="input-group-text currency"></span>
-                                    </div>
+                                    </div>*@
                                     <output type="number" class="form-control" name="netAmount" id="netAmount" />
                                 </div>
                             </div>
@@ -206,12 +206,10 @@
                     </div>
                     <div class="col-md-4 text-monospace">                      
                         <h6>GPO Box: 9484</h6>
-                        <h6>Hotel Marg, Lazimpat - 2</h6>
+                        <h6>Lazimpat - 2</h6>
                         <h6>Kathmandu, Nepal</h6>
-                        <h6>Tel: (977) 01 4444843/44/45</h6>
-                        <h6>Fax: (977) 01 4415330</h6>
-                        <h6>Email: mail@peace-intl.com.np</h6>
-                        <h6>&emsp;&emsp;&emsp;peaceintlmail@gmail.com</h6>
+                        <h6>Tel: (977) 01 4444843/44/45</h6>                   
+                        <h6>Email: peaceintl.mail@gmail.com</h6>                    
                         <h6>Web: peace-intl.com </h6>
                         <h6>PAN: 302243385 </h6>
                     </div>
@@ -253,14 +251,13 @@
 
         <div class="row text-monospace">
             <div class="col-md-8">
-                <h6><span>Dr:</span>&emsp;{{invoice.dr}}</h6>
+                <h6><span>Date:</span>&emsp;{{splitDate invoice.createdDate}}</h6>
                 <h6><span>File Code No:</span>&emsp;{{invoice.fileCodeNo}}</h6>
                 <h6><span>Client Name:</span>&emsp;{{invoice.clientName}} X {{invoice.pax}}</h6>
                 <h6><span>Agent name:</span>&emsp;{{invoice.agentName}}</h6>
                 @*<h6><span>PAX:</span>&emsp;{{invoice.pax}}</h6>*@
             </div>
-            <div class="col-md-4">
-                <h6><span>Date:</span>&emsp;{{splitDate invoice.createdDate}}</h6>
+            <div class="col-md-4">                
                 <h6><span>Invoice no:</span>&emsp;{{invoice.invoiceNo}}</h6>
                 <h6><span>Ref no:</span>&emsp;{{invoice.referenceNo}}</h6>                
                 <h6><span>Currency:</span>&emsp;{{invoice.currency}}</h6>
@@ -287,7 +284,7 @@
                         </td>
                     </tr>
                     {{/each}}
-                    {{#for invoiceDetail.length 9 1}}
+                    {{#for invoiceDetail.length 20 1}}
                     <tr>
 
                         <td height="40"></td>
