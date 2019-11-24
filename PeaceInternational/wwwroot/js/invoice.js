@@ -155,21 +155,21 @@ const itemListColumnDefs = [
         cellClass: ['text-monospace']
     },  
     {
-        headerName: 'Particulars', field: 'particulars', width: 450,
+        headerName: 'Particulars', field: 'particulars', maxWidth: 450,
         cellStyle: () => {
             return { 'font-size': '16px' };
         },
         cellClass:['text-monospace']
     },  
     {
-        headerName: 'Amount', field: 'amount', width: 250,
+        headerName: 'Amount', field: 'amount', maxWidth: 250,
         cellStyle: () => {
             return { 'font-size': '16px' };
         },
         cellClass: ['text-monospace']
     },
     {
-        headerName: 'Remove', width: 150,
+        headerName: 'Remove', maxWidth: 150,
         cellRenderer: () => {
             return `<button type='button' class='btn btn-danger btn-sm m-1 shadow w-100'><i class='fas fa-times'></i></button>`;
         },
@@ -185,7 +185,10 @@ const itemListGridOptions = {
 
     columnDefs: itemListColumnDefs,
     rowHeight: 50,
-    rowData: false   
+    rowData: false,
+    onGridSizeChanged: (params) => {
+        params.api.sizeColumnsToFit();
+    }
 };
 
 function getItemList() {
