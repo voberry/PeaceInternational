@@ -8,7 +8,7 @@ namespace PeaceInternational.Core.Entity
     {
         public int InvoiceId { get; set; }
         public string Particulars { get; set; }
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public Invoice Invoice { get; set; }
     }

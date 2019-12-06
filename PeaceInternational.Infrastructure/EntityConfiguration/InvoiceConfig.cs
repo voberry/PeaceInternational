@@ -40,6 +40,14 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
             builder.Property(p => p.Guide)
                .HasMaxLength(255);
 
+            builder.Property(p => p.TotalDue)
+               .HasColumnType("Decimal(10,2)");
+
+            builder.Property(p => p.Discount)
+              .HasColumnType("Decimal(10,2)");
+
+            builder.Property(p => p.NetAmount)
+              .HasColumnType("Decimal(10,2)");
 
             builder.Property(p => p.Vehicle)
                .HasMaxLength(255);

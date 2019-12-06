@@ -16,7 +16,13 @@ const invoiceColumnDefs = [
     { headerName: 'PAX', field: 'pax', maxWidth: 100 },
     //{ headerName: 'Total Due', field: 'totalDue', maxWidth: 100 },
     //{ headerName: 'Discount', field: 'discount', maxWidth: 80 },
-    { headerName: 'Net Amount', field: 'netAmount', maxWidth: 140 },
+    {
+
+        headerName: 'Net Amount', field: 'netAmount', maxWidth: 140,
+        cellRenderer: function (data) {
+            return data.value.toFixed(2);
+        }
+    },
     {
         headerName: 'Details', maxWidth: 100,
         cellRenderer: function () {
@@ -163,6 +169,9 @@ const itemListColumnDefs = [
     },  
     {
         headerName: 'Amount', field: 'amount', maxWidth: 250,
+        cellRenderer: function (data) {
+            return data.value.toFixed(2);
+        },
         cellStyle: () => {
             return { 'font-size': '16px' };
         },
@@ -219,10 +228,12 @@ function call() {
 }
 
 const Edit = (data) => {
-    
+
+    console.log(data);
     $('#createInvoice').modal('toggle');
     $("#id").val(data.id);
     $('#date').val(data.createdDate.split('T')[0]);
+    $("#fileCodeNo").val(data.fileCodeNo);
     $('#referenceNo').val(data.referenceNo);
     $('#dr').val(data.dr);
     $('#address').val(data.address);
@@ -231,9 +242,9 @@ const Edit = (data) => {
     $('#pax').val(data.pax);
     $('#guide').val(data.guide);
     $('#vehicle').val(data.vehicle);
-    $('#totalDue').val(data.totalDue);
-    $('#discount').val(data.discount);
-    $('#netAmount').val(data.netAmount);
+    $('#totalDue').val(data.totalDue.toFixed(2));
+    $('#discount').val(data.discount.toFixed(2));
+    $('#netAmount').val(data.netAmount.toFixed(2));
     setInvoiceDetailGridData(data.id, setItemListData);
 };
 
@@ -330,7 +341,7 @@ const addParticulars = () => {
 
         id: 0,
         particulars: $('#particulars').val(),
-        amount: parseInt($('#particularAmount').val())
+        amount: parseFloat($('#particularAmount').val()).toFixed(2)
     };
 
     itemListGridOptions.api.updateRowData({ add: [newData] });
@@ -346,7 +357,7 @@ function calcTotal() {
     let netAmount = 0;
 
     $(itemList).each(function (idx, item) {        
-        amount += item.amount;
+        amount += parseFloat(item.amount);
     });
 
     netAmount = amount - discount;
@@ -357,10 +368,10 @@ function calcTotal() {
         $('#discount').removeClass('is-invalid');
     }
 
-    $('#totalDue').val(amount);
-    $('#netAmount').val(netAmount);
+    $('#totalDue').val(parseFloat(amount).toFixed(2));
+    $('#netAmount').val(parseFloat(netAmount).toFixed(2));
     console.log(amount, netAmount);
-    return [amount, netAmount];
+    return [parseFloat(amount), parseFloat(netAmount)];
 
 }
 
@@ -379,7 +390,7 @@ const getCurrentNepaliYear = () => {
     var year = new Date().getFullYear();
     const startingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 1, 1);
     const endingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 12, 31);   
-    var invoiceNoPrefix = startingNepaliYear.toString().slice(2, 4) + endingNepaliYear.toString().slice(2, 4)
+    var invoiceNoPrefix = startingNepaliYear.toString().slice(2, 4) + endingNepaliYear.toString().slice(2, 4);
     return invoiceNoPrefix;
 };
 

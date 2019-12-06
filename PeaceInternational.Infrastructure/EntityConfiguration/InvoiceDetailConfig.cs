@@ -15,7 +15,7 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
                 .IsRequired();
 
             builder.Property(p => p.Amount)
-                .HasColumnType("float");
+                .HasColumnType("Decimal(10,2)");
 
             builder.HasOne(p => p.Invoice)
                 .WithMany(i => i.InvoiceDetails)
