@@ -10,7 +10,7 @@ const invoiceColumnDefs = [
             return data.value.split('T')[0];
         }
     },
-    { headerName: 'Agent Name', field: 'agentName', maxWidth: 150 },
+    { headerName: 'Address', field: 'address', maxWidth: 150 },
     { headerName: 'Client Name', field: 'clientName', maxWidth: 150 },
     //{ headerName: 'Currency', field: 'currency', maxWidth: 150 },
     { headerName: 'PAX', field: 'pax', maxWidth: 100 },
@@ -211,7 +211,7 @@ function call() {
 
    let filter = {
         invoiceNo: { type: 'contains', filter: $('#searchField').val() },
-        agentName: { type: 'contains', filter: $('#searchFieldAgent').val() },
+        address: { type: 'contains', filter: $('#searchFieldAgent').val() },
         clientName: { type: 'contains', filter: $('#searchFieldClient').val() }
     };
         gridOptions.api.setFilterModel(filter);
@@ -225,7 +225,7 @@ const Edit = (data) => {
     $('#date').val(data.createdDate.split('T')[0]);
     $('#referenceNo').val(data.referenceNo);
     $('#dr').val(data.dr);
-    $('#agentName').val(data.agentName);
+    $('#address').val(data.address);
     $('#currency').val(data.currency);
     $('#clientName').val(data.clientName);
     $('#pax').val(data.pax);
@@ -250,7 +250,8 @@ const ClearInvoiceForm = () => {
     $('#date').val(new Date().toISOString().slice(0, 10));
     $('#referenceNo').val('');
     $('#dr').val('');
-    $('#agentName').val('');
+    $('#fileCodeNo').val('');
+    $('#address').val('');
     $('#currency').val('');
     $('#clientName').val('');
     $('#pax').val('');
@@ -273,10 +274,14 @@ const invoiceFormValidation = () => {
             dr: {
                 required: true                
             },
+            fileCodeNo: {
+                required: true,
+                checkFileCodeNo: true
+            },
             referenceNo: {
                 required: true
             },
-            agentName: {
+            address: {
                 required: true
             },
             currency: {
@@ -387,10 +392,10 @@ const Save = () => {
         var record = {
             Id: $('#id').val(),
             InvoiceNo: getCurrentNepaliYear(),
-            //FileCodeNo: $('#fileCodeNo').val(),
+            FileCodeNo: $('#fileCodeNo').val(),
             ReferenceNo: $('#referenceNo').val(),
             Dr: $('#dr').val(),
-            AgentName: $('#agentName').val(),
+            Address: $('#address').val(),
             Currency: $('#currency').val(),
             ClientName: $('#clientName').val(),
             PAX: $('#pax').val(),
@@ -474,17 +479,6 @@ $(document).ready(function () {
                 });
         });
        
-      
-        //html2canvas($("#invoiceBody")[0]).then(function (canvas) {
-        //    var img = canvas.toDataURL();
-        //    window.open(img);
-        //});
-      
-        //$('#invoiceBody').html2canvas();
-        //var queue = html2canvas.Parse();
-        //var canvas = html2canvas.Renderer(queue, { elements: { length: 1 } });
-        //var img = canvas.toDataURL();
-        //window.open(img);
     });
 
     $('#searchField').on('keyup', function ()
@@ -500,6 +494,19 @@ $(document).ready(function () {
     $('#searchFieldClient').on('keyup', function ()
     {
         call();
+    });
+
+    $('#fileCodeNo').on('change', function () {
+        $.ajax({
+            url: 'Customer/Get',
+            method: 'GET',
+            data: { id: $('#fileCodeNo').val() },
+            success: function (data) {
+                console.log(data);
+                $('#clientName').val(data.tourName);
+                $('#guide').val(data.guideName);
+            }
+        });
     });
 });
 

@@ -8,10 +8,10 @@
         font-weight:bold;
     }
 
-    html, body {
+    /*#page html, body {
         margin: 0;
         padding: 0;
-    }
+    }*/
 
 
     #page {
@@ -49,19 +49,16 @@
 </div>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <input type="text" class="form-control" id="searchField" placeholder="Invoice No" />
-    </div>
-    <div class="col-md-4">
-        <input type="text" class="form-control" id="searchFieldAgent" placeholder="Agent Name" />
-    </div>
-    <div class="col-md-4">
+    </div>    
+    <div class="col-md-6">
         <input type="text" class="form-control" id="searchFieldClient" placeholder="Client name" />
     </div>
 
 </div>
 <div style="height: 100%; box-sizing: border-box; padding-top:20px;">
-    <div id="invoiceGrid" style="width: 100%; height:450px" class="ag-theme-balham"></div>
+    <div id="invoiceGrid" style="width:100%; height:450px" class="ag-theme-balham"></div>
 </div>
 
 @*Create Invoice Modal*@
@@ -86,13 +83,13 @@
                             <label for="dr"> Dr. <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="dr" id="dr" />
                         </div>
-                        <div class="col-md-3">
-                            <label for="refrenceNo"> Reference No. <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="referenceNo" id="referenceNo" />
+                        <div class="col-md-2">
+                            <label for="fileCodeNo"> File Code No. <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="fileCodeNo" id="fileCodeNo" />
                         </div>
                         <div class="col-md-2">
-                            <label for="agentName"> Agent Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="agentName" id="agentName" />
+                            <label for="refrenceNo"> Reference No. <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="referenceNo" id="referenceNo" />
                         </div>
                         <div class="col-md-1">
                             <label for="currency"> Currency <span class="text-danger">*</span></label>
@@ -102,18 +99,22 @@
                     <br />
                     <div class="form-row">
                         <div class="col-md-3">
+                            <label for="agentName"> Address <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="address" id="address" />
+                        </div>
+                        <div class="col-md-3">
                             <label for="clientName"> Client Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="clientName" id="clientName" />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-1">
                             <label for="pax"> PAX <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="pax" id="pax" />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="guide"> Guide </label>
                             <input type="text" class="form-control" name="guide" id="guide" />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="vehicle"> Vehicle </label>
                             <input type="text" class="form-control" name="vehicle" id="vehicle" />
                         </div>
@@ -264,9 +265,9 @@
         <div class="row text-monospace">
             <div class="col-md-8">
                 <h6><span>Dr:</span>&emsp;{{invoice.dr}}</h6>
+                <h6><span>Address:</span>&emsp;{{invoice.address}}</h6>
                 <h6><span>File Code No:</span>&emsp;{{invoice.fileCodeNo}}</h6>
                 <h6><span>Client Name:</span>&emsp;{{invoice.clientName}} X {{invoice.pax}}</h6>
-                <h6><span>Agent name:</span>&emsp;{{invoice.agentName}}</h6>
                 @*<h6><span>PAX:</span>&emsp;{{invoice.pax}}</h6>*@
             </div>
             <div class="col-md-4">    

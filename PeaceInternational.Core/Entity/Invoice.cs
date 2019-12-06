@@ -15,7 +15,7 @@ namespace PeaceInternational.Core.Entity
         public int FileCodeNo { get; set; }
         public string ReferenceNo { get; set; }
         public string Dr { get; set; }
-        public string AgentName { get; set; }
+        public string Address { get; set; }
         public string ClientName { get; set; }
         public string Currency { get; set; }
         public int PAX { get; set; }
@@ -25,11 +25,9 @@ namespace PeaceInternational.Core.Entity
         public double Discount { get; set; }
         public double NetAmount { get; set; }
 
-        public ICollection<InvoiceDetail> InvoiceDetails { get; set; }
+        public Customer Customer { get; set; }
 
-        public object Join()
-        {
-            throw new NotImplementedException();
-        }
+        public ICollection<InvoiceDetail> InvoiceDetails { get; set; }
+        
     }
 }

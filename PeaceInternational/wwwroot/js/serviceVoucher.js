@@ -33,7 +33,7 @@ const columnDefs = [
 const setGridData = () => {
 
     $.ajax({
-        url: 'HotelReceipt/Get',
+        url: 'ServiceVoucher/Get',
         method: 'GET',
         success: (data) => {
             console.log(data);
@@ -54,7 +54,7 @@ function call() {
 }
 
 
-//Settings for the HotelReceipt grid
+//Settings for the ServiceVoucher grid
 let gridOptions = {
     columnDefs: columnDefs,
     rowHeight: 40,
@@ -74,7 +74,7 @@ let gridOptions = {
 const GenerateReceipt = (receiptData) => {
     console.log(receiptData);
     $.ajax({
-        url: 'HotelReceipt/GetServiceVoucher',
+        url: 'ServiceVoucher/GetServiceVoucher',
         method: 'GET',
         data: { id: receiptData.id },
         success: (data) => {
@@ -114,9 +114,9 @@ const Clear = () => {
 };
 
 //Function specifying rules for validating the form
-const hotelReceiptValidation = () => {
+const serviceVoucherValidation = () => {
 
-    $('#hotelReceiptForm').validate({
+    $('#serviceVoucherForm').validate({
         rules: {
             exchangeOrderNo: {
                 required: true,
@@ -124,7 +124,8 @@ const hotelReceiptValidation = () => {
             },
             fileCodeNo: {
                 required: true,
-                digits: true
+                digits: true,
+                checkFileCodeNo: true
             },
             hotel: {
                 required: true
@@ -163,7 +164,7 @@ const Edit = (data) => {
 
     Clear();
     console.log(data);
-    $('#hotelReceiptTitle').html("Edit Hotel Receipt");
+    $('#serviceVoucherTitle').html("Edit Service Voucher");
     $('#id').val(data.id);
     $('#exchangeOrderNo').val(data.exchangeOrderNo);
     $('#fileCodeNo').val(data.fileCodeNo);
@@ -177,16 +178,16 @@ const Edit = (data) => {
     $('#to').val(data.to);
     $('#departureFlight').val(data.departureFlight);
     $('#services').val(data.services);
-    $('#hotelReceiptForm').validate().destroy();
-    hotelReceiptValidation();
-    $('#hotelReceiptForm').validate().resetForm();
-    $('#createHotelReceipt').modal('toggle');
+    $('#serviceVoucherForm').validate().destroy();
+    serviceVoucherValidation();
+    $('#serviceVoucherForm').validate().resetForm();
+    $('#createServiceVoucher').modal('toggle');
 };
 
 
 const Save = () => {
 
-    $('#hotelReceiptForm').off('submit').on('submit', function (e) {
+    $('#serviceVoucherForm').off('submit').on('submit', function (e) {
 
         e.preventDefault();
 
@@ -207,9 +208,9 @@ const Save = () => {
         };
 
         $.ajax({
-            url: 'HotelReceipt/Save',
+            url: 'ServiceVoucher/Save',
             method: 'POST',
-            data: { hotelReceipt: record },
+            data: { serviceVoucher: record },
             success: function (data) {
                 console.log(data);
                 noty({
@@ -218,7 +219,7 @@ const Save = () => {
                     layout: 'topCenter',
                     timeout: 2000
                 });
-                $('#createHotelReceipt').modal('toggle');
+                $('#createServiceVoucher').modal('toggle');
                 setGridData();
             }
         });
@@ -241,21 +242,21 @@ const setHotelDropdown = () => {
 }
 
 $(document).ready(function () {
-    var hotelReceiptGrid = document.querySelector('#hotelReceiptGrid');
+    var serviceVoucherGrid = document.querySelector('#serviceVoucherGrid');
 
-    new agGrid.Grid(hotelReceiptGrid, gridOptions);
+    new agGrid.Grid(serviceVoucherGrid, gridOptions);
 
     setGridData();
 
     setHotelDropdown();
 
-    $('#addHotelReceiptBtn').click(function () {
+    $('#addServiceVoucherBtn').click(function () {
         console.log('Button Pressed');
-        $('#hotelReceiptTitle').html("Add Hotel Receipt");
+        $('#serviceVoucherTitle').html("Add Service Voucher");
         Clear();
-        $('#hotelReceiptForm').validate().destroy();
-        hotelReceiptValidation();
-        $('#hotelReceiptForm').validate().resetForm();
+        $('#serviceVoucherForm').validate().destroy();
+        serviceVoucherValidation();
+        $('#serviceVoucherForm').validate().resetForm();
     });
     $('#printInvoice').off('click').on('click', function () {
 
@@ -273,7 +274,7 @@ $(document).ready(function () {
         });
     });
     $('#btnSave').off('click').on('click', function () {
-        if ($('#hotelReceiptForm').valid()) {
+        if ($('#serviceVoucherForm').valid()) {
             Save();
         }
     });
@@ -288,5 +289,19 @@ $(document).ready(function () {
 
     $('#searchFieldClientname').on('keyup', function () {
         call();
+    });
+
+    $('#fileCodeNo').on('change', function () {
+        $.ajax({
+            url: 'Customer/Get',
+            method: 'GET',
+            data: { id: $('#fileCodeNo').val() },
+            success: function (data) {
+                console.log(data);
+                $('#clientName').val(data.tourName);
+                $('#arrivalOn').val(data.arrivalDate.split('T')[0]);
+                $('#departureOn').val(data.departureDate.split('T')[0]);
+            }
+        });
     });
 });

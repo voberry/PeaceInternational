@@ -123,10 +123,10 @@ namespace PeaceInternational.Web.Controllers
                     int InvoiceId = await _invoiceCrudService.InsertAsync(new Invoice
                     {
                         InvoiceNo = $"{invoice.InvoiceNo}/{(invoiceCount + 1).ToString().PadLeft(4, '0')}",
-                        FileCodeNo = 123,
+                        FileCodeNo = invoice.FileCodeNo,
                         ReferenceNo = invoice.ReferenceNo,
                         Dr = invoice.Dr,
-                        AgentName = invoice.AgentName,
+                        Address = invoice.Address,
                         ClientName = invoice.ClientName,
                         Currency = invoice.Currency,
                         PAX = invoice.PAX,
@@ -176,7 +176,8 @@ namespace PeaceInternational.Web.Controllers
 
                 record.ReferenceNo = invoice.ReferenceNo;
                 record.Dr = invoice.Dr;
-                record.AgentName = invoice.AgentName;
+                record.FileCodeNo = invoice.FileCodeNo;
+                record.Address = invoice.Address;
                 record.ClientName = invoice.ClientName;
                 record.Currency = invoice.Currency;
                 record.PAX = invoice.PAX;

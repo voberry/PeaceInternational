@@ -43,64 +43,22 @@ $(document).ready(function () {
         return isSuccess;
     }, "Username already exists");
 
-    $.validator.addMethod("checkRegistrationNo", function (value, element, params) {
+    $.validator.addMethod("checkFileCodeNo", function (value, element) {
 
         var isSuccess = false;
 
         $.ajax({
-            url: '/StoreInfo/CheckRegisterNo',
+            url: '/Customer/CheckFileCodeNo',
             method: 'GET',
             async: false,
-            data: { regNo: value, id: params },
+            data: { fileCodeNo: value },
             success: function (data) {
                 isSuccess = data === 1 ? true : false;
             }
         });
 
         return isSuccess;
-    }, "Registration Number already exists");
-
-    $.validator.addMethod("checkUserPhoneNo", function (value, element, params) {
-        var isSuccess = false;
-        $.ajax({
-            url: '/Admin/CheckPhoneNo',
-            method: 'GET',
-            async: false,
-            data: { phoneNo: value, userId: params },
-            success: function (data) {
-                isSuccess = data === 1 ? true : false;
-            }
-        });
-        return isSuccess;
-    }, "Phone Number already exists");
-
-    $.validator.addMethod("checkSupplierPhoneNo", function (value, element, params) {
-        var isSuccess = false;
-        $.ajax({
-            url: '/Supplier/CheckPhoneNo',
-            method: 'GET',
-            async: false,
-            data: { phoneNo: value, id: params },
-            success: function (data) {
-                isSuccess = data === 1 ? true : false;
-            }
-        });
-        return isSuccess;
-    }, "Phone Number already exists");
-
-    $.validator.addMethod("checkCustomerPhoneNo", function (value, element, params) {
-        var isSuccess = false;
-        $.ajax({
-            url: '/Customer/CheckPhoneNo',
-            method: 'GET',
-            async: false,
-            data: { phoneNo: value, id: params },
-            success: function (data) {
-                isSuccess = data === 1 ? true : false;
-            }
-        });
-        return isSuccess;
-    }, "Phone Number already exists");
+    }, "File Code Number does not exists"); 
 
     $.validator.addMethod("greaterDate", function (value, element, params) {
         var startDate = $(params).val();
