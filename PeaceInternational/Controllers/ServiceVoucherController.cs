@@ -15,22 +15,22 @@ using PeaceInternational.Web.Models;
 namespace PeaceInternational.Web.Controllers
 {
     [Authorize]
-    public class HotelReceiptController : Controller
+    public class ServiceVoucherController : Controller
     {
 
-        private readonly ICrudService<HotelReceipt> _hotelReceiptCrudService;
+        private readonly ICrudService<ServiceVoucher> _serviceVoucherCrudService;
         private readonly ICrudService<Hotel> _hotelCrudService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private Notification notification;
 
-        public HotelReceiptController(
-            ICrudService<HotelReceipt> hotelReceiptCrudService,
+        public ServiceVoucherController(
+            ICrudService<ServiceVoucher> serviceVoucherCrudService,
             ICrudService<Hotel> hotelCrudService,
             UserManager<IdentityUser> userManager,           
             IUnitOfWork unitOfWork)
         {
-            _hotelReceiptCrudService = hotelReceiptCrudService;
+            _serviceVoucherCrudService = serviceVoucherCrudService;
             _hotelCrudService = hotelCrudService;
             _userManager = userManager;
             _unitOfWork = unitOfWork;
@@ -49,7 +49,7 @@ namespace PeaceInternational.Web.Controllers
             {
                 if (id == null)
                 {
-                    var result = await _hotelReceiptCrudService.GetAll()
+                    var result = await _serviceVoucherCrudService.GetAll()
                         .AsNoTracking()
                         .Include(h => h.Hotel)
                         .ToListAsync();
@@ -57,7 +57,7 @@ namespace PeaceInternational.Web.Controllers
                 }
                 else
                 {
-                    var result = _hotelReceiptCrudService.Get(id);
+                    var result = _serviceVoucherCrudService.Get(id);
                     return Json(result);
                 }
             }
@@ -72,11 +72,11 @@ namespace PeaceInternational.Web.Controllers
         {
             try
             {
-                var hotelReceipt = _hotelReceiptCrudService.Get(id);
-                var hotel = _hotelCrudService.Get(hotelReceipt.HotelId);
+                var serviceVoucher = _serviceVoucherCrudService.Get(id);
+                var hotel = _hotelCrudService.Get(serviceVoucher.HotelId);
                 var result = new
                 {
-                    hotelReceipt,
+                    serviceVoucher,
                     hotel
                 };
                 return Json(result);
@@ -87,41 +87,41 @@ namespace PeaceInternational.Web.Controllers
             }
         }
 
-        //Save HotelReceipt
+        //Save ServiceVoucher
         [HttpPost]
-        public async Task<IActionResult> Save(HotelReceipt hotelReceipt)
+        public async Task<IActionResult> Save(ServiceVoucher serviceVoucher)
         {
             try
             {
                 var user = _userManager.GetUserAsync(HttpContext.User).Result;
                 notification = new Notification();
 
-                if (hotelReceipt.Id > 0)
+                if (serviceVoucher.Id > 0)
                 {
 
-                    notification = await EditHotelReceipt(hotelReceipt, user);
+                    notification = await EditServiceVoucher(serviceVoucher, user);
                 }
                 else
                 {
-                    await _hotelReceiptCrudService.InsertAsync(new HotelReceipt
+                    await _serviceVoucherCrudService.InsertAsync(new ServiceVoucher
                     {
-                        ExchangeOrderNo = hotelReceipt.ExchangeOrderNo,
-                        FileCodeNo = hotelReceipt.FileCodeNo,
-                        HotelId = hotelReceipt.HotelId,
-                        ClientName = hotelReceipt.ClientName,
-                        PAX = hotelReceipt.PAX,
-                        ArrivalDate = hotelReceipt.ArrivalDate,
-                        From = hotelReceipt.From,
-                        ArrivalFlight = hotelReceipt.ArrivalFlight,
-                        DepartureDate = hotelReceipt.DepartureDate,
-                        To = hotelReceipt.To,
-                        DepartureFlight = hotelReceipt.DepartureFlight,
-                        Services = hotelReceipt.Services,
+                        ExchangeOrderNo = serviceVoucher.ExchangeOrderNo,
+                        FileCodeNo = serviceVoucher.FileCodeNo,
+                        HotelId = serviceVoucher.HotelId,
+                        ClientName = serviceVoucher.ClientName,
+                        PAX = serviceVoucher.PAX,
+                        ArrivalDate = serviceVoucher.ArrivalDate,
+                        From = serviceVoucher.From,
+                        ArrivalFlight = serviceVoucher.ArrivalFlight,
+                        DepartureDate = serviceVoucher.DepartureDate,
+                        To = serviceVoucher.To,
+                        DepartureFlight = serviceVoucher.DepartureFlight,
+                        Services = serviceVoucher.Services,
                         CreatedBy = user.Id
                     });
 
                     notification.Type = "success";
-                    notification.Message = "Hotel Receipt created successfully.";
+                    notification.Message = "Service Voucher created successfully.";
                 }
 
                 return Json(notification);
@@ -129,41 +129,41 @@ namespace PeaceInternational.Web.Controllers
             catch (Exception exception)
             {
                 notification.Type = "error";
-                notification.Message = "Hotel Receipt creation failed.";
+                notification.Message = "Service Voucher creation failed.";
                 return Json(notification);
             }
         }
 
-        //Edit Hotel Receipt
-        private async Task<Notification> EditHotelReceipt(HotelReceipt hotelReceipt, IdentityUser user)
+        //Edit Service Voucher
+        private async Task<Notification> EditServiceVoucher(ServiceVoucher serviceVoucher, IdentityUser user)
         {
             try
             {
-                var record = await _hotelReceiptCrudService.GetAsync(hotelReceipt.Id);
+                var record = await _serviceVoucherCrudService.GetAsync(serviceVoucher.Id);
 
-                record.ExchangeOrderNo = hotelReceipt.FileCodeNo;
-                record.FileCodeNo = hotelReceipt.FileCodeNo;
-                record.HotelId = hotelReceipt.HotelId;
-                record.ClientName = hotelReceipt.ClientName;
-                record.PAX = hotelReceipt.PAX;
-                record.ArrivalDate = hotelReceipt.ArrivalDate;
-                record.From = hotelReceipt.From;
-                record.ArrivalFlight = hotelReceipt.ArrivalFlight;
-                record.DepartureDate = hotelReceipt.DepartureDate;
-                record.To = hotelReceipt.To;
-                record.DepartureFlight = hotelReceipt.DepartureFlight;
-                record.Services = hotelReceipt.Services;
+                record.ExchangeOrderNo = serviceVoucher.FileCodeNo;
+                record.FileCodeNo = serviceVoucher.FileCodeNo;
+                record.HotelId = serviceVoucher.HotelId;
+                record.ClientName = serviceVoucher.ClientName;
+                record.PAX = serviceVoucher.PAX;
+                record.ArrivalDate = serviceVoucher.ArrivalDate;
+                record.From = serviceVoucher.From;
+                record.ArrivalFlight = serviceVoucher.ArrivalFlight;
+                record.DepartureDate = serviceVoucher.DepartureDate;
+                record.To = serviceVoucher.To;
+                record.DepartureFlight = serviceVoucher.DepartureFlight;
+                record.Services = serviceVoucher.Services;
                 record.ModifiedBy = user.Id;
                 record.ModifiedDate = DateTime.Now;
 
-                _hotelReceiptCrudService.Update(record);
+                _serviceVoucherCrudService.Update(record);
 
-                return new Notification("success", "Hotel Receipt updated successfully.");
+                return new Notification("success", "Service Voucher updated successfully.");
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
-                return new Notification("error", "Hotel Receipt update failed.");
+                return new Notification("error", "Service Voucher update failed.");
             }
         }
     }

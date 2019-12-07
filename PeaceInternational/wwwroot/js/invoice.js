@@ -10,13 +10,19 @@ const invoiceColumnDefs = [
             return data.value.split('T')[0];
         }
     },
-    { headerName: 'Agent Name', field: 'agentName', maxWidth: 150 },
+    { headerName: 'Address', field: 'address', maxWidth: 150 },
     { headerName: 'Client Name', field: 'clientName', maxWidth: 150 },
     //{ headerName: 'Currency', field: 'currency', maxWidth: 150 },
     { headerName: 'PAX', field: 'pax', maxWidth: 100 },
     //{ headerName: 'Total Due', field: 'totalDue', maxWidth: 100 },
     //{ headerName: 'Discount', field: 'discount', maxWidth: 80 },
-    { headerName: 'Net Amount', field: 'netAmount', maxWidth: 140 },
+    {
+
+        headerName: 'Net Amount', field: 'netAmount', maxWidth: 140,
+        cellRenderer: function (data) {
+            return data.value.toFixed(2);
+        }
+    },
     {
         headerName: 'Details', maxWidth: 100,
         cellRenderer: function () {
@@ -163,6 +169,9 @@ const itemListColumnDefs = [
     },  
     {
         headerName: 'Amount', field: 'amount', maxWidth: 250,
+        cellRenderer: function (data) {
+            return data.value.toFixed(2);
+        },
         cellStyle: () => {
             return { 'font-size': '16px' };
         },
@@ -211,7 +220,7 @@ function call() {
 
    let filter = {
         invoiceNo: { type: 'contains', filter: $('#searchField').val() },
-        agentName: { type: 'contains', filter: $('#searchFieldAgent').val() },
+        address: { type: 'contains', filter: $('#searchFieldAgent').val() },
         clientName: { type: 'contains', filter: $('#searchFieldClient').val() }
     };
         gridOptions.api.setFilterModel(filter);
@@ -219,21 +228,23 @@ function call() {
 }
 
 const Edit = (data) => {
-    
+
+    console.log(data);
     $('#createInvoice').modal('toggle');
     $("#id").val(data.id);
     $('#date').val(data.createdDate.split('T')[0]);
+    $("#fileCodeNo").val(data.fileCodeNo);
     $('#referenceNo').val(data.referenceNo);
     $('#dr').val(data.dr);
-    $('#agentName').val(data.agentName);
+    $('#address').val(data.address);
     $('#currency').val(data.currency);
     $('#clientName').val(data.clientName);
     $('#pax').val(data.pax);
     $('#guide').val(data.guide);
     $('#vehicle').val(data.vehicle);
-    $('#totalDue').val(data.totalDue);
-    $('#discount').val(data.discount);
-    $('#netAmount').val(data.netAmount);
+    $('#totalDue').val(data.totalDue.toFixed(2));
+    $('#discount').val(data.discount.toFixed(2));
+    $('#netAmount').val(data.netAmount.toFixed(2));
     setInvoiceDetailGridData(data.id, setItemListData);
 };
 
@@ -250,7 +261,8 @@ const ClearInvoiceForm = () => {
     $('#date').val(new Date().toISOString().slice(0, 10));
     $('#referenceNo').val('');
     $('#dr').val('');
-    $('#agentName').val('');
+    $('#fileCodeNo').val('');
+    $('#address').val('');
     $('#currency').val('');
     $('#clientName').val('');
     $('#pax').val('');
@@ -273,10 +285,14 @@ const invoiceFormValidation = () => {
             dr: {
                 required: true                
             },
+            fileCodeNo: {
+                required: true,
+                checkFileCodeNo: true
+            },
             referenceNo: {
                 required: true
             },
-            agentName: {
+            address: {
                 required: true
             },
             currency: {
@@ -325,7 +341,7 @@ const addParticulars = () => {
 
         id: 0,
         particulars: $('#particulars').val(),
-        amount: parseInt($('#particularAmount').val())
+        amount: parseFloat($('#particularAmount').val()).toFixed(2)
     };
 
     itemListGridOptions.api.updateRowData({ add: [newData] });
@@ -341,7 +357,7 @@ function calcTotal() {
     let netAmount = 0;
 
     $(itemList).each(function (idx, item) {        
-        amount += item.amount;
+        amount += parseFloat(item.amount);
     });
 
     netAmount = amount - discount;
@@ -352,10 +368,10 @@ function calcTotal() {
         $('#discount').removeClass('is-invalid');
     }
 
-    $('#totalDue').val(amount);
-    $('#netAmount').val(netAmount);
+    $('#totalDue').val(parseFloat(amount).toFixed(2));
+    $('#netAmount').val(parseFloat(netAmount).toFixed(2));
     console.log(amount, netAmount);
-    return [amount, netAmount];
+    return [parseFloat(amount), parseFloat(netAmount)];
 
 }
 
@@ -374,7 +390,7 @@ const getCurrentNepaliYear = () => {
     var year = new Date().getFullYear();
     const startingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 1, 1);
     const endingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 12, 31);   
-    var invoiceNoPrefix = startingNepaliYear.toString().slice(2, 4) + endingNepaliYear.toString().slice(2, 4)
+    var invoiceNoPrefix = startingNepaliYear.toString().slice(2, 4) + endingNepaliYear.toString().slice(2, 4);
     return invoiceNoPrefix;
 };
 
@@ -387,10 +403,10 @@ const Save = () => {
         var record = {
             Id: $('#id').val(),
             InvoiceNo: getCurrentNepaliYear(),
-            //FileCodeNo: $('#fileCodeNo').val(),
+            FileCodeNo: $('#fileCodeNo').val(),
             ReferenceNo: $('#referenceNo').val(),
             Dr: $('#dr').val(),
-            AgentName: $('#agentName').val(),
+            Address: $('#address').val(),
             Currency: $('#currency').val(),
             ClientName: $('#clientName').val(),
             PAX: $('#pax').val(),
@@ -474,17 +490,6 @@ $(document).ready(function () {
                 });
         });
        
-      
-        //html2canvas($("#invoiceBody")[0]).then(function (canvas) {
-        //    var img = canvas.toDataURL();
-        //    window.open(img);
-        //});
-      
-        //$('#invoiceBody').html2canvas();
-        //var queue = html2canvas.Parse();
-        //var canvas = html2canvas.Renderer(queue, { elements: { length: 1 } });
-        //var img = canvas.toDataURL();
-        //window.open(img);
     });
 
     $('#searchField').on('keyup', function ()
@@ -500,6 +505,19 @@ $(document).ready(function () {
     $('#searchFieldClient').on('keyup', function ()
     {
         call();
+    });
+
+    $('#fileCodeNo').on('change', function () {
+        $.ajax({
+            url: 'Customer/Get',
+            method: 'GET',
+            data: { id: $('#fileCodeNo').val() },
+            success: function (data) {
+                console.log(data);
+                $('#clientName').val(data.tourName);
+                $('#guide').val(data.guideName);
+            }
+        });
     });
 });
 

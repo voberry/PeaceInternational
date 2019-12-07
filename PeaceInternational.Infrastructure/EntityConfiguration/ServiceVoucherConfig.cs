@@ -7,14 +7,11 @@ using System.Text;
 
 namespace PeaceInternational.Infrastructure.EntityConfiguration
 {
-    public class HotelReceiptConfig : BaseEntityConfig<HotelReceipt>, IEntityTypeConfiguration<HotelReceipt>
+    public class ServiceVoucherConfig : BaseEntityConfig<ServiceVoucher>, IEntityTypeConfiguration<ServiceVoucher>
     {
-        public override void Configure(EntityTypeBuilder<HotelReceipt> builder)
+        public override void Configure(EntityTypeBuilder<ServiceVoucher> builder)
         {
-            base.Configure(builder);
-
-            builder.Property(p => p.FileCodeNo)
-                .IsRequired();
+            base.Configure(builder);          
 
             builder.Property(p => p.ClientName)
               .HasMaxLength(255)
@@ -45,6 +42,10 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
             builder.HasOne(p => p.Hotel)
                 .WithMany(h => h.HotelReceipt)
                 .HasForeignKey(p => p.HotelId);
+
+            builder.HasOne(p => p.Customer)
+                .WithMany(e => e.HotelReceipt)
+                .HasForeignKey(p => p.FileCodeNo);
         }
     }
 }

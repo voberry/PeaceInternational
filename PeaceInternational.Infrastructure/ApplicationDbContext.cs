@@ -19,7 +19,8 @@ namespace PeaceInternational.Infrastructure
             builder.ApplyConfiguration(new HotelConfig());
             builder.ApplyConfiguration(new InvoiceConfig());
             builder.ApplyConfiguration(new InvoiceDetailConfig());
-            builder.ApplyConfiguration(new HotelReceiptConfig());
+            builder.ApplyConfiguration(new ServiceVoucherConfig());
+            builder.ApplyConfiguration(new CustomerConfig());
 
         }
     }

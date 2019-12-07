@@ -8,13 +8,13 @@ namespace PeaceInternational.Core.Entity
     {
         public Hotel()
         {
-            this.HotelReceipt = new HashSet<HotelReceipt>();
+            this.HotelReceipt = new HashSet<ServiceVoucher>();
         }
 
         public string Name { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
 
-        public ICollection<HotelReceipt> HotelReceipt { get; set; }
+        public ICollection<ServiceVoucher> HotelReceipt { get; set; }
     }
 }

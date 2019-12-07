@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PeaceInternational.Core.Entity
 {
-    public class HotelReceipt : BaseEntity
+    public class ServiceVoucher : BaseEntity
     {
         public int ExchangeOrderNo { get; set; }
         public int FileCodeNo { get; set; }
@@ -18,6 +18,8 @@ namespace PeaceInternational.Core.Entity
         public string To { get; set; }
         public string DepartureFlight { get; set; }
         public string Services { get; set; }
+
+        public Customer Customer { get; set; }
 
         public Hotel Hotel { get; set; }
     }

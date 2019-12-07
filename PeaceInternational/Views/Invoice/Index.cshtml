@@ -3,20 +3,19 @@
     ViewData["Title"] = "Invoice";
 }
 <style>
-  
+
     span {
-        font-weight:bold;
+        font-weight: bold;
     }
 
-    html, body {
-        margin: 0;
-        padding: 0;
+    .topRightInfo h6 {
+        margin-bottom: 3px;
     }
-
 
     #page {
         border-collapse: collapse;
         border: 2px solid;
+        position: relative;
     }
 
         /* And this to your table's `td` elements. */
@@ -33,11 +32,9 @@
         }
 
         #page tfoot {
-            
             border-top: 2px solid;
         }
-
-   </style>
+</style>
 
 <div class="row">
     <div class="col-md-10">
@@ -49,19 +46,16 @@
 </div>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <input type="text" class="form-control" id="searchField" placeholder="Invoice No" />
     </div>
-    <div class="col-md-4">
-        <input type="text" class="form-control" id="searchFieldAgent" placeholder="Agent Name" />
-    </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <input type="text" class="form-control" id="searchFieldClient" placeholder="Client name" />
     </div>
 
 </div>
 <div style="height: 100%; box-sizing: border-box; padding-top:20px;">
-    <div id="invoiceGrid" style="width: 100%; height:450px" class="ag-theme-balham"></div>
+    <div id="invoiceGrid" style="width:100%; height:450px" class="ag-theme-balham"></div>
 </div>
 
 @*Create Invoice Modal*@
@@ -86,34 +80,38 @@
                             <label for="dr"> Dr. <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="dr" id="dr" />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
+                            <label for="fileCodeNo"> File Code No. <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="fileCodeNo" id="fileCodeNo" />
+                        </div>
+                        <div class="col-md-2">
                             <label for="refrenceNo"> Reference No. <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="referenceNo" id="referenceNo" />
                         </div>
-                        <div class="col-md-2">
-                            <label for="agentName"> Agent Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="agentName" id="agentName" />
-                        </div>
                         <div class="col-md-1">
                             <label for="currency"> Currency <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="currency" id="currency" />
+                            <input type="text" class="form-control" name="currency" id="currency" oninput="this.value = this.value.toUpperCase()" />
                         </div>
                     </div>
                     <br />
                     <div class="form-row">
                         <div class="col-md-3">
+                            <label for="agentName"> Address <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="address" id="address" />
+                        </div>
+                        <div class="col-md-3">
                             <label for="clientName"> Client Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="clientName" id="clientName" />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-1">
                             <label for="pax"> PAX <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="pax" id="pax" />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="guide"> Guide </label>
                             <input type="text" class="form-control" name="guide" id="guide" />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="vehicle"> Vehicle </label>
                             <input type="text" class="form-control" name="vehicle" id="vehicle" />
                         </div>
@@ -136,7 +134,7 @@
                             <hr />
                         </div>
                         <div class="col-md-3 col d-flex align-items-center justify-content-center" style="background-color:cornflowerblue" ;>
-                            <img src="~/img/logo.png"/>
+                            <img src="~/img/logo.png" />
                         </div>
                     </div>
 
@@ -151,8 +149,8 @@
                                 <label for="amount">Total Due <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     @*<div class="input-group-prepend">
-                                        <span class="input-group-text currency"></span>
-                                    </div>*@
+                                            <span class="input-group-text currency"></span>
+                                        </div>*@
                                     <output type="number" class="form-control" name="totalDue" id="totalDue" />
                                 </div>
                             </div>
@@ -164,8 +162,8 @@
                                 <label for="netAmount">Net Amount<span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     @*<div class="input-group-prepend">
-                                        <span class="input-group-text currency"></span>
-                                    </div>*@
+                                            <span class="input-group-text currency"></span>
+                                        </div>*@
                                     <output type="number" class="form-control" name="netAmount" id="netAmount" />
                                 </div>
                             </div>
@@ -214,37 +212,39 @@
             <div class="modal-body" id="invoiceBody">
                 <div class="row">
                     <div class="col-md-8">
-                        <img src="~/img/logo2.jpg" style="max-width:100%" />
+                        <img src="~/img/logo2.jpg" style="max-width:100%; max-height:85%" />
                     </div>
-                    <div class="col-md-4 text-monospace">                      
+                    <div class="col-md-4 text-monospace topRightInfo">
                         <h6>GPO Box: 9484</h6>
-                        <h6>Lazimpat - 2</h6>
-                        <h6>Kathmandu, Nepal</h6>
-                        <h6>Tel: (977) 01 4444843/44/45</h6>                   
-                        <h6>Email: peaceintl.mail@gmail.com</h6>                    
+                        <h6>Lazimpat - 2, Kathmandu, Nepal</h6>
+                        <h6>Tel: (977) 01 4444843/44/45</h6>
+                        <h6>Email: peaceintl.mail@gmail.com</h6>
+                        <h6>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;mail@peace-intl.com.np </h6>
                         <h6>Web: peace-intl.com </h6>
                         <h6>PAN: 302243385 </h6>
                     </div>
                 </div>
-                <br />
                 <div id="receiptTemplate">
                 </div>
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-3">
                         <h6>E. & O. E.</h6>
                         <h6>Enclosures: </h6>
                         <h6>Prepared By: </h6>
-                        <h6>Checked By:</h6>                        
+                        <h6>Checked By:</h6>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-9">
+                        <h6 class="font-weight-bold float-right small">For : Peace International Tours & Travel (P) Ltd</h6>
                         <br />
-                        <h6 class="border-top border-dark">Authorized Signature: </h6>
+                        <br />
+                        <br />
+                        <h6 class="border-top border-dark float-right">Authorized Signature: </h6>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <h6>
-                            1. If the Payment is to be made through Bank, transfer kindly made it directly either at our <br>A/C No. 01 04 21 7500056 at Nabil Bank, Kantipath, Kathmandu under advise to us.
+                            IMPORTANT : 1. If the Payment is to be made through Bank, transfer kindly made it directly either at our <br>A/C No. 01 04 21 7500056 at Nabil Bank, Kantipath, Kathmandu under advise to us.
                         </h6>
                     </div>
                 </div>
@@ -263,21 +263,21 @@
 
         <div class="row text-monospace">
             <div class="col-md-8">
-                <h6><span>Dr:</span>&emsp;{{invoice.dr}}</h6>
-                <h6><span>File Code No:</span>&emsp;{{invoice.fileCodeNo}}</h6>
-                <h6><span>Client Name:</span>&emsp;{{invoice.clientName}} X {{invoice.pax}}</h6>
-                <h6><span>Agent name:</span>&emsp;{{invoice.agentName}}</h6>
+                <h6>Dr:&emsp;<span>{{invoice.dr}}</span></h6>
+                <h6>Address:&emsp;<span>{{invoice.address}}</span></h6>
+                <h6>Ref no:&emsp;{{invoice.referenceNo}}</h6>
+                <h6>Name:&emsp;<span>{{invoice.clientName}} X {{invoice.pax}}</span></h6>
                 @*<h6><span>PAX:</span>&emsp;{{invoice.pax}}</h6>*@
             </div>
-            <div class="col-md-4">    
-                <h6><span>Date:</span>&emsp;{{splitDate invoice.createdDate}}</h6>
-                <h6><span>Invoice no:</span>&emsp;{{invoice.invoiceNo}}</h6>
-                <h6><span>Ref no:</span>&emsp;{{invoice.referenceNo}}</h6>                
-                <h6><span>Currency:</span>&emsp;{{invoice.currency}}</h6>
+            <div class="col-md-4">
+                <h6>Date:&emsp;<span>{{splitDate invoice.createdDate}}</span></h6>
+                <h6>Invoice no:&emsp;{{invoice.invoiceNo}}</h6>
+                <h6>File Code No:&emsp;{{invoice.fileCodeNo}}</h6>
+                <h6>Currency:&emsp;<span>{{invoice.currency}}</span></h6>
             </div>
         </div>
         <br />
-        <div class="row">
+        <div class="row flex-nowrap">
             <table class="table table-borderless ml-2 mr-2" id="page">
                 <thead class="text-center thead-light">
                     <tr>
@@ -293,7 +293,7 @@
                         <td height="40">{{inc @@index}}</td>
                         <td height="40">{{this.particulars}}</td>
                         <td height="40">
-                            {{this.amount}}
+                            {{distanceFixed this.amount}}
                         </td>
                     </tr>
                     {{/each}}
@@ -307,24 +307,24 @@
                     {{/for}}
                 </tbody>
                 <tfoot>
-                    <tr>
+                    <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Total Due</td>
-                        <td>{{invoice.totalDue}}</td>
+                        <td>{{distanceFixed invoice.totalDue}}</td>
                     </tr>
                     <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Discount</td>
-                        <td>{{invoice.discount}}</td>
+                        <td>{{distanceFixed invoice.discount}}</td>
                     </tr>
                     <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Net Amount</td>
-                        <td>{{invoice.netAmount}} /-</td>
+                        <td>{{distanceFixed invoice.netAmount}} /-</td>
                     </tr>
                     <tr>
-                        <td colspan="3"><span>Total Due:</span> {{inWords invoice.netAmount}}</td>
+                        <td colspan="3"><span>In Words:</span> {{inWords invoice.netAmount}}</td>
                     </tr>
                 </tfoot>
             </table>
-            <br />            
+            <br />
         </div>
     </script>
 }

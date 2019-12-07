@@ -35,4 +35,8 @@ Handlebars.registerHelper('for', function (from, to, incr, block) {
     return accum;
 });
 
+Handlebars.registerHelper('distanceFixed', function (distance) {
+    return distance.toFixed(2);
+});
+
 
