@@ -16,13 +16,14 @@
         border-collapse: collapse;
         border: 2px solid;
         position: relative;
+        font-family:Arial, Helvetica, sans-serif;
     }
 
         /* And this to your table's `td` elements. */
         #page td {
             padding-top: 1px;
             margin: 0;
-            font-size: 13px;
+            font-size: 16px;
             border-right: 2px solid;
         }
 
@@ -214,12 +215,12 @@
                     <div class="col-md-8">
                         <img src="~/img/logo2.jpg" style="max-width:100%; max-height:85%" />
                     </div>
-                    <div class="col-md-4 text-monospace topRightInfo">
+                    <div class="col-md-4 topRightInfo">
                         <h6>GPO Box: 9484</h6>
                         <h6>Lazimpat - 2, Kathmandu, Nepal</h6>
                         <h6>Tel: (977) 01 4444843/44/45</h6>
                         <h6>Email: peaceintl.mail@gmail.com</h6>
-                        <h6>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;mail@peace-intl.com.np </h6>
+                        <h6>&emsp;&emsp;&emsp;mail@peace-intl.com.np </h6>
                         <h6>Web: peace-intl.com </h6>
                         <h6>PAN: 302243385 </h6>
                     </div>
@@ -229,7 +230,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <h6>E. & O. E.</h6>
-                        <h6>Enclosures: </h6>
+                        <h6>ENCLOSURES: </h6>
                         <h6>Prepared By: </h6>
                         <h6>Checked By:</h6>
                     </div>
@@ -261,29 +262,30 @@
     <script src="~/js/invoice.js"></script>
     <script id="entry-template" type="text/x-handlebars-template">
 
-        <div class="row text-monospace">
+        <div class="row">
             <div class="col-md-8">
                 <h6>Dr:&emsp;<span>{{invoice.dr}}</span></h6>
                 <h6>Address:&emsp;<span>{{invoice.address}}</span></h6>
-                <h6>Ref no:&emsp;{{invoice.referenceNo}}</h6>
+                <h6>Ref No:&emsp;{{invoice.referenceNo}}</h6>
                 <h6>Name:&emsp;<span>{{invoice.clientName}} X {{invoice.pax}}</span></h6>
                 @*<h6><span>PAX:</span>&emsp;{{invoice.pax}}</h6>*@
             </div>
             <div class="col-md-4">
-                <h6>Date:&emsp;<span>{{splitDate invoice.createdDate}}</span></h6>
+                <h6>Date:&emsp;<span>{{chain "splitDate" "customDate" invoice.createdDate}}</span></h6>
                 <h6>Invoice no:&emsp;{{invoice.invoiceNo}}</h6>
                 <h6>File Code No:&emsp;{{invoice.fileCodeNo}}</h6>
                 <h6>Currency:&emsp;<span>{{invoice.currency}}</span></h6>
             </div>
         </div>
         <br />
+        <p class="text-center font-weight-bold">Your Account has been debited as per particulars given below:</p>
         <div class="row flex-nowrap">
             <table class="table table-borderless ml-2 mr-2" id="page">
                 <thead class="text-center thead-light">
                     <tr>
-                        <th width="10%">S.NO</th>
+                        <th width="10%">SN.</th>
                         <th width="70%">PARTICULARS</th>
-                        <th width="20%">Amount</th>
+                        <th width="20%">AMOUNT</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -308,15 +310,15 @@
                 </tbody>
                 <tfoot>
                     <tr style="border-bottom:2px solid;">
-                        <td colspan="2" align="right" class="font-weight-bold">Total Due</td>
+                        <td colspan="2" align="right" class="font-weight-bold">Total Due:</td>
                         <td>{{distanceFixed invoice.totalDue}}</td>
                     </tr>
                     <tr style="border-bottom:2px solid;">
-                        <td colspan="2" align="right" class="font-weight-bold">Discount</td>
+                        <td colspan="2" align="right" class="font-weight-bold">Discount:</td>
                         <td>{{distanceFixed invoice.discount}}</td>
                     </tr>
                     <tr style="border-bottom:2px solid;">
-                        <td colspan="2" align="right" class="font-weight-bold">Net Amount</td>
+                        <td colspan="2" align="right" class="font-weight-bold">Net Amount:</td>
                         <td>{{distanceFixed invoice.netAmount}} /-</td>
                     </tr>
                     <tr>
