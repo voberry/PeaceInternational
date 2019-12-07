@@ -19,6 +19,13 @@
         padding-top: 45px;
     }
 
+      #page {
+        border-collapse: collapse;
+        border: 2px solid;
+        position: relative;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+
     h5 {
         font-size: 14px;
     }
@@ -412,17 +419,16 @@
             <div class="modal-body mr-2 ml-2" id="invoiceBody">
                 <div class="formsize">
                     <header>
-                        <div class="row head">
-                            <div class="logo col-md-7">
-                                <img src="~/img/logo2.jpg">
+                        <div class="row header">
+                            <div class="logo col-md-8">
+                                <img src="img/logo2.jpg" style="padding-top: 15px; padding-right: 25px" ;>
                             </div>
-                            <div class="address col-md-5 text-monospace">
+                            <div class="col-md-4 ag-resizer-topRight">
                                 <h6>GPO Box: 9484</h6>
-                                <h6>Lazimpat - 2</h6>
-                                <h6>Kathmandu, Nepal</h6>
+                                <h6>Lazimpat - 2, Kathmandu, Nepal</h6>
                                 <h6>Tel: (977) 01 4444843/44/45</h6>
-                                <h6>Email: mail@peace-intl.com.np</h6>
-                                <h6>peaceintl.mail@gmail.com</h6>
+                                <h6>Email: peaceintl.mail@gmail.com</h6>
+                                <h6>&emsp;&emsp;&emsp;mail@peace-intl.com.np </h6>
                                 <h6>Web: peace-intl.com </h6>
                                 <h6>PAN: 302243385 </h6>
                             </div>
@@ -433,12 +439,14 @@
                     <footer>
                         <div class="row endfooter">
                             <div class="col-md-8 endfooter1">
-                                <p>COLLECT ALL EXTRAS DIRECTLY.</p>
+                                <p><strong>COLLECT ALL EXTRAS DIRECTLY.</strong></p>
+                                <br />
                                 <p>Valid Only For Services/amount stated above and subject to terms and coditions stated overleaf</p>
                             </div>
                             <div class="col-md-4 text-center endfooter2">
-                                <p>Ishwori</p>
-                                <p>&emsp;&emsp;( Authorized Signatory )</p>
+                                <p><strong>Ishwari</strong></p>
+                                <br />
+                                <p><strong>&emsp;&emsp;( Authorized Signatory )</strong></p>
                             </div>
                         </div>
                     </footer>
@@ -446,17 +454,16 @@
 
                 <div class="formsize">
                     <header>
-                        <div class="row head">
-                            <div class="logo col-md-7">
-                                <img src="img/logo2.jpg">
+                        <div class="row header">
+                            <div class="logo col-md-8">
+                                <img src="img/logo2.jpg" style="padding-top: 15px; padding-right: 25px"; >
                             </div>
-                            <div class="address col-md-5 text-monospace">
+                            <div class="col-md-4 ag-resizer-topRight">
                                 <h6>GPO Box: 9484</h6>
-                                <h6>Lazimpat - 2</h6>
-                                <h6>Kathmandu, Nepal</h6>
+                                <h6>Lazimpat - 2, Kathmandu, Nepal</h6>
                                 <h6>Tel: (977) 01 4444843/44/45</h6>
-                                <h6>Email: mail@peace-intl.com.np</h6>
-                                <h6>    peaceintl.mail@gmail.com</h6>
+                                <h6>Email: peaceintl.mail@gmail.com</h6>
+                                <h6>&emsp;&emsp;&emsp;mail@peace-intl.com.np </h6>
                                 <h6>Web: peace-intl.com </h6>
                                 <h6>PAN: 302243385 </h6>
                             </div>
@@ -467,12 +474,14 @@
                     <footer>
                         <div class="row endfooter">
                             <div class="col-md-8 endfooter1">
-                                <p>COLLECT ALL EXTRAS DIRECTLY.</p>                               
+                                <p><strong>COLLECT ALL EXTRAS DIRECTLY.</strong></p>
+                                <br />
                                 <p>Valid Only For Services/amount stated above and subject to terms and coditions stated overleaf</p>
                             </div>
                             <div class="col-md-4 text-center endfooter2">
-                                <p>Ishwori</p>
-                                <p>&emsp;&emsp;( Authorized Signatory )</p>
+                                <p><strong>Ishwari</strong></p>
+                                <br />
+                                <p><strong>&emsp;&emsp;( Authorized Signatory )</strong></p>
                             </div>
                         </div>
                     </footer>
@@ -504,7 +513,7 @@
             <div class="svdata">
                 <div class="svrow1">
                     <div class="svrcol1">
-                        <p class="h7">Name <strong>{{serviceVoucher.clientName}}</strong></p>
+                        <p class="h7">Name <strong>{{serviceVoucher.clientName}} X {{serviceVoucher.pax}}</strong></p>
                     </div>
                     <div class="svrcol2">
                         <p class="h7">File Code No. {{serviceVoucher.fileCodeNo}}</p>
@@ -512,7 +521,7 @@
                 </div>
                 <div class="svrow2">
                     <div class="svrcol3">
-                        <p class="h7">ARR. On <strong>{{splitDate serviceVoucher.arrivalDate}}</strong></p>
+                        <p class="h7">ARR. On <strong>{{chain "splitDate" "customDate"  serviceVoucher.arrivalDate}}</strong></p>
                     </div>
                     <div class="svrcol4">
                         <p class="h7">From  <strong>{{serviceVoucher.from}}</strong></p>
@@ -523,7 +532,7 @@
                 </div>
                 <div class="svrow2">
                     <div class="svrcol3">
-                        <p class="h7">DEP. On <strong>{{splitDate serviceVoucher.departureDate}}</strong></p>
+                        <p class="h7">DEP. On <strong>{{chain "splitDate" "customDate"  serviceVoucher.departureDate}}</strong></p>
                     </div>
                     <div class="svrcol4">
                     <p class="h7">For <strong>{{serviceVoucher.to}}</strong></p>
