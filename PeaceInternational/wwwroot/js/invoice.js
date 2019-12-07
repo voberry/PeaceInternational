@@ -283,7 +283,8 @@ const invoiceFormValidation = () => {
                 required: true
             },
             dr: {
-                required: true                
+                required: true,
+                maxlength: 100
             },
             fileCodeNo: {
                 required: true,

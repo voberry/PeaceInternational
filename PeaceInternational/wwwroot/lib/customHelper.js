@@ -39,4 +39,30 @@ Handlebars.registerHelper('distanceFixed', function (distance) {
     return distance.toFixed(2);
 });
 
+Handlebars.registerHelper('customDate', function (date) {
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    var splittedDate = date.split('-');
+    console.log(splittedDate);
+    var monthName = months[splittedDate[1] - 1];
+    return `${splittedDate[2]}/${monthName}/${splittedDate[0]}`;
+
+});
+
+Handlebars.registerHelper('chain', function () {
+    var helpers = [], value;
+    $.each(arguments, function (i, arg) {
+        if (Handlebars.helpers[arg]) {
+            helpers.push(Handlebars.helpers[arg]);
+        } else {
+            value = arg;
+            $.each(helpers, function (j, helper) {
+                value = helper(value, arguments[i + 1]);
+            });
+            return false;
+        }
+    });
+    return value;
+});
+
+
 
