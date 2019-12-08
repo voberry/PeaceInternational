@@ -3,6 +3,7 @@
 //Column Defination for the grid
 const columnDefs = [
     { headerName: 'Receipt No.', field: 'id', maxWidth: 120 },
+    { headerName: 'File Code No.', field: 'fileCodeNo', maxWidth: 120 },
     {
         headerName: 'Hotel', field: 'hotel.name'
     },
@@ -46,6 +47,7 @@ const setGridData = () => {
 function call() {
     let filter = {
         id: { type: 'contains', filter: $('#searchFieldReceipt').val() },
+        fileCodeNo: { type: 'contains', filter: $('#searchFieldFileCode').val() },   
         'hotel.name': { type: 'contains', filter: $('#searchFieldHotel').val() },
         clientName: { type: 'contains', filter: $('#searchFieldClientname').val() }
     };
@@ -277,6 +279,10 @@ $(document).ready(function () {
         if ($('#serviceVoucherForm').valid()) {
             Save();
         }
+    });
+
+    $('#searchFieldFileCode').on('keyup', function () {
+        call();
     });
 
     $('#searchFieldReceipt').on('keyup', function () {

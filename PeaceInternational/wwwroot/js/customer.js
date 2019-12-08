@@ -2,7 +2,7 @@
 
 //Column Defination for the grid
 const columnDefs = [
-    { headerName: 'Id', field: 'id', maxWidth: 80 },
+    { headerName: 'File Code No.', field: 'id', maxWidth: 100 },
     { headerName: 'Tour Name', field: 'tourName' },
     { headerName: 'Country', field: 'country' },
     {
@@ -124,6 +124,7 @@ const customerValidation = () => {
 
 const call = () => {
     let filter = {
+        id: { type: 'contains', filter: $('#searchFieldFileCode').val() },   
         tourName: { type: 'contains', filter: $('#searchFieldTourName').val() },        
         agent: { type: 'contains', filter: $('#searchFieldAgent').val() }
     };
@@ -233,6 +234,10 @@ $(document).ready(function () {
         }
     });
 
+
+    $('#searchFieldFileCode').on('keyup', function () {
+        call();
+    });
 
     $('#searchFieldTourName').on('keyup', function () {
         call();

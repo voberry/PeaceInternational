@@ -302,8 +302,11 @@
 </div>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-2">
         <input type="text" class="form-control" id="searchFieldReceipt" placeholder="Receipt No" />
+    </div>
+    <div class="col-md-2">
+        <input type="text" class="form-control" id="searchFieldFileCode" placeholder="File Code No." />
     </div>
     <div class="col-md-4">
         <input type="text" class="form-control" id="searchFieldHotel" placeholder="Hotel" />
@@ -351,7 +354,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="clientName"> Client Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="clientName" id="clientName" />
+                            <input type="text" class="form-control" name="clientName" id="clientName" oninput="this.value = this.value.toUpperCase()"/>
                         </div>
                         <div class="col-md-3">
                             <label for="pax"> PAX <span class="text-danger">*</span></label>
@@ -366,11 +369,11 @@
                         </div>
                         <div class="col-md-4">
                             <label for="from"> From <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="from" id="from" />
+                            <input type="text" class="form-control" name="from" id="from" oninput="this.value = this.value.toUpperCase()"/>
                         </div>
                         <div class="col-md-4">
                             <label for="arrivalFlight"> Flight No. <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="arrivalFlight" id="arrivalFlight" />
+                            <input type="text" class="form-control" name="arrivalFlight" id="arrivalFlight" oninput="this.value = this.value.toUpperCase()"/>
                         </div>
                     </div>
                     <br />
@@ -381,18 +384,18 @@
                         </div>
                         <div class="col-md-4">
                             <label for="to"> To <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="to" id="to" />
+                            <input type="text" class="form-control" name="to" id="to" oninput="this.value = this.value.toUpperCase()"/>
                         </div>
                         <div class="col-md-4">
                             <label for="departureFlight"> Flight No. <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="departureFlight" id="departureFlight" />
+                            <input type="text" class="form-control" name="departureFlight" id="departureFlight" oninput="this.value = this.value.toUpperCase()"/>
                         </div>
                     </div>
                     <br />
                     <div class="form-row">
                         <div class="col-md-12">
                             <label for="services"> Services <span class="text-danger">*</span></label>
-                            <textarea rows="5" class="form-control" name="services" id="services" placeholder="Add Services Here"></textarea>
+                            <textarea rows="5" class="form-control" name="services" id="services" placeholder="Add Services Here" oninput="this.value = this.value.toUpperCase()"></textarea>
                         </div>
                     </div>
                 </div>

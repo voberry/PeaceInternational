@@ -4,6 +4,7 @@
 const invoiceColumnDefs = [
 
     { headerName: 'Invoice No', field: 'invoiceNo', maxWidth: 150 },
+    { headerName: 'File Code No.', field: 'fileCodeNo', hide : true },
     {
         headerName: 'Date', field: 'createdDate', tooltipField: 'Date', maxWidth: 220,
         cellRenderer: function (data) {
@@ -28,16 +29,16 @@ const invoiceColumnDefs = [
         cellRenderer: function () {
             return '<i class="btn fas fa-clipboard" id="detailsButton"></i>';
         },
-        onCellClicked(params) {           
+        onCellClicked(params) {
             InvoiceDetails(params.data.id);
         }
     },
     {
-        headerName: 'Edit', maxWidth: 100,       
+        headerName: 'Edit', maxWidth: 100,
         cellRenderer: function () {
             return '<i class="btn fas fa-edit" id="editButton"></i>';
         },
-        onCellClicked(params) {            
+        onCellClicked(params) {
             Edit(params.data);
         }
     },
@@ -46,7 +47,7 @@ const invoiceColumnDefs = [
         cellRenderer: function () {
             return '<i class="btn fas fa-file-invoice-dollar" id="generatePdfButton"></i>';
         },
-        onCellClicked(params) {            
+        onCellClicked(params) {
             GenerateInvoice(params.data);
         }
     }
@@ -58,7 +59,7 @@ const invoiceDetailColumnDefs = [
 
     { headerName: 'Id', field: 'id', hide: true },
     { headerName: 'Particulars', field: 'particulars' },
-    { headerName: 'Amount', field: 'amount', maxWidth:200 }
+    { headerName: 'Amount', field: 'amount', maxWidth: 200 }
 
 ];
 
@@ -69,20 +70,20 @@ const setInvoiceGridData = () => {
         url: 'Invoice/GetInvoice',
         method: 'GET',
         success: (data) => {
-            gridOptions.api.setRowData(data);          
+            gridOptions.api.setRowData(data);
         }
     });
 };
 
 
 //Function to set the data for the Invoice Detail grid
-const setInvoiceDetailGridData = (invoiceId, callback) => {   
+const setInvoiceDetailGridData = (invoiceId, callback) => {
     $.ajax({
         url: 'Invoice/GetInvoiceDetail',
         method: 'GET',
         data: { invoiceId: invoiceId },
         success: (data) => {
-            invoiceDetailGridOptions.api.setRowData(data);    
+            invoiceDetailGridOptions.api.setRowData(data);
             console.log(data);
             callback(data);
         }
@@ -124,22 +125,22 @@ const invoiceDetailGridOptions = {
 
 //Function to generate Invoice
 const GenerateInvoice = (invoiceData) => {
-  
+
     $.ajax({
         url: 'Invoice/GetInvoiceInfo',
         method: 'GET',
         data: { id: invoiceData.id },
-        success: (data) => {            
-        
+        success: (data) => {
+
             var source = document.getElementById("entry-template").innerHTML;
             var template = Handlebars.compile(source);
             var result = template(data);
-         
-            $('#receiptTemplate').html(result);            
+
+            $('#receiptTemplate').html(result);
             $('#viewInvoice').modal('toggle');
         }
     });
-   
+
 };
 
 
@@ -152,21 +153,21 @@ const InvoiceDetails = (invoiceId) => {
 };
 
 const itemListColumnDefs = [
-   
+
     {
         headerName: 'Id', field: 'id', hide: true,
         cellStyle: () => {
             return { 'font-size': '16px' };
         },
         cellClass: ['text-monospace']
-    },  
+    },
     {
         headerName: 'Particulars', field: 'particulars', maxWidth: 450,
         cellStyle: () => {
             return { 'font-size': '16px' };
         },
-        cellClass:['text-monospace']
-    },  
+        cellClass: ['text-monospace']
+    },
     {
         headerName: 'Amount', field: 'amount', maxWidth: 250,
         cellRenderer: function (data) {
@@ -206,7 +207,7 @@ function getItemList() {
     itemListGridOptions.api.forEachNode(function (node) {
         itemList.push(node.data);
     });
-    
+
     return itemList;
 }
 
@@ -218,13 +219,13 @@ function clear() {
 
 function call() {
 
-   let filter = {
-        invoiceNo: { type: 'contains', filter: $('#searchField').val() },
-        address: { type: 'contains', filter: $('#searchFieldAgent').val() },
+    let filter = {
+        invoiceNo: { type: 'contains', filter: $('#searchField').val() },      
+        fileCodeNo: { type: 'contains', filter: $('#searchFieldFileCode').val() },
         clientName: { type: 'contains', filter: $('#searchFieldClient').val() }
     };
-        gridOptions.api.setFilterModel(filter);
-        gridOptions.api.onFilterChanged();
+    gridOptions.api.setFilterModel(filter);
+    gridOptions.api.onFilterChanged();
 }
 
 const Edit = (data) => {
@@ -248,7 +249,7 @@ const Edit = (data) => {
     setInvoiceDetailGridData(data.id, setItemListData);
 };
 
-const setItemListData = (data) => {    
+const setItemListData = (data) => {
     itemListGridOptions.api.setRowData(data);
 };
 
@@ -257,7 +258,7 @@ const setItemListData = (data) => {
 const ClearInvoiceForm = () => {
 
     removeBorderClass();
-    $("#id").val('');    
+    $("#id").val('');
     $('#date').val(new Date().toISOString().slice(0, 10));
     $('#referenceNo').val('');
     $('#dr').val('');
@@ -278,7 +279,7 @@ const ClearInvoiceForm = () => {
 const invoiceFormValidation = () => {
 
     $('#invoiceForm').validate({
-        rules: {           
+        rules: {
             date: {
                 required: true
             },
@@ -357,7 +358,7 @@ function calcTotal() {
     let discount = $('#discount').val();
     let netAmount = 0;
 
-    $(itemList).each(function (idx, item) {        
+    $(itemList).each(function (idx, item) {
         amount += parseFloat(item.amount);
     });
 
@@ -390,7 +391,7 @@ const getCurrentNepaliYear = () => {
 
     var year = new Date().getFullYear();
     const startingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 1, 1);
-    const endingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 12, 31);   
+    const endingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 12, 31);
     var invoiceNoPrefix = startingNepaliYear.toString().slice(2, 4) + endingNepaliYear.toString().slice(2, 4);
     return invoiceNoPrefix;
 };
@@ -400,7 +401,7 @@ const Save = () => {
     $('#invoiceForm').off('submit').on('submit', function (e) {
 
         e.preventDefault();
-        
+
         var record = {
             Id: $('#id').val(),
             InvoiceNo: getCurrentNepaliYear(),
@@ -417,13 +418,13 @@ const Save = () => {
             Discount: $('#discount').val(),
             NetAmount: $('#netAmount').val(),
             InvoiceDetails: getItemListData()
-        };              
+        };
 
         $.ajax({
             url: 'Invoice/Save',
             method: 'POST',
             data: { invoice: record },
-            success: function (data) {             
+            success: function (data) {
                 noty({
                     type: data.type,
                     text: data.message,
@@ -463,7 +464,7 @@ $(document).ready(function () {
 
     getCurrentNepaliYear();
 
-    $('#addInvoiceBtn').click(function () {             
+    $('#addInvoiceBtn').click(function () {
         ClearInvoiceForm();
         $('#invoiceForm').validate().destroy();
         invoiceFormValidation();
@@ -478,7 +479,7 @@ $(document).ready(function () {
 
     $('#printInvoice').off('click').on('click', function () {
 
-        html2canvas($("#invoiceBody")[0], {            
+        html2canvas($("#invoiceBody")[0], {
             scale: 3
         }).then(function (canvas) {
             var myImage = canvas.toDataURL("image/png");
@@ -490,21 +491,22 @@ $(document).ready(function () {
                     tWindow.print();
                 });
         });
-       
+
     });
 
-    $('#searchField').on('keyup', function ()
-    {
+    $('#searchField').on('keyup', function () {
         call();
     });
 
-    $('#searchFieldAgent').on('keyup', function ()
-    {
+    $('#searchFieldAgent').on('keyup', function () {
         call();
     });
 
-    $('#searchFieldClient').on('keyup', function ()
-    {
+    $('#searchFieldClient').on('keyup', function () {
+        call();
+    });
+
+    $('#searchFieldFileCode').on('keyup', function () {
         call();
     });
 

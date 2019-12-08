@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -39,7 +40,7 @@ namespace PeaceInternational.Web.Controllers
                 if (id == null)
                 {
                     var result = await _customerCrudService.GetAllAsync();
-                    return Json(result);
+                    return Json(result.OrderByDescending(p => p.CreatedDate));
                 }
                 else
                 {

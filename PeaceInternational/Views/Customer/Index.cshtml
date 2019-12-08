@@ -13,10 +13,13 @@
 </div>
 <hr />
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-2">
+        <input type="text" class="form-control" id="searchFieldFileCode" placeholder="File Code No." />
+    </div>
+    <div class="col-md-5">
         <input type="text" class="form-control" id="searchFieldTourName" placeholder="Tour Name" />
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
         <input type="text" class="form-control" id="searchFieldAgent" placeholder="Agent Name" />
     </div>
 </div>
@@ -39,7 +42,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="tourName"> Tour Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="tourName" id="tourName" />
+                                <input type="text" class="form-control" name="tourName" id="tourName" oninput="this.value = this.value.toUpperCase()" />
                             </div>
                         </div>
                         <div class="col-md-6">
