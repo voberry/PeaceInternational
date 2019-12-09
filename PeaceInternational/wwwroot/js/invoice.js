@@ -169,10 +169,7 @@ const itemListColumnDefs = [
         cellClass: ['text-monospace']
     },
     {
-        headerName: 'Amount', field: 'amount', maxWidth: 250,
-        cellRenderer: function (data) {
-            return data.value.toFixed(2);
-        },
+        headerName: 'Amount', field: 'amount', maxWidth: 250,       
         cellStyle: () => {
             return { 'font-size': '16px' };
         },
