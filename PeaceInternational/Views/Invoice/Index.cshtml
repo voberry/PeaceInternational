@@ -8,8 +8,12 @@
         font-weight: bold;
     }
 
+    .topRightInfo{
+        padding-left:6rem;
+    }
+
     .topRightInfo h6 {
-        margin-bottom: 3px;       
+        margin-bottom: 3px;
     }
     body h6{
         font-size:18px;
@@ -221,7 +225,7 @@
                     <div class="col-md-8">
                         <img src="~/img/logo2.jpg" style="max-width:100%; max-height:85%" />
                     </div>
-                    <div class="col-md-4 topRightInfo text-right">
+                    <div class="col-md-4 topRightInfo">
                         <h6>GPO Box: 9484</h6>
                         <h6>Lazimpat - 2, Kathmandu, Nepal</h6>
                         <h6>Tel: (977) 01 4444843/44/45</h6>
@@ -278,7 +282,7 @@
                 <h6>Name:&emsp;<span>{{invoice.clientName}} X {{invoice.pax}}</span></h6>
                 @*<h6><span>PAX:</span>&emsp;{{invoice.pax}}</h6>*@
             </div>
-            <div class="col-md-4 text-right">
+            <div class="col-md-4" style="padding-left:6rem;">
                 <h6>Date:&emsp;<span>{{chain "splitDate" "customDate" invoice.createdDate}}</span></h6>
                 <h6>Invoice no:&emsp;{{invoice.invoiceNo}}</h6>
                 <h6>File Code No:&emsp;{{invoice.fileCodeNo}}</h6>
@@ -318,15 +322,15 @@
                 <tfoot>
                     <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Total Due:</td>
-                        <td>{{distanceFixed invoice.totalDue}}</td>
+                        <td align="right">{{distanceFixed invoice.totalDue}}</td>
                     </tr>
                     <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Discount:</td>
-                        <td>{{distanceFixed invoice.discount}}</td>
+                        <td align="right">{{distanceFixed invoice.discount}}</td>
                     </tr>
                     <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Net Amount:</td>
-                        <td>{{distanceFixed invoice.netAmount}} </td>
+                        <td align="right">{{distanceFixed invoice.netAmount}} </td>
                     </tr>
                     <tr>
                         <td colspan="3"><span>In Words:</span> {{inWords invoice.netAmount}}</td>
