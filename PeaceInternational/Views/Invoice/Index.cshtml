@@ -9,21 +9,24 @@
     }
 
     .topRightInfo h6 {
-        margin-bottom: 3px;
+        margin-bottom: 3px;       
+    }
+    body h6{
+        font-size:18px;
     }
 
     #page {
         border-collapse: collapse;
         border: 2px solid;
         position: relative;
-        font-family:Arial, Helvetica, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
     }
 
         /* And this to your table's `td` elements. */
         #page td {
             padding-top: 1px;
             margin: 0;
-            font-size: 16px;
+            font-size: 18px;
             border-right: 2px solid;
         }
 
@@ -148,7 +151,7 @@
                                 <div id="itemListGrid" style="width:100%; height:300px" class="ag-theme-balham"></div>
                             </div>
                         </div>
-                        <div class="col-md-2 m-4">
+                        <div class="col-md- m-4">
                             <div class="form-group">
                                 <label for="amount">Total Due <span class="text-danger">*</span></label>
                                 <div class="input-group">
@@ -218,7 +221,7 @@
                     <div class="col-md-8">
                         <img src="~/img/logo2.jpg" style="max-width:100%; max-height:85%" />
                     </div>
-                    <div class="col-md-4 topRightInfo">
+                    <div class="col-md-4 topRightInfo text-right">
                         <h6>GPO Box: 9484</h6>
                         <h6>Lazimpat - 2, Kathmandu, Nepal</h6>
                         <h6>Tel: (977) 01 4444843/44/45</h6>
@@ -238,7 +241,9 @@
                         <h6>Checked By:</h6>
                     </div>
                     <div class="col-md-9">
-                        <h6 class="font-weight-bold float-right small">For : Peace International Tours & Travel (P) Ltd</h6>
+                        <h6 class="font-weight-bold float-right">For : Peace International Tours & Travel (P) Ltd</h6>
+                        <br />
+                        <br />
                         <br />
                         <br />
                         <br />
@@ -273,7 +278,7 @@
                 <h6>Name:&emsp;<span>{{invoice.clientName}} X {{invoice.pax}}</span></h6>
                 @*<h6><span>PAX:</span>&emsp;{{invoice.pax}}</h6>*@
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 text-right">
                 <h6>Date:&emsp;<span>{{chain "splitDate" "customDate" invoice.createdDate}}</span></h6>
                 <h6>Invoice no:&emsp;{{invoice.invoiceNo}}</h6>
                 <h6>File Code No:&emsp;{{invoice.fileCodeNo}}</h6>
@@ -286,7 +291,7 @@
             <table class="table table-borderless ml-2 mr-2" id="page">
                 <thead class="text-center thead-light">
                     <tr>
-                        <th width="10%">SN.</th>
+                        <th width="5%">SN.</th>
                         <th width="70%">PARTICULARS</th>
                         <th width="20%">AMOUNT</th>
                     </tr>
@@ -297,14 +302,13 @@
 
                         <td height="40">{{inc @@index}}</td>
                         <td height="40">{{this.particulars}}</td>
-                        <td height="40">
+                        <td height="40" class="text-right">
                             {{distanceFixed this.amount}}
                         </td>
                     </tr>
                     {{/each}}
-                    {{#for invoiceDetail.length 16 1}}
+                    {{#for invoiceDetail.length 17 1}}
                     <tr>
-
                         <td height="40"></td>
                         <td height="40"></td>
                         <td height="40"></td>
@@ -322,7 +326,7 @@
                     </tr>
                     <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Net Amount:</td>
-                        <td>{{distanceFixed invoice.netAmount}} /-</td>
+                        <td>{{distanceFixed invoice.netAmount}} </td>
                     </tr>
                     <tr>
                         <td colspan="3"><span>In Words:</span> {{inWords invoice.netAmount}}</td>
