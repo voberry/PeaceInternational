@@ -8,15 +8,16 @@
         font-weight: bold;
     }
 
-    .topRightInfo{
-        padding-left:6rem;
+    .topRightInfo {
+        padding-left: 6rem;       
     }
 
     .topRightInfo h6 {
         margin-bottom: 3px;
-    }
-    body h6{
         font-size:18px;
+    }
+    body h6 {
+        font-size:22px;
     }
 
     #page {
@@ -30,7 +31,7 @@
         #page td {
             padding-top: 1px;
             margin: 0;
-            font-size: 18px;
+            font-size: 22px;
             border-right: 2px solid;
         }
 
@@ -279,7 +280,7 @@
                 <h6>Dr:&emsp;<span>{{invoice.dr}}</span></h6>
                 <h6>&emsp;&emsp;&emsp;<span>{{invoice.address}}</span></h6>
                 <h6>Ref No:&emsp;{{invoice.referenceNo}}</h6>
-                <h6>Name:&emsp;<span>{{invoice.clientName}} X {{invoice.pax}}</span></h6>
+                <h6>Name:&emsp;<span>{{invoice.clientName}} X {{invoice.pax}} PAX</span></h6>
                 @*<h6><span>PAX:</span>&emsp;{{invoice.pax}}</h6>*@
             </div>
             <div class="col-md-4" style="padding-left:6rem;">
@@ -304,14 +305,14 @@
                     {{#each invoiceDetail}}
                     <tr>
 
-                        <td height="40">{{inc @@index}}</td>
+                        <td height="40" align="center">{{inc @@index}}</td>
                         <td height="40">{{this.particulars}}</td>
-                        <td height="40" class="text-right">
+                        <td height="40" class="text-right pr-5">
                             {{distanceFixed this.amount}}
                         </td>
                     </tr>
                     {{/each}}
-                    {{#for invoiceDetail.length 17 1}}
+                    {{#for invoiceDetail.length 18 1}}
                     <tr>
                         <td height="40"></td>
                         <td height="40"></td>
@@ -322,15 +323,15 @@
                 <tfoot>
                     <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Total Due:</td>
-                        <td align="right">{{distanceFixed invoice.totalDue}}</td>
+                        <td align="right" class="pr-5">{{distanceFixed invoice.totalDue}}</td>
                     </tr>
                     <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Discount:</td>
-                        <td align="right">{{distanceFixed invoice.discount}}</td>
+                        <td align="right" class="pr-5">{{distanceFixed invoice.discount}}</td>
                     </tr>
                     <tr style="border-bottom:2px solid;">
                         <td colspan="2" align="right" class="font-weight-bold">Net Amount:</td>
-                        <td align="right">{{distanceFixed invoice.netAmount}} </td>
+                        <td align="right" class="pr-5">{{distanceFixed invoice.netAmount}} </td>
                     </tr>
                     <tr>
                         <td colspan="3"><span>In Words:</span> {{inWords invoice.netAmount}}</td>

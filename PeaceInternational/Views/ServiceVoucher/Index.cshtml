@@ -27,16 +27,16 @@
     }
 
     h5 {
-        font-size: 17px;
+        font-size: 19px;
     }
 
     h6 {
-        font-size: 17px;
+        font-size: 19px;
         margin-bottom: 1px;
     }
 
     .h7 {
-        font-size: 17px;
+        font-size: 19px;
         margin-bottom: 5px;
     }
 
@@ -83,7 +83,7 @@
     }
 
     .formsize {
-        height: 670px;
+        height: 750px;
         margin-top: 0px;
         margin-bottom: 70px;
         border-style: solid;
@@ -166,7 +166,7 @@
     }
 
         .svcomment .comment {
-            height: 120px;
+            height: 150px;
             margin: 0px 15px 16px 15px;
         }
 
@@ -179,7 +179,7 @@
     }
 
     .endfooter {
-        margin-top: 2px;
+        margin-top: 4px;
     }
 
     .endfooter1 p {
@@ -187,7 +187,7 @@
     }
 
     .endfooter1, .endfooter2 p {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     section {
@@ -502,8 +502,8 @@
                     <p class="h7"><strong>{{hotel.address}}</strong></p>
                 </div>
                 <div class="col-md-4">
-                    <p class="h7"><strong>Exchange Order No.{{serviceVoucher.exchangeOrderNo}}</strong></p>
-                    <p class="h7"><strong>Date {{splitDate serviceVoucher.createdDate}}</strong></p>
+                    <p class="h7"><strong>Exchange Order No. :{{serviceVoucher.exchangeOrderNo}}</strong></p>
+                    <p class="h7"><strong>Date: {{chain "splitDate" "customDate" serviceVoucher.createdDate}}</strong></p>
                 </div>
             </div>
         </section>
@@ -511,7 +511,7 @@
             <div class="svdata">
                 <div class="svrow1">
                     <div class="svrcol1">
-                        <p class="h7">Name <strong>{{serviceVoucher.clientName}} X {{serviceVoucher.pax}}</strong></p>
+                        <p class="h7">Name <strong>{{serviceVoucher.clientName}} X {{serviceVoucher.pax}} PAX</strong></p>
                     </div>
                     <div class="svrcol2">
                         <p class="h7">File Code No. {{serviceVoucher.fileCodeNo}}</p>
@@ -519,7 +519,7 @@
                 </div>
                 <div class="svrow2">
                     <div class="svrcol3">
-                        <p class="h7">ARR. On <strong>{{chain "splitDate" "customDate"  serviceVoucher.arrivalDate}}</strong></p>
+                        <p class="h7">ARR. On <strong>{{splitDate serviceVoucher.arrivalDate}}</strong></p>
                     </div>
                     <div class="svrcol4">
                         <p class="h7">From  <strong>{{serviceVoucher.from}}</strong></p>
@@ -530,7 +530,7 @@
                 </div>
                 <div class="svrow2">
                     <div class="svrcol3">
-                        <p class="h7">DEP. On <strong>{{chain "splitDate" "customDate"  serviceVoucher.departureDate}}</strong></p>
+                        <p class="h7">DEP. On <strong>{{splitDate serviceVoucher.departureDate}}</strong></p>
                     </div>
                     <div class="svrcol4">
                     <p class="h7">For <strong>{{serviceVoucher.to}}</strong></p>

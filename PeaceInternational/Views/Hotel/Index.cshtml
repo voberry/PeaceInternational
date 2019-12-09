@@ -34,7 +34,7 @@
                     <input type="hidden" id="id" />
                     <div class="form-group">
                         <label for="name"> Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="name" id="name" />
+                        <input type="text" class="form-control" name="name" id="name" oninput="this.value = this.value.toUpperCase()" />
                     </div>
                     <div class="form-group">
                         <label for="address"> Address <span class="text-danger">*</span></label>
