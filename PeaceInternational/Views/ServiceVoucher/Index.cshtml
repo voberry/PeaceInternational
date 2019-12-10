@@ -36,7 +36,7 @@
     }
 
     .h7 {
-        font-size: 19px;
+        font-size: 20px;
         margin-bottom: 5px;
     }
 
@@ -187,7 +187,7 @@
     }
 
     .endfooter1, .endfooter2 p {
-        font-size: 16px;
+        font-size: 20px;
     }
 
     section {
@@ -444,7 +444,7 @@
                     <footer>
                         <div class="row endfooter">
                             <div class="col-md-8 endfooter1">
-                                <p>Valid Only For Services/amount stated above and subject to terms and conditions stated overleaf</p>
+                                <p style="font-size:16px !important;">Valid Only For Services/amount stated above and subject to terms and conditions stated overleaf</p>
                             </div>
                             <div class="col-md-4 text-center endfooter2">
                                 <p><strong>&emsp;&emsp;( Authorized Signatory )</strong></p>
@@ -476,7 +476,7 @@
                     <footer>
                         <div class="row endfooter">
                             <div class="col-md-8 endfooter1">
-                                <p>Valid Only For Services/amount stated above and subject to terms and conditions stated overleaf</p>
+                                <p style="font-size:16px !important;">Valid Only For Services/amount stated above and subject to terms and conditions stated overleaf</p>
                             </div>
                             <div class="col-md-4 text-center endfooter2">
                                 <p><strong>&emsp;&emsp;( Authorized Signatory )</strong></p>
@@ -495,7 +495,7 @@
     <script src="~/js/serviceVoucher.js"></script>
     <script id="entry-template" type="text/x-handlebars-template">
         <section>
-            <strong>&nbsp; Services to be provided by:</strong>
+            <strong class="h7">&nbsp; Services to be provided by:</strong>
             <div class="row svaddress">
                 <div class="col-md-8">
                     <p class="h7"><strong>{{hotel.name}}</strong></p>
@@ -542,16 +542,16 @@
             </div>
         </section>
         <div class="svcomment">
-            <strong>&nbsp;Please provide the following services</strong>
+            <strong  class="h7">&nbsp;Please provide the following services</strong>
             <p class="comment">
                 {{serviceVoucher.services}}
             </p>
             <div class="row endfooter2">
                 <div class="col-md-8 endfooter1">
-                    <p><strong>COLLECT ALL EXTRAS DIRECTLY.</strong></p>
+                    <p class="h7"><strong>COLLECT ALL EXTRAS DIRECTLY.</strong></p>
                 </div>
                 <div class="col-md-4 text-center endfooter2">
-                    <p><strong>Ishwari</strong></p>
+                    <p class="h7"><strong>Ishwari</strong></p>
                 </div>
             </div>
         </div>
