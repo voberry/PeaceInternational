@@ -19,11 +19,11 @@
         padding-top: 45px;
     }
 
-      #page {
+    #page {
         border-collapse: collapse;
         border: 2px solid;
         position: relative;
-        font-family:Arial, Helvetica, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
     }
 
     h5 {
@@ -40,15 +40,19 @@
         margin-bottom: 5px;
     }
 
+    .h8 {
+        font-size: 22px;
+    }
+
     .head {
         height: 150px;
         margin-bottom: 40px;
     }
 
     .logo img {
-        height: 140px;
-        width: 90%;
-        margin-left:50px;
+        max-height: 100%;
+        max-width: 80%;
+        margin-left: 50px;
     }
 
     .detail {
@@ -83,7 +87,7 @@
     }
 
     .formsize {
-        height: 750px;
+        height: 780px;
         margin-top: 0px;
         margin-bottom: 70px;
         border-style: solid;
@@ -355,7 +359,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="clientName"> Client Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="clientName" id="clientName" oninput="this.value = this.value.toUpperCase()"/>
+                            <input type="text" class="form-control" name="clientName" id="clientName" oninput="this.value = this.value.toUpperCase()" />
                         </div>
                         <div class="col-md-3">
                             <label for="pax"> PAX <span class="text-danger">*</span></label>
@@ -370,11 +374,11 @@
                         </div>
                         <div class="col-md-4">
                             <label for="from"> From <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="from" id="from" oninput="this.value = this.value.toUpperCase()"/>
+                            <input type="text" class="form-control" name="from" id="from" oninput="this.value = this.value.toUpperCase()" />
                         </div>
                         <div class="col-md-4">
                             <label for="arrivalFlight"> Flight No. <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="arrivalFlight" id="arrivalFlight" oninput="this.value = this.value.toUpperCase()"/>
+                            <input type="text" class="form-control" name="arrivalFlight" id="arrivalFlight" oninput="this.value = this.value.toUpperCase()" />
                         </div>
                     </div>
                     <br />
@@ -385,11 +389,11 @@
                         </div>
                         <div class="col-md-4">
                             <label for="to"> To <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="to" id="to" oninput="this.value = this.value.toUpperCase()"/>
+                            <input type="text" class="form-control" name="to" id="to" oninput="this.value = this.value.toUpperCase()" />
                         </div>
                         <div class="col-md-4">
                             <label for="departureFlight"> Flight No. <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="departureFlight" id="departureFlight" oninput="this.value = this.value.toUpperCase()"/>
+                            <input type="text" class="form-control" name="departureFlight" id="departureFlight" oninput="this.value = this.value.toUpperCase()" />
                         </div>
                     </div>
                     <br />
@@ -425,9 +429,9 @@
                     <header class="mt-4">
                         <div class="row header">
                             <div class="logo col-md-8">
-                                <img src="img/logo2.jpg" style="padding-top: 15px; padding-right: 30px" ;>
+                                <img src="img/logo2.jpg" style="padding-top: 15px; padding-right: 30px";>
                             </div>
-                            <div class="col-md-4 ag-resizer-topRight">
+                            <div class="col-md-4">
                                 <h6>GPO Box: 9484</h6>
                                 <h6>Lazimpat - 2, Kathmandu, Nepal</h6>
                                 <h6>Tel: (977) 01 4444843/44/45</h6>
@@ -444,7 +448,7 @@
                     <footer>
                         <div class="row endfooter">
                             <div class="col-md-8 endfooter1">
-                                <p style="font-size:16px !important;">Valid Only For Services/amount stated above and subject to terms and conditions stated overleaf</p>
+                                <p style="font-size:17px !important;">Valid Only For Services/amount stated above and subject to terms and conditions stated overleaf</p>
                             </div>
                             <div class="col-md-4 text-center endfooter2">
                                 <p><strong>&emsp;&emsp;( Authorized Signatory )</strong></p>
@@ -453,7 +457,7 @@
                     </footer>
                 </div>
 
-                <div class="formsize" style="margin-top:8rem;">
+                <div class="formsize" style="margin-top:4rem;">
                     <header class="mt-4">
                         <div class="row header">
                             <div class="logo col-md-8">
@@ -476,7 +480,7 @@
                     <footer>
                         <div class="row endfooter">
                             <div class="col-md-8 endfooter1">
-                                <p style="font-size:16px !important;">Valid Only For Services/amount stated above and subject to terms and conditions stated overleaf</p>
+                                <p style="font-size:17px !important;">Valid Only For Services/amount stated above and subject to terms and conditions stated overleaf</p>
                             </div>
                             <div class="col-md-4 text-center endfooter2">
                                 <p><strong>&emsp;&emsp;( Authorized Signatory )</strong></p>
@@ -495,7 +499,7 @@
     <script src="~/js/serviceVoucher.js"></script>
     <script id="entry-template" type="text/x-handlebars-template">
         <section>
-            <strong class="h7">&nbsp; Services to be provided by:</strong>
+            <strong class="h8">&nbsp; Services to be provided by:</strong>
             <div class="row svaddress">
                 <div class="col-md-8">
                     <p class="h7"><strong>{{hotel.name}}</strong></p>
@@ -533,17 +537,17 @@
                         <p class="h7">DEP. On <strong>{{splitDate serviceVoucher.departureDate}}</strong></p>
                     </div>
                     <div class="svrcol4">
-                    <p class="h7">For <strong>{{serviceVoucher.to}}</strong></p>
-                </div>
-                <div class="svrcol5">
-                    <p class="h7">By <strong>{{serviceVoucher.departureFlight}}</strong></p>
-                </div>
+                        <p class="h7">For <strong>{{serviceVoucher.to}}</strong></p>
+                    </div>
+                    <div class="svrcol5">
+                        <p class="h7">By <strong>{{serviceVoucher.departureFlight}}</strong></p>
+                    </div>
                 </div>
             </div>
         </section>
         <div class="svcomment">
-            <strong  class="h7">&nbsp;Please provide the following services</strong>
-            <p class="comment">
+            <strong class="h8">&nbsp;Please provide the following services</strong>
+            <p class="comment h7">
                 {{serviceVoucher.services}}
             </p>
             <div class="row endfooter2">
