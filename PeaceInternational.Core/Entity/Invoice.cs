@@ -12,7 +12,8 @@ namespace PeaceInternational.Core.Entity
         }
        
         public string InvoiceNo { get; set; }
-        public int FileCodeNo { get; set; }
+        public string FileCodeNo { get; set; }
+        public int FiscalYearId { get; set; }
         public string ReferenceNo { get; set; }
         public string Dr { get; set; }
         public string Address { get; set; }
@@ -26,6 +27,7 @@ namespace PeaceInternational.Core.Entity
         public decimal NetAmount { get; set; }
 
         public Customer Customer { get; set; }
+        public FiscalYear FiscalYear { get; set; }
 
         public ICollection<InvoiceDetail> InvoiceDetails { get; set; }
         

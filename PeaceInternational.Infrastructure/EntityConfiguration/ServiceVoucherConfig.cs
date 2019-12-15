@@ -11,7 +11,7 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
     {
         public override void Configure(EntityTypeBuilder<ServiceVoucher> builder)
         {
-            base.Configure(builder);          
+            base.Configure(builder);
 
             builder.Property(p => p.ClientName)
               .HasMaxLength(255)
@@ -37,15 +37,20 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
                 .IsRequired()
                 .HasMaxLength(20);
 
-            builder.Property(p => p.Services);             
+            builder.Property(p => p.Services);
 
             builder.HasOne(p => p.Hotel)
                 .WithMany(h => h.HotelReceipt)
                 .HasForeignKey(p => p.HotelId);
 
             builder.HasOne(p => p.Customer)
-                .WithMany(e => e.HotelReceipt)
-                .HasForeignKey(p => p.FileCodeNo);
+                .WithMany(e => e.ServiceVoucher)
+                .HasForeignKey(p => p.FileCodeNo)
+                .HasPrincipalKey(e => e.FileCodeNo);
+
+            builder.HasOne(p => p.FiscalYear)
+               .WithMany(e => e.ServiceVoucher)
+               .HasForeignKey(p => p.FiscalYearId);
         }
     }
 }

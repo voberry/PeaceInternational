@@ -131,7 +131,8 @@ const GenerateInvoice = (invoiceData) => {
         method: 'GET',
         data: { id: invoiceData.id },
         success: (data) => {
-
+            data.invoice.fileCodeNo = data.invoice.fileCodeNo.split('/')[1];
+            console.log(data);
             var source = document.getElementById("entry-template").innerHTML;
             var template = Handlebars.compile(source);
             var result = template(data);
@@ -384,14 +385,14 @@ const getItemListData = () => {
     return itemList;
 };
 
-const getCurrentNepaliYear = () => {
+//const getCurrentNepaliYear = () => {
 
-    var year = new Date().getFullYear();
-    const startingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 1, 1);
-    const endingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 12, 31);
-    var invoiceNoPrefix = startingNepaliYear.toString().slice(2, 4) + endingNepaliYear.toString().slice(2, 4);
-    return invoiceNoPrefix;
-};
+//    var year = new Date().getFullYear();
+//    const startingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 1, 1);
+//    const endingNepaliYear = calendarFunctions.getBsYearByAdDate(year, 12, 31);
+//    var invoiceNoPrefix = startingNepaliYear.toString().slice(2, 4) + endingNepaliYear.toString().slice(2, 4);
+//    return invoiceNoPrefix;
+//};
 
 const Save = () => {
 
@@ -400,8 +401,7 @@ const Save = () => {
         e.preventDefault();
 
         var record = {
-            Id: $('#id').val(),
-            InvoiceNo: getCurrentNepaliYear(),
+            Id: $('#id').val(),  
             FileCodeNo: $('#fileCodeNo').val(),
             ReferenceNo: $('#referenceNo').val(),
             Dr: $('#dr').val(),
@@ -459,7 +459,7 @@ $(document).ready(function () {
 
     $('#discount').on('keyup', () => { calcTotal(); });
 
-    getCurrentNepaliYear();
+    //getCurrentNepaliYear();
 
     $('#addInvoiceBtn').click(function () {
         ClearInvoiceForm();

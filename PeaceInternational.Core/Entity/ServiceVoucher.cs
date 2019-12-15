@@ -6,8 +6,9 @@ namespace PeaceInternational.Core.Entity
 {
     public class ServiceVoucher : BaseEntity
     {
-        public int ExchangeOrderNo { get; set; }
-        public int FileCodeNo { get; set; }
+        public string ExchangeOrderNo { get; set; }
+        public string FileCodeNo { get; set; }
+        public int FiscalYearId { get; set; }
         public int HotelId { get; set; }
         public string ClientName { get; set; }
         public int PAX { get; set; }
@@ -20,6 +21,7 @@ namespace PeaceInternational.Core.Entity
         public string Services { get; set; }
 
         public Customer Customer { get; set; }
+        public FiscalYear FiscalYear { get; set; }
 
         public Hotel Hotel { get; set; }
     }

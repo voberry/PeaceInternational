@@ -13,6 +13,12 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
         {
             base.Configure(builder);
 
+            builder.HasAlternateKey(p => p.FileCodeNo);
+
+            builder.Property(p => p.FileCodeNo)     
+                .IsRequired()
+                .HasMaxLength(50);
+
             builder.Property(p => p.TourName)
                 .HasMaxLength(255)
                 .IsRequired();
@@ -30,6 +36,9 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
             builder.Property(p => p.GuideName)
                 .HasMaxLength(255);
 
+            builder.HasOne(p => p.FiscalYear)
+                .WithMany(e => e.Customers)
+                .HasForeignKey(p => p.FiscalYearId);
         }
     }
 }

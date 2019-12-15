@@ -20,6 +20,7 @@ namespace PeaceInternational.Web.Controllers
 
         private readonly ICrudService<ServiceVoucher> _serviceVoucherCrudService;
         private readonly ICrudService<Hotel> _hotelCrudService;
+        private readonly ICrudService<FiscalYear> _fiscalYearCrudService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private Notification notification;
@@ -27,12 +28,14 @@ namespace PeaceInternational.Web.Controllers
         public ServiceVoucherController(
             ICrudService<ServiceVoucher> serviceVoucherCrudService,
             ICrudService<Hotel> hotelCrudService,
-            UserManager<IdentityUser> userManager,           
+            UserManager<IdentityUser> userManager,
+            ICrudService<FiscalYear> fiscalYearCrudService,
             IUnitOfWork unitOfWork)
         {
             _serviceVoucherCrudService = serviceVoucherCrudService;
             _hotelCrudService = hotelCrudService;
             _userManager = userManager;
+            _fiscalYearCrudService = fiscalYearCrudService;
             _unitOfWork = unitOfWork;
         }
         // GET: /<controller>/
@@ -74,10 +77,12 @@ namespace PeaceInternational.Web.Controllers
             {
                 var serviceVoucher = _serviceVoucherCrudService.Get(id);
                 var hotel = _hotelCrudService.Get(serviceVoucher.HotelId);
+                var user = _userManager.GetUserAsync(HttpContext.User).Result;
                 var result = new
                 {
                     serviceVoucher,
-                    hotel
+                    hotel,
+                    user.UserName
                 };
                 return Json(result);
             }
@@ -94,6 +99,8 @@ namespace PeaceInternational.Web.Controllers
             try
             {
                 var user = _userManager.GetUserAsync(HttpContext.User).Result;
+                var currentFiscalYear = _fiscalYearCrudService.Get(p => DateTime.Now.Date >= p.StartDateAD && DateTime.Now.Date <= p.EndDateAD);
+
                 notification = new Notification();
 
                 if (serviceVoucher.Id > 0)
@@ -105,8 +112,9 @@ namespace PeaceInternational.Web.Controllers
                 {
                     await _serviceVoucherCrudService.InsertAsync(new ServiceVoucher
                     {
-                        ExchangeOrderNo = serviceVoucher.ExchangeOrderNo,
+                        ExchangeOrderNo = GetExchangeOrderNo(currentFiscalYear),
                         FileCodeNo = serviceVoucher.FileCodeNo,
+                        FiscalYearId = currentFiscalYear.Id,
                         HotelId = serviceVoucher.HotelId,
                         ClientName = serviceVoucher.ClientName,
                         PAX = serviceVoucher.PAX,
@@ -140,8 +148,7 @@ namespace PeaceInternational.Web.Controllers
             try
             {
                 var record = await _serviceVoucherCrudService.GetAsync(serviceVoucher.Id);
-
-                record.ExchangeOrderNo = serviceVoucher.FileCodeNo;
+                
                 record.FileCodeNo = serviceVoucher.FileCodeNo;
                 record.HotelId = serviceVoucher.HotelId;
                 record.ClientName = serviceVoucher.ClientName;
@@ -165,6 +172,14 @@ namespace PeaceInternational.Web.Controllers
                 Console.WriteLine(exception.Message);
                 return new Notification("error", "Service Voucher update failed.");
             }
+        }
+
+        private string GetExchangeOrderNo(FiscalYear currentFiscalYear)
+        {
+            var count = _serviceVoucherCrudService.GetAll(p => p.FiscalYearId == currentFiscalYear.Id).Count();
+            var formattedFiscalYear = currentFiscalYear.Name.Remove(2, 1);
+            var exchangeOrderNo = $"{formattedFiscalYear}/{(count + 1).ToString().PadLeft(4, '0')}";
+            return exchangeOrderNo;
         }
     }
 }

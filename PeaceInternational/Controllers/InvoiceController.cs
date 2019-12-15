@@ -18,6 +18,7 @@ namespace PeaceInternational.Web.Controllers
     {
         private readonly ICrudService<Invoice> _invoiceCrudService;
         private readonly ICrudService<InvoiceDetail> _invoiceDetailCrudService;
+        private readonly ICrudService<FiscalYear> _fiscalYearCrudService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private Notification notification;
@@ -26,10 +27,12 @@ namespace PeaceInternational.Web.Controllers
             ICrudService<Invoice> invoiceCrudService,
             UserManager<IdentityUser> userManager,
             ICrudService<InvoiceDetail> invoiceDetailCrudService,
+            ICrudService<FiscalYear> fiscalYearCrudService,
             IUnitOfWork unitOfWork)
         {
             _invoiceCrudService = invoiceCrudService;
             _invoiceDetailCrudService = invoiceDetailCrudService;
+            _fiscalYearCrudService = fiscalYearCrudService;
             _userManager = userManager;
             _unitOfWork = unitOfWork;
         }
@@ -106,6 +109,8 @@ namespace PeaceInternational.Web.Controllers
             try
             {
                 var user = _userManager.GetUserAsync(HttpContext.User).Result;
+                var currentFiscalYear = _fiscalYearCrudService.Get(p => DateTime.Now.Date >= p.StartDateAD && DateTime.Now.Date <= p.EndDateAD);
+
                 notification = new Notification();
 
                 if (invoice.Id > 0)
@@ -122,8 +127,9 @@ namespace PeaceInternational.Web.Controllers
 
                     int InvoiceId = await _invoiceCrudService.InsertAsync(new Invoice
                     {
-                        InvoiceNo = $"{invoice.InvoiceNo}/{(invoiceCount + 1).ToString().PadLeft(4, '0')}",
+                        InvoiceNo = GetInvoiceNo(currentFiscalYear),
                         FileCodeNo = invoice.FileCodeNo,
+                        FiscalYearId = currentFiscalYear.Id,
                         ReferenceNo = invoice.ReferenceNo,
                         Dr = invoice.Dr,
                         Address = invoice.Address,
@@ -223,6 +229,14 @@ namespace PeaceInternational.Web.Controllers
                 _unitOfWork.Rollback();
                 return new Notification("error", "Invoice update failed.");
             }
+        }
+
+        private string GetInvoiceNo(FiscalYear currentFiscalYear)
+        {
+            var count = _invoiceCrudService.GetAll(p => p.FiscalYearId == currentFiscalYear.Id).Count();
+            var formattedFiscalYear = currentFiscalYear.Name.Remove(2, 1);
+            var invoiceNo = $"{formattedFiscalYear}/{(count + 1).ToString().PadLeft(4, '0')}";
+            return invoiceNo;
         }
     }
 }

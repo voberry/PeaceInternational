@@ -36,12 +36,12 @@
     }
 
     .h7 {
-        font-size: 20px;
+        font-size: 21px;
         margin-bottom: 5px;
     }
 
     .h8 {
-        font-size: 22px;
+        font-size: 24px;
     }
 
     .head {
@@ -77,17 +77,9 @@
     ==================================================*/
 
     /*Service Voucher CSS*/
-    .svcontainer {
-        height: 1125px;
-        width: 800px;
-        /*background-color: grey;*/
-        padding-left: 30px;
-        padding-right: 30px;
-        padding-top: 10px;
-    }
 
     .formsize {
-        height: 780px;
+        height: 800px;
         margin-top: 0px;
         margin-bottom: 70px;
         border-style: solid;
@@ -96,21 +88,7 @@
 
     .address h6 {
         line-height: 18px;
-    }
-
-    .svcontainer header {
-        padding: 10px 10px 22px 10px;
-    }
-
-    .svcontainer .head {
-        margin-bottom: 15px;
-    }
-
-    .svcontainer strong {
-        margin-left: 15px;
-        font-size: 14px;
-        margin-top: 10px;
-    }
+    }  
 
     .svaddress {
         margin: 10px 0px 10px 5px;
@@ -160,9 +138,9 @@
         float: right;
     }
 
-    footer {
+    /*footer {
         height: 150px;
-    }
+    }*/
 
     .svcomment {
         border-style: none none solid none;
@@ -227,7 +205,7 @@
     }
 
     .body {
-        height: 600px;
+        height: 200px;
     }
 
     .sclass {
@@ -336,15 +314,15 @@
                 <div class="modal-body">
                     <input type="hidden" id="id" />
                     <div class="form-row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="date"> Date <span class="text-danger">*</span></label>
                             <output type="text" class="form-control" name="date" id="date" />
                         </div>
-                        <div class="col-md-4">
+                        @*<div class="col-md-4">
                             <label for="exchangeOrderNo"> Exchange Order No. <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" name="exchangeOrderNo" id="exchangeOrderNo" />
-                        </div>
-                        <div class="col-md-4">
+                        </div>*@
+                        <div class="col-md-6">
                             <label for="fileCodeNo"> File Code No. <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="fileCodeNo" id="fileCodeNo" />
                         </div>
@@ -445,19 +423,18 @@
                     <br />
                     <div id="receiptTemplate1">
                     </div>
-                    <footer>
+                    <div>
                         <div class="row endfooter">
                             <div class="col-md-8 endfooter1">
-                                <p style="font-size:17px !important;">Valid Only For Services/amount stated above and subject to terms and conditions stated overleaf</p>
+                                <p style="font-size:14px !important;">VALID ONLY FOR SERVICES/AMOUNT STATED ABOVE AND SUBJECT TO TERMS AND CONDITIONS STATED OVERLEAF</p>
                             </div>
                             <div class="col-md-4 text-center endfooter2">
                                 <p><strong>&emsp;&emsp;( Authorized Signatory )</strong></p>
                             </div>
                         </div>
-                    </footer>
+                    </div>
                 </div>
-
-                <div class="formsize" style="margin-top:4rem;">
+                <div class="formsize">
                     <header class="mt-4">
                         <div class="row header">
                             <div class="logo col-md-8">
@@ -477,16 +454,16 @@
                     <br />
                     <div id="receiptTemplate2">
                     </div>
-                    <footer>
+                    <div>
                         <div class="row endfooter">
                             <div class="col-md-8 endfooter1">
-                                <p style="font-size:17px !important;">Valid Only For Services/amount stated above and subject to terms and conditions stated overleaf</p>
+                                <p style="font-size:14px !important;">VALID ONLY FOR SERVICES/AMOUNT STATED ABOVE AND SUBJECT TO TERMS AND CONDITIONS STATED OVERLEAF</p>
                             </div>
                             <div class="col-md-4 text-center endfooter2">
                                 <p><strong>&emsp;&emsp;( Authorized Signatory )</strong></p>
                             </div>
                         </div>
-                    </footer>
+                    </div>
                 </div>
             </div>
             <button type="button" class="btn btn-danger" id="printInvoice">Print</button>
@@ -502,11 +479,11 @@
             <strong class="h8">&nbsp; Services to be provided by:</strong>
             <div class="row svaddress">
                 <div class="col-md-8">
-                    <p class="h7"><strong>{{hotel.name}}</strong></p>
-                    <p class="h7"><strong>{{hotel.address}}</strong></p>
+                    <p class="h7" style="font-size:25px !important;"><strong>{{hotel.name}}</strong></p>
+                    <p class="h7" style="font-size:25px !important;"><strong>{{hotel.address}}</strong></p>
                 </div>
                 <div class="col-md-4">
-                    <p class="h7"><strong>Exchange Order No. :{{serviceVoucher.exchangeOrderNo}}</strong></p>
+                    <p class="h7"><strong>Exchange Order No. : {{serviceVoucher.exchangeOrderNo}}</strong></p>
                     <p class="h7"><strong>Date: {{chain "splitDate" "customDate" serviceVoucher.createdDate}}</strong></p>
                 </div>
             </div>
@@ -546,7 +523,7 @@
             </div>
         </section>
         <div class="svcomment">
-            <strong class="h8">&nbsp;Please provide the following services</strong>
+            <strong class="h8">&nbsp;&nbsp;Please provide the following services</strong>
             <p class="comment h7">
                 {{serviceVoucher.services}}
             </p>
@@ -555,7 +532,7 @@
                     <p class="h7"><strong>COLLECT ALL EXTRAS DIRECTLY.</strong></p>
                 </div>
                 <div class="col-md-4 text-center endfooter2">
-                    <p class="h7"><strong>Ishwari</strong></p>
+                    <p class="h7"><strong>{{userName}}</strong></p>
                 </div>
             </div>
         </div>

@@ -21,7 +21,7 @@ namespace PeaceInternational.Infrastructure
             builder.ApplyConfiguration(new InvoiceDetailConfig());
             builder.ApplyConfiguration(new ServiceVoucherConfig());
             builder.ApplyConfiguration(new CustomerConfig());
-
+            builder.ApplyConfiguration(new FiscalYearConfig());
         }
     }
 }

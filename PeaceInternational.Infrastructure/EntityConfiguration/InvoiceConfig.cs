@@ -54,7 +54,12 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
 
             builder.HasOne(p => p.Customer)
                .WithMany(e => e.Invoice)
-               .HasForeignKey(p => p.FileCodeNo);
+               .HasForeignKey(p => p.FileCodeNo)
+               .HasPrincipalKey(e => e.FileCodeNo);
+
+            builder.HasOne(p => p.FiscalYear)
+               .WithMany(e => e.Invoice)
+               .HasForeignKey(p => p.FiscalYearId);
         }
     }
 }

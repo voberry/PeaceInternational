@@ -2,7 +2,7 @@
 
 //Column Defination for the grid
 const columnDefs = [
-    { headerName: 'File Code No.', field: 'id', maxWidth: 100 },
+    { headerName: 'File Code No.', field: 'fileCodeNo', maxWidth: 100 },
     { headerName: 'Tour Name', field: 'tourName' },
     { headerName: 'Country', field: 'country' },
     {
@@ -124,7 +124,7 @@ const customerValidation = () => {
 
 const call = () => {
     let filter = {
-        id: { type: 'contains', filter: $('#searchFieldFileCode').val() },   
+        fileCodeNo: { type: 'contains', filter: $('#searchFieldFileCode').val() },   
         tourName: { type: 'contains', filter: $('#searchFieldTourName').val() },        
         agent: { type: 'contains', filter: $('#searchFieldAgent').val() }
     };

@@ -80,7 +80,9 @@ const GenerateReceipt = (receiptData) => {
         method: 'GET',
         data: { id: receiptData.id },
         success: (data) => {
-
+            data.serviceVoucher.exchangeOrderNo = data.serviceVoucher.exchangeOrderNo.split('/')[1];
+            data.serviceVoucher.fileCodeNo = data.serviceVoucher.fileCodeNo.split('/')[1];
+            console.log(data);
             console.log(receiptData);
             var source = document.getElementById("entry-template").innerHTML;
             var template = Handlebars.compile(source);
@@ -120,13 +122,12 @@ const serviceVoucherValidation = () => {
 
     $('#serviceVoucherForm').validate({
         rules: {
-            exchangeOrderNo: {
-                required: true,
-                digits: true
-            },
+            //exchangeOrderNo: {
+            //    required: true,
+            //    digits: true
+            //},
             fileCodeNo: {
-                required: true,
-                digits: true,
+                required: true,                
                 checkFileCodeNo: true
             },
             hotel: {
@@ -195,7 +196,7 @@ const Save = () => {
 
         var record = {
             Id: $('#id').val(),
-            ExchangeOrderNo: $('#exchangeOrderNo').val(),
+            //ExchangeOrderNo: $('#exchangeOrderNo').val(),
             FileCodeNo: $('#fileCodeNo').val(),
             HotelId: $('#hotel').val(),
             ClientName: $('#clientName').val(),
@@ -301,7 +302,7 @@ $(document).ready(function () {
         $.ajax({
             url: 'Customer/Get',
             method: 'GET',
-            data: { id: $('#fileCodeNo').val() },
+            data: { fileCodeNo: $('#fileCodeNo').val() },
             success: function (data) {
                 console.log(data);
                 $('#clientName').val(data.tourName);

@@ -15,14 +15,17 @@ namespace PeaceInternational.Web.Controllers
     public class CustomerController : Controller
     {
         private readonly ICrudService<Customer> _customerCrudService;
+        private readonly ICrudService<FiscalYear> _fiscalYearCrudService;
         private readonly UserManager<IdentityUser> _userManager;
         private Notification notification;
 
         public CustomerController(
             ICrudService<Customer> customerCrudService,
+            ICrudService<FiscalYear> fiscalYearCrudService,
             UserManager<IdentityUser> userManager)
         {
             _customerCrudService = customerCrudService;
+            _fiscalYearCrudService = fiscalYearCrudService;
             _userManager = userManager;
         }
        
@@ -33,18 +36,18 @@ namespace PeaceInternational.Web.Controllers
 
         //GET Customer
         [HttpGet]
-        public async Task<IActionResult> Get(int? id)
+        public async Task<IActionResult> Get(string fileCodeNo)
         {
             try
             {
-                if (id == null)
+                if (fileCodeNo == null)
                 {
                     var result = await _customerCrudService.GetAllAsync();
                     return Json(result.OrderByDescending(p => p.CreatedDate));
                 }
                 else
                 {
-                    var result = _customerCrudService.Get(id);
+                    var result = _customerCrudService.Get(p => p.FileCodeNo == fileCodeNo);
                     return Json(result);
                 }
             }
@@ -61,6 +64,7 @@ namespace PeaceInternational.Web.Controllers
             try
             {
                 var user = _userManager.GetUserAsync(HttpContext.User).Result;
+                var currentFiscalYear = _fiscalYearCrudService.Get(p => DateTime.Now.Date >= p.StartDateAD && DateTime.Now.Date <= p.EndDateAD);
                 notification = new Notification();
 
                 if (customer.Id > 0)
@@ -72,6 +76,8 @@ namespace PeaceInternational.Web.Controllers
                 {
                     await _customerCrudService.InsertAsync(new Customer
                     {
+                        FileCodeNo = GetFileCodeNo(currentFiscalYear),
+                        FiscalYearId = currentFiscalYear.Id,
                         TourName = customer.TourName,
                         Country = customer.Country,
                         ArrivalDate = customer.ArrivalDate,
@@ -115,9 +121,9 @@ namespace PeaceInternational.Web.Controllers
         }
 
         [HttpGet]
-        public JsonResult CheckFileCodeNo(int fileCodeNo)
+        public JsonResult CheckFileCodeNo(string fileCodeNo)
         {
-            var customer = _customerCrudService.Get(fileCodeNo);
+            var customer = _customerCrudService.Get(p => p.FileCodeNo == fileCodeNo);
             return customer == null ? Json(0) : Json(1);
         }
 
@@ -161,6 +167,14 @@ namespace PeaceInternational.Web.Controllers
                 Console.WriteLine(exception.Message);
                 return new Notification("error", "Failed to delete customer.");
             }
+        }
+
+        private string GetFileCodeNo(FiscalYear currentFiscalYear)
+        {            
+            var count = _customerCrudService.GetAll(p => p.FiscalYearId == currentFiscalYear.Id).Count();
+            var formattedFiscalYear = currentFiscalYear.Name.Remove(2, 1);
+            var fileCodeNo = $"{formattedFiscalYear}/{(count + 1).ToString().PadLeft(4, '0')}";
+            return fileCodeNo;
         }
     }
 }
