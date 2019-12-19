@@ -511,7 +511,7 @@ $(document).ready(function () {
         $.ajax({
             url: 'Customer/Get',
             method: 'GET',
-            data: { id: $('#fileCodeNo').val() },
+            data: { fileCodeNo: $('#fileCodeNo').val() },
             success: function (data) {
                 console.log(data);
                 $('#clientName').val(data.tourName);

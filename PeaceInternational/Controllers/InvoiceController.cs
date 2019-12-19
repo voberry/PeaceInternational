@@ -119,10 +119,7 @@ namespace PeaceInternational.Web.Controllers
                     notification = await EditInvoice(invoice, user);
                 }
                 else
-                {
-
-                    int invoiceCount = _invoiceCrudService.GetAll(p => p.InvoiceNo.Contains(invoice.InvoiceNo)).Count();
-
+                {                    
                     _unitOfWork.BeginTransaction();
 
                     int InvoiceId = await _invoiceCrudService.InsertAsync(new Invoice
@@ -235,6 +232,12 @@ namespace PeaceInternational.Web.Controllers
         {
             var count = _invoiceCrudService.GetAll(p => p.FiscalYearId == currentFiscalYear.Id).Count();
             var formattedFiscalYear = currentFiscalYear.Name.Remove(2, 1);
+
+            if(formattedFiscalYear == "7677")
+            {
+                count = 168;
+            }
+
             var invoiceNo = $"{formattedFiscalYear}/{(count + 1).ToString().PadLeft(4, '0')}";
             return invoiceNo;
         }

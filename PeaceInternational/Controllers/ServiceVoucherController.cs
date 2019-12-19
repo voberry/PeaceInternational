@@ -77,7 +77,7 @@ namespace PeaceInternational.Web.Controllers
             {
                 var serviceVoucher = _serviceVoucherCrudService.Get(id);
                 var hotel = _hotelCrudService.Get(serviceVoucher.HotelId);
-                var user = _userManager.GetUserAsync(HttpContext.User).Result;
+                var user = _userManager.FindByIdAsync(serviceVoucher.CreatedBy).Result;
                 var result = new
                 {
                     serviceVoucher,
@@ -178,6 +178,12 @@ namespace PeaceInternational.Web.Controllers
         {
             var count = _serviceVoucherCrudService.GetAll(p => p.FiscalYearId == currentFiscalYear.Id).Count();
             var formattedFiscalYear = currentFiscalYear.Name.Remove(2, 1);
+
+            if (formattedFiscalYear == "7677")
+            {
+                count = 244;
+            }
+
             var exchangeOrderNo = $"{formattedFiscalYear}/{(count + 1).ToString().PadLeft(4, '0')}";
             return exchangeOrderNo;
         }
