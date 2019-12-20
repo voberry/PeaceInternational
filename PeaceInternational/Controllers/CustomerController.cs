@@ -173,6 +173,12 @@ namespace PeaceInternational.Web.Controllers
         {            
             var count = _customerCrudService.GetAll(p => p.FiscalYearId == currentFiscalYear.Id).Count();
             var formattedFiscalYear = currentFiscalYear.Name.Remove(2, 1);
+
+            if (formattedFiscalYear == "7677")
+            {
+                count = 70;
+            }
+
             var fileCodeNo = $"{formattedFiscalYear}/{(count + 1).ToString().PadLeft(4, '0')}";
             return fileCodeNo;
         }

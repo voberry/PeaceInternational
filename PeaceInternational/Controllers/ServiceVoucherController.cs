@@ -181,7 +181,7 @@ namespace PeaceInternational.Web.Controllers
 
             if (formattedFiscalYear == "7677")
             {
-                count = 244;
+                count = 248;
             }
 
             var exchangeOrderNo = $"{formattedFiscalYear}/{(count + 1).ToString().PadLeft(4, '0')}";
