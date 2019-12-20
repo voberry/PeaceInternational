@@ -24,6 +24,14 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
 
             builder.Property(p => p.PhoneNo)
                 .IsRequired();
+
+            builder.Property(p => p.Code)
+               .IsRequired()
+               .HasMaxLength(20);
+
+            builder.Property(p => p.Category)
+               .IsRequired()
+               .HasColumnType("char(1)");              
         }
     }
 }

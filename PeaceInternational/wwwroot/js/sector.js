@@ -2,11 +2,10 @@
 
 //Column Defination for the grid
 const columnDefs = [
-    { headerName: 'Name', field: 'name' }, 
-    { headerName: 'Code', field: 'code' }, 
-    { headerName: 'Category', field: 'category' }, 
-    { headerName: 'Address', field: 'address' },
-    { headerName: 'PhoneNo', field: 'phoneNo', sortable: false, filter: false },
+    { headerName: 'Name', field: 'name', maxWidth: 300 },
+    { headerName: 'Code', field: 'code', maxWidth: 200 },
+    { headerName: 'Full Day Rate', field: 'fullDayRate' },
+    { headerName: 'Half Day Rate', field: 'halfDayRate', sortable: false, filter: false },
     {
         headerName: 'Edit', maxWidth: 200, sortable: false, filter: false,
         cellRenderer: function () {
@@ -35,7 +34,7 @@ const columnDefs = [
 const setGridData = () => {
 
     $.ajax({
-        url: 'Hotel/Get',
+        url: 'Sector/Get',
         method: 'GET',
         success: (data) => {
             gridOptions.api.setRowData(data);
@@ -45,7 +44,7 @@ const setGridData = () => {
 };
 
 
-//Settings for the Hotel grid
+//Settings for the Sector grid
 let gridOptions = {
     columnDefs: columnDefs,
     rowHeight: 40,
@@ -67,15 +66,14 @@ const Clear = () => {
     $("#id").val('');
     $('#name').val('');
     $('#code').val('');
-    $('#category').val('');
-    $('#address').val('');
-    $('#phoneNo').val('');
+    $('#fullDayRate').val('');
+    $('#halfDayRate').val('');
 };
 
 //Function specifying rules for validating the form
-const hotelValidation = () => {
+const sectorValidation = () => {
 
-    $('#hotelForm').validate({
+    $('#sectorForm').validate({
         rules: {
             name: {
                 required: true,
@@ -84,17 +82,13 @@ const hotelValidation = () => {
             },
             code: {
                 required: true,
-                maxlength: 15,
-                isOnlyWhiteSpace: true
+                maxlength: 15
             },
-            category: {
-                required: true             
-            },
-            address: {
+            fullDayRate: {
                 required: true,
-                isOnlyWhiteSpace: true
+                digits: true
             },
-            phoneNo: {
+            halfDayRate: {
                 required: true,
                 digits: true
             }
@@ -105,17 +99,16 @@ const hotelValidation = () => {
 const Edit = (data) => {
 
     Clear();
-    $('#hotelTitle').html("Edit Hotel");
+    $('#sectorTitle').html("Edit Sector");
     $('#id').val(data.id);
     $('#name').val(data.name);
     $('#code').val(data.code);
-    $('#category').val(data.category);
-    $('#address').val(data.address);
-    $('#phoneNo').val(data.phoneNo);
-    $('#hotelForm').validate().destroy();
-    hotelValidation();
-    $('#hotelForm').validate().resetForm();
-    $('#createHotel').modal('toggle');
+    $('#fullDayRate').val(data.fullDayRate);
+    $('#halfDayRate').val(data.halfDayRate);
+    $('#sectorForm').validate().destroy();
+    sectorValidation();
+    $('#sectorForm').validate().resetForm();
+    $('#createSector').modal('toggle');
 };
 
 const Delete = (data) => {
@@ -124,7 +117,7 @@ const Delete = (data) => {
 
     if (confirm) {
         $.ajax({
-            url: 'Hotel/Delete',
+            url: 'Sector/Delete',
             method: 'POST',
             data: { id: data.id },
             success: function (data) {
@@ -135,33 +128,32 @@ const Delete = (data) => {
                     layout: 'topCenter',
                     timeout: 2000
                 });
-               
+
                 setGridData();
             }
         });
-    }   
+    }
 };
 
 
 const Save = () => {
 
-    $('#hotelForm').off('submit').on('submit', function (e) {
+    $('#sectorForm').off('submit').on('submit', function (e) {
 
-        e.preventDefault();       
+        e.preventDefault();
 
         var record = {
             Id: $('#id').val(),
             Name: $('#name').val(),
             Code: $('#code').val(),
-            Category: $('#category').val(),
-            Address: $('#address').val(),
-            PhoneNo: $('#phoneNo').val()
+            FullDayRate: $('#fullDayRate').val(),
+            HalfDayRate: $('#halfDayRate').val()
         };
 
         $.ajax({
-            url: 'Hotel/Save',
+            url: 'Sector/Save',
             method: 'POST',
-            data: { hotel: record },
+            data: { sector: record },
             success: function (data) {
                 console.log(data);
                 noty({
@@ -170,8 +162,8 @@ const Save = () => {
                     layout: 'topCenter',
                     timeout: 2000
                 });
-                $('#createHotel').modal('toggle');
-                setGridData();  
+                $('#createSector').modal('toggle');
+                setGridData();
             }
         });
 
@@ -179,23 +171,23 @@ const Save = () => {
 };
 
 $(document).ready(function () {
-    var hotelGrid = document.querySelector('#hotelGrid');
+    var sectorGrid = document.querySelector('#sectorGrid');
 
-    new agGrid.Grid(hotelGrid, gridOptions);
+    new agGrid.Grid(sectorGrid, gridOptions);
 
     setGridData();
 
-    $('#addHotelBtn').click(function () {
+    $('#addSectorBtn').click(function () {
         console.log('Button Pressed');
-        $('#hotelTitle').html("Add Hotel");
+        $('#sectorTitle').html("Add Sector");
         Clear();
-        $('#hotelForm').validate().destroy();
-        hotelValidation();
-        $('#hotelForm').validate().resetForm();
+        $('#sectorForm').validate().destroy();
+        sectorValidation();
+        $('#sectorForm').validate().resetForm();
     });
 
     $('#btnSave').off('click').on('click', function () {
-        if ($('#hotelForm').valid()) {
+        if ($('#sectorForm').valid()) {
             Save();
         }
     });

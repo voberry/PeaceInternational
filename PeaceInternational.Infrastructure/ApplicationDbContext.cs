@@ -22,6 +22,10 @@ namespace PeaceInternational.Infrastructure
             builder.ApplyConfiguration(new ServiceVoucherConfig());
             builder.ApplyConfiguration(new CustomerConfig());
             builder.ApplyConfiguration(new FiscalYearConfig());
+            builder.ApplyConfiguration(new GuideEntityConfig());
+            builder.ApplyConfiguration(new HotelRoomRateConfig());
+            builder.ApplyConfiguration(new SectorConfig());
+            builder.ApplyConfiguration(new TransportConfig());
         }
     }
 }

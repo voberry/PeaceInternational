@@ -2,11 +2,11 @@
 
 //Column Defination for the grid
 const columnDefs = [
-    { headerName: 'Name', field: 'name' }, 
-    { headerName: 'Code', field: 'code' }, 
-    { headerName: 'Category', field: 'category' }, 
-    { headerName: 'Address', field: 'address' },
-    { headerName: 'PhoneNo', field: 'phoneNo', sortable: false, filter: false },
+    { headerName: 'Name', field: 'name' },
+    { headerName: 'Min PAX', field: 'minPAX' },
+    { headerName: 'Max PAX', field: 'maxPAX' },
+    { headerName: 'Full Day Rate', field: 'fullDayRate' },
+    { headerName: 'Half Day Rate', field: 'halfDayRate', sortable: false, filter: false },
     {
         headerName: 'Edit', maxWidth: 200, sortable: false, filter: false,
         cellRenderer: function () {
@@ -35,7 +35,7 @@ const columnDefs = [
 const setGridData = () => {
 
     $.ajax({
-        url: 'Hotel/Get',
+        url: 'Transport/Get',
         method: 'GET',
         success: (data) => {
             gridOptions.api.setRowData(data);
@@ -45,7 +45,7 @@ const setGridData = () => {
 };
 
 
-//Settings for the Hotel grid
+//Settings for the Transport grid
 let gridOptions = {
     columnDefs: columnDefs,
     rowHeight: 40,
@@ -66,35 +66,35 @@ const Clear = () => {
     removeBorderClass();
     $("#id").val('');
     $('#name').val('');
-    $('#code').val('');
-    $('#category').val('');
-    $('#address').val('');
-    $('#phoneNo').val('');
+    $('#minPAX').val('');
+    $('#maxPAX').val('');
+    $('#fullDayRate').val('');
+    $('#halfDayRate').val('');
 };
 
 //Function specifying rules for validating the form
-const hotelValidation = () => {
+const transportValidation = () => {
 
-    $('#hotelForm').validate({
+    $('#transportForm').validate({
         rules: {
             name: {
                 required: true,
                 maxlength: 100,
                 isOnlyWhiteSpace: true
             },
-            code: {
+            minPAX: {
                 required: true,
-                maxlength: 15,
-                isOnlyWhiteSpace: true
+                digits: true
             },
-            category: {
-                required: true             
-            },
-            address: {
+            maxPAX: {
                 required: true,
-                isOnlyWhiteSpace: true
+                digits: true
             },
-            phoneNo: {
+            fullDayRate: {
+                required: true,
+                digits: true
+            },
+            halfDayRate: {
                 required: true,
                 digits: true
             }
@@ -105,17 +105,17 @@ const hotelValidation = () => {
 const Edit = (data) => {
 
     Clear();
-    $('#hotelTitle').html("Edit Hotel");
+    $('#transportTitle').html("Edit Transport");
     $('#id').val(data.id);
     $('#name').val(data.name);
-    $('#code').val(data.code);
-    $('#category').val(data.category);
-    $('#address').val(data.address);
-    $('#phoneNo').val(data.phoneNo);
-    $('#hotelForm').validate().destroy();
-    hotelValidation();
-    $('#hotelForm').validate().resetForm();
-    $('#createHotel').modal('toggle');
+    $('#minPAX').val(data.minPAX);
+    $('#maxPAX').val(data.maxPAX);
+    $('#fullDayRate').val(data.fullDayRate);
+    $('#halfDayRate').val(data.halfDayRate);
+    $('#transportForm').validate().destroy();
+    transportValidation();
+    $('#transportForm').validate().resetForm();
+    $('#createTransport').modal('toggle');
 };
 
 const Delete = (data) => {
@@ -124,7 +124,7 @@ const Delete = (data) => {
 
     if (confirm) {
         $.ajax({
-            url: 'Hotel/Delete',
+            url: 'Transport/Delete',
             method: 'POST',
             data: { id: data.id },
             success: function (data) {
@@ -135,33 +135,33 @@ const Delete = (data) => {
                     layout: 'topCenter',
                     timeout: 2000
                 });
-               
+
                 setGridData();
             }
         });
-    }   
+    }
 };
 
 
 const Save = () => {
 
-    $('#hotelForm').off('submit').on('submit', function (e) {
+    $('#transportForm').off('submit').on('submit', function (e) {
 
-        e.preventDefault();       
+        e.preventDefault();
 
         var record = {
             Id: $('#id').val(),
             Name: $('#name').val(),
-            Code: $('#code').val(),
-            Category: $('#category').val(),
-            Address: $('#address').val(),
-            PhoneNo: $('#phoneNo').val()
+            MinPAX: $('#minPAX').val(),
+            MaxPAX: $('#maxPAX').val(),
+            FullDayRate: $('#fullDayRate').val(),
+            HalfDayRate: $('#halfDayRate').val()
         };
 
         $.ajax({
-            url: 'Hotel/Save',
+            url: 'Transport/Save',
             method: 'POST',
-            data: { hotel: record },
+            data: { transport: record },
             success: function (data) {
                 console.log(data);
                 noty({
@@ -170,8 +170,8 @@ const Save = () => {
                     layout: 'topCenter',
                     timeout: 2000
                 });
-                $('#createHotel').modal('toggle');
-                setGridData();  
+                $('#createTransport').modal('toggle');
+                setGridData();
             }
         });
 
@@ -179,23 +179,23 @@ const Save = () => {
 };
 
 $(document).ready(function () {
-    var hotelGrid = document.querySelector('#hotelGrid');
+    var transportGrid = document.querySelector('#transportGrid');
 
-    new agGrid.Grid(hotelGrid, gridOptions);
+    new agGrid.Grid(transportGrid, gridOptions);
 
     setGridData();
 
-    $('#addHotelBtn').click(function () {
+    $('#addTransportBtn').click(function () {
         console.log('Button Pressed');
-        $('#hotelTitle').html("Add Hotel");
+        $('#transportTitle').html("Add Transport");
         Clear();
-        $('#hotelForm').validate().destroy();
-        hotelValidation();
-        $('#hotelForm').validate().resetForm();
+        $('#transportForm').validate().destroy();
+        transportValidation();
+        $('#transportForm').validate().resetForm();
     });
 
     $('#btnSave').off('click').on('click', function () {
-        if ($('#hotelForm').valid()) {
+        if ($('#transportForm').valid()) {
             Save();
         }
     });

@@ -122,10 +122,7 @@ const serviceVoucherValidation = () => {
 
     $('#serviceVoucherForm').validate({
         rules: {
-            //exchangeOrderNo: {
-            //    required: true,
-            //    digits: true
-            //},
+           
             fileCodeNo: {
                 required: true,                
                 checkFileCodeNo: true
@@ -242,7 +239,7 @@ const setHotelDropdown = () => {
             $('#hotel').append(options);
         }
     });
-}
+};
 
 $(document).ready(function () {
     var serviceVoucherGrid = document.querySelector('#serviceVoucherGrid');

@@ -33,7 +33,6 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item ml-2">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Hotel" asp-action="Index"><i class="fas fa-hotel fa-lg"></i> Hotel </a>
                         </li>
                         <li class="nav-item ml-2">
                             <a class="nav-link text-light" asp-area="" asp-controller="Invoice" asp-action="Index"><i class="fas fa-file-invoice-dollar fa-lg"></i> Invoice</a>
@@ -45,10 +44,24 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="TourCost" asp-action="Index"><i class="fas fa-dollar-sign fa-lg"></i> Tour Cost</a>
                         </li>
                         <li class="nav-item ml-2">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Customer" asp-action="Index"><i class="fas fa-user-astronaut fa-lg"></i> Customer</a>
                         </li>
                         <li class="nav-item ml-2">
                             <a class="nav-link text-light" asp-area="" asp-controller="Users" asp-action="Index"><i class="fas fa-users fa-lg"></i> Users</a>
+                        </li>
+                        <li class="nav-item ml-2">
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle text-light" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-cogs fa-lg"></i> Settings
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <a class="dropdown-item text-dark mt-1" asp-area="" asp-controller="Hotel" asp-action="Index"><i class="fas fa-hotel fa-lg mr-2"></i> Hotel </a>
+                                    <a class="dropdown-item text-dark mt-1" asp-area="" asp-controller="Hotel" asp-action="HotelRoomRate"><i class="fas fa-glass-martini-alt fa-lg mr-2"></i> Hotel Room Rate</a>
+                                    <a class="dropdown-item text-dark mt-1" asp-area="" asp-controller="Customer" asp-action="Index"><i class="fas fa-user-astronaut fa-lg mr-2"></i> Customer</a>
+                                    <a class="dropdown-item text-dark mt-1" asp-area="" asp-controller="Guide" asp-action="Index"><i class="fas fa-dove fa-lg mr-2"></i> Guide</a>
+                                    <a class="dropdown-item text-dark mt-1" asp-area="" asp-controller="Sector" asp-action="Index"><i class="fas fa-snowflake fa-lg mr-2"></i> Sector</a>
+                                    <a class="dropdown-item text-dark mt-1" asp-area="" asp-controller="Transport" asp-action="Index"><i class="fas fa-car fa-lg mr-2"></i> Transport</a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>

@@ -14,7 +14,10 @@ namespace PeaceInternational.Core.Entity
         public string Name { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
+        public string Code { get; set; }
+        public char Category { get; set; }
 
+        public HotelRoomRate HotelRoomRate { get; set; }
         public ICollection<ServiceVoucher> HotelReceipt { get; set; }
     }
 }

@@ -2,11 +2,9 @@
 
 //Column Defination for the grid
 const columnDefs = [
-    { headerName: 'Name', field: 'name' }, 
-    { headerName: 'Code', field: 'code' }, 
-    { headerName: 'Category', field: 'category' }, 
-    { headerName: 'Address', field: 'address' },
-    { headerName: 'PhoneNo', field: 'phoneNo', sortable: false, filter: false },
+    { headerName: 'Name', field: 'name' },
+    { headerName: 'Full Day Rate', field: 'fullDayRate' },
+    { headerName: 'Half Day Rate', field: 'halfDayRate', sortable: false, filter: false },
     {
         headerName: 'Edit', maxWidth: 200, sortable: false, filter: false,
         cellRenderer: function () {
@@ -35,7 +33,7 @@ const columnDefs = [
 const setGridData = () => {
 
     $.ajax({
-        url: 'Hotel/Get',
+        url: 'Guide/Get',
         method: 'GET',
         success: (data) => {
             gridOptions.api.setRowData(data);
@@ -45,7 +43,7 @@ const setGridData = () => {
 };
 
 
-//Settings for the Hotel grid
+//Settings for the Guide grid
 let gridOptions = {
     columnDefs: columnDefs,
     rowHeight: 40,
@@ -66,35 +64,24 @@ const Clear = () => {
     removeBorderClass();
     $("#id").val('');
     $('#name').val('');
-    $('#code').val('');
-    $('#category').val('');
-    $('#address').val('');
-    $('#phoneNo').val('');
+    $('#fullDayRate').val('');
+    $('#halfDayRate').val('');
 };
 
 //Function specifying rules for validating the form
-const hotelValidation = () => {
+const guideValidation = () => {
 
-    $('#hotelForm').validate({
+    $('#guideForm').validate({
         rules: {
             name: {
                 required: true,
                 maxlength: 100,
                 isOnlyWhiteSpace: true
             },
-            code: {
-                required: true,
-                maxlength: 15,
-                isOnlyWhiteSpace: true
+            fullDayRate: {
+                required: true
             },
-            category: {
-                required: true             
-            },
-            address: {
-                required: true,
-                isOnlyWhiteSpace: true
-            },
-            phoneNo: {
+            halfDayRate: {
                 required: true,
                 digits: true
             }
@@ -105,17 +92,15 @@ const hotelValidation = () => {
 const Edit = (data) => {
 
     Clear();
-    $('#hotelTitle').html("Edit Hotel");
+    $('#guideTitle').html("Edit Guide");
     $('#id').val(data.id);
     $('#name').val(data.name);
-    $('#code').val(data.code);
-    $('#category').val(data.category);
-    $('#address').val(data.address);
-    $('#phoneNo').val(data.phoneNo);
-    $('#hotelForm').validate().destroy();
-    hotelValidation();
-    $('#hotelForm').validate().resetForm();
-    $('#createHotel').modal('toggle');
+    $('#fullDayRate').val(data.fullDayRate);
+    $('#halfDayRate').val(data.halfDayRate);
+    $('#guideForm').validate().destroy();
+    guideValidation();
+    $('#guideForm').validate().resetForm();
+    $('#createGuide').modal('toggle');
 };
 
 const Delete = (data) => {
@@ -124,7 +109,7 @@ const Delete = (data) => {
 
     if (confirm) {
         $.ajax({
-            url: 'Hotel/Delete',
+            url: 'Guide/Delete',
             method: 'POST',
             data: { id: data.id },
             success: function (data) {
@@ -135,33 +120,31 @@ const Delete = (data) => {
                     layout: 'topCenter',
                     timeout: 2000
                 });
-               
+
                 setGridData();
             }
         });
-    }   
+    }
 };
 
 
 const Save = () => {
 
-    $('#hotelForm').off('submit').on('submit', function (e) {
+    $('#guideForm').off('submit').on('submit', function (e) {
 
-        e.preventDefault();       
+        e.preventDefault();
 
         var record = {
             Id: $('#id').val(),
             Name: $('#name').val(),
-            Code: $('#code').val(),
-            Category: $('#category').val(),
-            Address: $('#address').val(),
-            PhoneNo: $('#phoneNo').val()
+            FullDayRate: $('#fullDayRate').val(),
+            HalfDayRate: $('#halfDayRate').val()
         };
 
         $.ajax({
-            url: 'Hotel/Save',
+            url: 'Guide/Save',
             method: 'POST',
-            data: { hotel: record },
+            data: { guide: record },
             success: function (data) {
                 console.log(data);
                 noty({
@@ -170,8 +153,8 @@ const Save = () => {
                     layout: 'topCenter',
                     timeout: 2000
                 });
-                $('#createHotel').modal('toggle');
-                setGridData();  
+                $('#createGuide').modal('toggle');
+                setGridData();
             }
         });
 
@@ -179,23 +162,23 @@ const Save = () => {
 };
 
 $(document).ready(function () {
-    var hotelGrid = document.querySelector('#hotelGrid');
+    var guideGrid = document.querySelector('#guideGrid');
 
-    new agGrid.Grid(hotelGrid, gridOptions);
+    new agGrid.Grid(guideGrid, gridOptions);
 
     setGridData();
 
-    $('#addHotelBtn').click(function () {
+    $('#addGuideBtn').click(function () {
         console.log('Button Pressed');
-        $('#hotelTitle').html("Add Hotel");
+        $('#guideTitle').html("Add Guide");
         Clear();
-        $('#hotelForm').validate().destroy();
-        hotelValidation();
-        $('#hotelForm').validate().resetForm();
+        $('#guideForm').validate().destroy();
+        guideValidation();
+        $('#guideForm').validate().resetForm();
     });
 
     $('#btnSave').off('click').on('click', function () {
-        if ($('#hotelForm').valid()) {
+        if ($('#guideForm').valid()) {
             Save();
         }
     });

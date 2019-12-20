@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PeaceInternational.Core.Entity;
 using PeaceInternational.Core.IRepository;
 using PeaceInternational.Web.Models;
@@ -15,19 +16,28 @@ namespace PeaceInternational.Web.Controllers
     public class HotelController : Controller
     {
         private readonly ICrudService<Hotel> _hotelCrudService;
+        private readonly ICrudService<HotelRoomRate> _hotelRoomRateCrudService;
         private readonly UserManager<IdentityUser> _userManager;
         private  Notification notification;
 
         public HotelController(
             ICrudService<Hotel> hotelCrudService,
+            ICrudService<HotelRoomRate> hotelRoomRateCrudService,
             UserManager<IdentityUser> userManager)
         {
             _hotelCrudService = hotelCrudService;
+            _hotelRoomRateCrudService = hotelRoomRateCrudService;
             _userManager = userManager;
         }
         
         // GET: /<controller>/
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [Route("HotelRoomRate")]       
+        public IActionResult HotelRoomRate()
         {
             return View();
         }
@@ -54,6 +64,33 @@ namespace PeaceInternational.Web.Controllers
                 throw exception;
             }
         }
+
+        //GET Hotel Room Rate
+        [HttpGet("HotelRoomRate/Get")]
+        public async Task<IActionResult> GetHotelRoomRate(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    var result = await _hotelRoomRateCrudService.GetAll()
+                         .AsNoTracking()
+                         .Include(h => h.Hotel)
+                         .ToListAsync();
+                    return Json(result);
+                }
+                else
+                {
+                    var result = _hotelRoomRateCrudService.Get(id);
+                    return Json(result);
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         //Save Hotel
         [HttpPost]
         public async Task<IActionResult> Save(Hotel hotel)
@@ -75,6 +112,8 @@ namespace PeaceInternational.Web.Controllers
                         Name = hotel.Name,
                         PhoneNo = hotel.PhoneNo,
                         Address = hotel.Address,
+                        Code = hotel.Code,
+                        Category = hotel.Category,
                         CreatedBy = user.Id
                     });
 
@@ -88,6 +127,45 @@ namespace PeaceInternational.Web.Controllers
             {
                 notification.Type = "error";
                 notification.Message = "Hotel creation failed.";
+                return Json(notification);
+            }
+        }
+
+        //Save Hotel Room Rate
+        [HttpPost("HotelRoomRate/Save")]
+        public async Task<IActionResult> SaveHotelRoomRate(HotelRoomRate hotelRoomRate)
+        {
+            try
+            {
+                var user = _userManager.GetUserAsync(HttpContext.User).Result;
+                notification = new Notification();
+
+                if (hotelRoomRate.Id > 0)
+                {
+
+                    notification = await EditHotelRoomRate(hotelRoomRate, user);
+                }
+                else
+                {
+                    await _hotelRoomRateCrudService.InsertAsync(new HotelRoomRate
+                    {
+                        HotelId = hotelRoomRate.HotelId,
+                        SingleBed = hotelRoomRate.SingleBed,
+                        DoubleBed = hotelRoomRate.DoubleBed,
+                        ExtraBed = hotelRoomRate.ExtraBed,                     
+                        CreatedBy = user.Id
+                    });
+
+                    notification.Type = "success";
+                    notification.Message = "Hotel Room Rate created successfully.";
+                }
+
+                return Json(notification);
+            }
+            catch (Exception exception)
+            {
+                notification.Type = "error";
+                notification.Message = "Hotel Room Rate creation failed.";
                 return Json(notification);
             }
         }
@@ -110,6 +188,24 @@ namespace PeaceInternational.Web.Controllers
             }
         }
 
+        [HttpPost("HotelRoomRate/Delete")]
+        public IActionResult DeleteHotelRoomRate(int id)
+        {
+            try
+            {
+                notification = new Notification();
+                notification = DeleteRoomRate(id);
+
+                return Json(notification);
+            }
+            catch (Exception exception)
+            {
+                notification.Type = "error";
+                notification.Message = "HotelRoomRate deletion failed.";
+                return Json(notification);
+            }
+        }
+
         private async Task<Notification> EditHotel(Hotel hotel, IdentityUser user)
         {
             try
@@ -119,6 +215,8 @@ namespace PeaceInternational.Web.Controllers
                 record.Name = hotel.Name;
                 record.Address = hotel.Address;
                 record.PhoneNo = hotel.PhoneNo;
+                record.Code = hotel.Code;
+                record.Category = hotel.Category;
                 record.ModifiedBy = user.Id;
                 record.ModifiedDate = DateTime.Now;
 
@@ -130,6 +228,30 @@ namespace PeaceInternational.Web.Controllers
             {
                 Console.WriteLine(exception.Message);
                 return new Notification("error", "Hotel update failed.");
+            }
+        }
+
+        private async Task<Notification> EditHotelRoomRate(HotelRoomRate hotelRoomRate, IdentityUser user)
+        {
+            try
+            {
+                var record = await _hotelRoomRateCrudService.GetAsync(hotelRoomRate.Id);
+
+                record.HotelId = hotelRoomRate.HotelId;
+                record.SingleBed = hotelRoomRate.SingleBed;
+                record.DoubleBed = hotelRoomRate.DoubleBed;
+                record.ExtraBed = hotelRoomRate.ExtraBed;              
+                record.ModifiedBy = user.Id;
+                record.ModifiedDate = DateTime.Now;
+
+                _hotelRoomRateCrudService.Update(record);
+
+                return new Notification("success", "HotelRoomRate updated successfully.");
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+                return new Notification("error", "HotelRoomRate update failed.");
             }
         }
 
@@ -146,6 +268,22 @@ namespace PeaceInternational.Web.Controllers
             {
                 Console.WriteLine(exception.Message);
                 return new Notification("error", "Failed to delete hotel.");
+            }
+        }
+
+        private Notification DeleteRoomRate(int id)
+        {
+            try
+            {
+                var record = _hotelRoomRateCrudService.Get(id);
+                _hotelRoomRateCrudService.Delete(record);
+
+                return new Notification("success", "HotelRoomRate deleted successfully.");
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+                return new Notification("error", "Failed to delete HotelRoomRate.");
             }
         }
     }

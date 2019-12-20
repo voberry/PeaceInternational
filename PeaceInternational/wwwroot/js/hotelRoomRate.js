@@ -2,13 +2,12 @@
 
 //Column Defination for the grid
 const columnDefs = [
-    { headerName: 'Name', field: 'name' }, 
-    { headerName: 'Code', field: 'code' }, 
-    { headerName: 'Category', field: 'category' }, 
-    { headerName: 'Address', field: 'address' },
-    { headerName: 'PhoneNo', field: 'phoneNo', sortable: false, filter: false },
+    { headerName: 'Hotel', field: 'hotel.name', maxWidth: 400 },
+    { headerName: 'Single Bed', field: 'singleBed', maxWidth: 150 },
+    { headerName: 'Double Bed', field: 'doubleBed', maxWidth: 150 },
+    { headerName: 'Extra Bed', field: 'extraBed', maxWidth: 150 },
     {
-        headerName: 'Edit', maxWidth: 200, sortable: false, filter: false,
+        headerName: 'Edit', maxWidth: 150, sortable: false, filter: false,
         cellRenderer: function () {
             return '<i class="btn fas fa-edit" id="editButton"></i>';
         },
@@ -19,7 +18,7 @@ const columnDefs = [
         }
     },
     {
-        headerName: 'Delete', maxWidth: 200, sortable: false, filter: false,
+        headerName: 'Delete', maxWidth: 150, sortable: false, filter: false,
         cellRenderer: function () {
             return '<i class="btn fas fa-trash" id="trashButton"></i>';
         },
@@ -35,7 +34,7 @@ const columnDefs = [
 const setGridData = () => {
 
     $.ajax({
-        url: 'Hotel/Get',
+        url: 'HotelRoomRate/Get',
         method: 'GET',
         success: (data) => {
             gridOptions.api.setRowData(data);
@@ -45,7 +44,7 @@ const setGridData = () => {
 };
 
 
-//Settings for the Hotel grid
+//Settings for the HotelRoomRate grid
 let gridOptions = {
     columnDefs: columnDefs,
     rowHeight: 40,
@@ -65,36 +64,30 @@ let gridOptions = {
 const Clear = () => {
     removeBorderClass();
     $("#id").val('');
-    $('#name').val('');
-    $('#code').val('');
-    $('#category').val('');
-    $('#address').val('');
-    $('#phoneNo').val('');
+    $('#hotel').val('');
+    $('#singleBed').val('');
+    $('#doubleBed').val('');
 };
 
 //Function specifying rules for validating the form
-const hotelValidation = () => {
+const hotelRoomRateValidation = () => {
 
-    $('#hotelForm').validate({
+    $('#hotelRoomRateForm').validate({
         rules: {
-            name: {
+            hotel: {
                 required: true,
                 maxlength: 100,
                 isOnlyWhiteSpace: true
             },
-            code: {
+            singleBed: {
                 required: true,
-                maxlength: 15,
-                isOnlyWhiteSpace: true
+                digits: true
             },
-            category: {
-                required: true             
-            },
-            address: {
+            doubleBed: {
                 required: true,
-                isOnlyWhiteSpace: true
+                digits: true
             },
-            phoneNo: {
+            extraBed: {
                 required: true,
                 digits: true
             }
@@ -105,17 +98,16 @@ const hotelValidation = () => {
 const Edit = (data) => {
 
     Clear();
-    $('#hotelTitle').html("Edit Hotel");
+    $('#hotelRoomRateTitle').html("Edit Hotel Room Rate");
     $('#id').val(data.id);
-    $('#name').val(data.name);
-    $('#code').val(data.code);
-    $('#category').val(data.category);
-    $('#address').val(data.address);
-    $('#phoneNo').val(data.phoneNo);
-    $('#hotelForm').validate().destroy();
-    hotelValidation();
-    $('#hotelForm').validate().resetForm();
-    $('#createHotel').modal('toggle');
+    $('#hotel').val(data.hotelId);
+    $('#singleBed').val(data.singleBed);
+    $('#doubleBed').val(data.doubleBed);
+    $('#extraBed').val(data.extraBed);
+    $('#hotelRoomRateForm').validate().destroy();
+    hotelRoomRateValidation();
+    $('#hotelRoomRateForm').validate().resetForm();
+    $('#createHotelRoomRate').modal('toggle');
 };
 
 const Delete = (data) => {
@@ -124,7 +116,7 @@ const Delete = (data) => {
 
     if (confirm) {
         $.ajax({
-            url: 'Hotel/Delete',
+            url: 'HotelRoomRate/Delete',
             method: 'POST',
             data: { id: data.id },
             success: function (data) {
@@ -135,33 +127,46 @@ const Delete = (data) => {
                     layout: 'topCenter',
                     timeout: 2000
                 });
-               
+
                 setGridData();
             }
         });
-    }   
+    }
+};
+
+const setHotelDropdown = () => {
+    $.ajax({
+        url: 'Hotel/Get',
+        method: 'GET',
+        success: function (data) {
+            let options = "";
+            for (var i = 0; i < data.length; i++) {
+                options += "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+            }
+            $('#hotel').append(options);
+        }
+    });
 };
 
 
 const Save = () => {
 
-    $('#hotelForm').off('submit').on('submit', function (e) {
+    $('#hotelRoomRateForm').off('submit').on('submit', function (e) {
 
-        e.preventDefault();       
+        e.preventDefault();
 
         var record = {
             Id: $('#id').val(),
-            Name: $('#name').val(),
-            Code: $('#code').val(),
-            Category: $('#category').val(),
-            Address: $('#address').val(),
-            PhoneNo: $('#phoneNo').val()
+            HotelId: $('#hotel').val(),
+            SingleBed: $('#singleBed').val(),
+            DoubleBed: $('#doubleBed').val(),
+            ExtraBed: $('#extraBed').val()
         };
 
         $.ajax({
-            url: 'Hotel/Save',
+            url: 'HotelRoomRate/Save',
             method: 'POST',
-            data: { hotel: record },
+            data: { hotelRoomRate: record },
             success: function (data) {
                 console.log(data);
                 noty({
@@ -170,8 +175,8 @@ const Save = () => {
                     layout: 'topCenter',
                     timeout: 2000
                 });
-                $('#createHotel').modal('toggle');
-                setGridData();  
+                $('#createHotelRoomRate').modal('toggle');
+                setGridData();
             }
         });
 
@@ -179,23 +184,25 @@ const Save = () => {
 };
 
 $(document).ready(function () {
-    var hotelGrid = document.querySelector('#hotelGrid');
+    var hotelRoomRateGrid = document.querySelector('#hotelRoomRateGrid');
 
-    new agGrid.Grid(hotelGrid, gridOptions);
+    new agGrid.Grid(hotelRoomRateGrid, gridOptions);
 
     setGridData();
 
-    $('#addHotelBtn').click(function () {
+    setHotelDropdown();
+
+    $('#addHotelRoomRateBtn').click(function () {
         console.log('Button Pressed');
-        $('#hotelTitle').html("Add Hotel");
+        $('#hotelRoomRateTitle').html("Add Hotel Room Rate");
         Clear();
-        $('#hotelForm').validate().destroy();
-        hotelValidation();
-        $('#hotelForm').validate().resetForm();
+        $('#hotelRoomRateForm').validate().destroy();
+        hotelRoomRateValidation();
+        $('#hotelRoomRateForm').validate().resetForm();
     });
 
     $('#btnSave').off('click').on('click', function () {
-        if ($('#hotelForm').valid()) {
+        if ($('#hotelRoomRateForm').valid()) {
             Save();
         }
     });
@@ -203,7 +210,7 @@ $(document).ready(function () {
     $('#searchField').on('keyup', function () {
         var filter;
         filter = {
-            name: { type: 'contains', filter: $('#searchField').val() }
+            'hotel.name': { type: 'contains', filter: $('#searchField').val() }
         };
         gridOptions.api.setFilterModel(filter);
         gridOptions.api.onFilterChanged();
