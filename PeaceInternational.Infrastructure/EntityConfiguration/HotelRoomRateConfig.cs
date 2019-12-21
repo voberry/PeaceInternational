@@ -25,6 +25,15 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
             builder.Property(p => p.ExtraBed)
                 .HasColumnType("Decimal(10,2)");
 
+            builder.Property(p => p.BB)
+               .HasColumnType("Decimal(10,2)");
+
+            builder.Property(p => p.AP)
+               .HasColumnType("Decimal(10,2)");
+
+            builder.Property(p => p.MAP)
+               .HasColumnType("Decimal(10,2)");
+
             builder.HasOne(p => p.Hotel)
                 .WithOne(e => e.HotelRoomRate)
                 .HasForeignKey<HotelRoomRate>(p => p.HotelId);

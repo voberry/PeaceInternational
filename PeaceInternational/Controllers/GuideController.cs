@@ -73,6 +73,7 @@ namespace PeaceInternational.Web.Controllers
                         Name = guide.Name,
                         FullDayRate = guide.FullDayRate,
                         HalfDayRate = guide.HalfDayRate,
+                        OverNight = guide.OverNight,
                         CreatedBy = user.Id
                     });
 
@@ -117,6 +118,7 @@ namespace PeaceInternational.Web.Controllers
                 record.Name = guide.Name;
                 record.FullDayRate = guide.FullDayRate;
                 record.HalfDayRate = guide.HalfDayRate;
+                record.OverNight = guide.OverNight;
                 record.ModifiedBy = user.Id;
                 record.ModifiedDate = DateTime.Now;
 

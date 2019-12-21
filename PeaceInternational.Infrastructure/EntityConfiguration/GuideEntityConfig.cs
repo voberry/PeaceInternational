@@ -20,6 +20,9 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
             builder.Property(p => p.HalfDayRate)
                .HasColumnType("Decimal(10,2)");
 
+            builder.Property(p => p.OverNight)
+              .HasColumnType("Decimal(10,2)");
+
         }
     }
 }

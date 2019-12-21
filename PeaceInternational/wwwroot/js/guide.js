@@ -4,7 +4,8 @@
 const columnDefs = [
     { headerName: 'Name', field: 'name' },
     { headerName: 'Full Day Rate', field: 'fullDayRate' },
-    { headerName: 'Half Day Rate', field: 'halfDayRate', sortable: false, filter: false },
+    { headerName: 'Half Day Rate', field: 'halfDayRate' },
+    { headerName: 'Overnight', field: 'overNight' },
     {
         headerName: 'Edit', maxWidth: 200, sortable: false, filter: false,
         cellRenderer: function () {
@@ -66,6 +67,7 @@ const Clear = () => {
     $('#name').val('');
     $('#fullDayRate').val('');
     $('#halfDayRate').val('');
+    $('#overnight').val('');
 };
 
 //Function specifying rules for validating the form
@@ -84,6 +86,10 @@ const guideValidation = () => {
             halfDayRate: {
                 required: true,
                 digits: true
+            },
+            overnight: {
+                required: true,
+                digits: true
             }
         }
     });
@@ -97,6 +103,7 @@ const Edit = (data) => {
     $('#name').val(data.name);
     $('#fullDayRate').val(data.fullDayRate);
     $('#halfDayRate').val(data.halfDayRate);
+    $('#overnight').val(data.overnight);
     $('#guideForm').validate().destroy();
     guideValidation();
     $('#guideForm').validate().resetForm();
@@ -138,7 +145,8 @@ const Save = () => {
             Id: $('#id').val(),
             Name: $('#name').val(),
             FullDayRate: $('#fullDayRate').val(),
-            HalfDayRate: $('#halfDayRate').val()
+            HalfDayRate: $('#halfDayRate').val(),
+            Overnight: $('#overnight').val()
         };
 
         $.ajax({

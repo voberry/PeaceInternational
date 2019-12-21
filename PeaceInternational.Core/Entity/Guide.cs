@@ -9,5 +9,6 @@ namespace PeaceInternational.Core.Entity
         public string Name { get; set; }
         public double FullDayRate { get; set; }
         public double HalfDayRate { get; set; }
+        public double OverNight { get; set; }
     }
 }

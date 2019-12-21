@@ -152,7 +152,10 @@ namespace PeaceInternational.Web.Controllers
                         HotelId = hotelRoomRate.HotelId,
                         SingleBed = hotelRoomRate.SingleBed,
                         DoubleBed = hotelRoomRate.DoubleBed,
-                        ExtraBed = hotelRoomRate.ExtraBed,                     
+                        ExtraBed = hotelRoomRate.ExtraBed,        
+                        BB = hotelRoomRate.BB,
+                        AP = hotelRoomRate.AP,
+                        MAP = hotelRoomRate.MAP,
                         CreatedBy = user.Id
                     });
 
@@ -201,7 +204,7 @@ namespace PeaceInternational.Web.Controllers
             catch (Exception exception)
             {
                 notification.Type = "error";
-                notification.Message = "HotelRoomRate deletion failed.";
+                notification.Message = "Hotel Room Rate deletion failed.";
                 return Json(notification);
             }
         }
@@ -240,18 +243,21 @@ namespace PeaceInternational.Web.Controllers
                 record.HotelId = hotelRoomRate.HotelId;
                 record.SingleBed = hotelRoomRate.SingleBed;
                 record.DoubleBed = hotelRoomRate.DoubleBed;
-                record.ExtraBed = hotelRoomRate.ExtraBed;              
+                record.ExtraBed = hotelRoomRate.ExtraBed;
+                record.BB = hotelRoomRate.BB;
+                record.AP = hotelRoomRate.AP;
+                record.MAP = hotelRoomRate.MAP;
                 record.ModifiedBy = user.Id;
                 record.ModifiedDate = DateTime.Now;
 
                 _hotelRoomRateCrudService.Update(record);
 
-                return new Notification("success", "HotelRoomRate updated successfully.");
+                return new Notification("success", "Hotel Room Rate updated successfully.");
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
-                return new Notification("error", "HotelRoomRate update failed.");
+                return new Notification("error", "Hotel Room Rate update failed.");
             }
         }
 
@@ -283,7 +289,7 @@ namespace PeaceInternational.Web.Controllers
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
-                return new Notification("error", "Failed to delete HotelRoomRate.");
+                return new Notification("error", "Failed to delete Hotel Room Rate.");
             }
         }
     }

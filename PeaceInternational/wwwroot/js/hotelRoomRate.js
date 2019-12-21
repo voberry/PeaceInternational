@@ -3,11 +3,14 @@
 //Column Defination for the grid
 const columnDefs = [
     { headerName: 'Hotel', field: 'hotel.name', maxWidth: 400 },
-    { headerName: 'Single Bed', field: 'singleBed', maxWidth: 150 },
-    { headerName: 'Double Bed', field: 'doubleBed', maxWidth: 150 },
-    { headerName: 'Extra Bed', field: 'extraBed', maxWidth: 150 },
+    { headerName: 'Single Bed', field: 'singleBed', maxWidth: 120 },
+    { headerName: 'Double Bed', field: 'doubleBed', maxWidth: 120 },
+    { headerName: 'Extra Bed', field: 'extraBed', maxWidth: 120 },
+    { headerName: 'BB', field: 'bb', maxWidth: 120 },
+    { headerName: 'AP', field: 'ap', maxWidth: 120 },
+    { headerName: 'MAP', field: 'map', maxWidth: 120 },
     {
-        headerName: 'Edit', maxWidth: 150, sortable: false, filter: false,
+        headerName: 'Edit', maxWidth: 100, sortable: false, filter: false,
         cellRenderer: function () {
             return '<i class="btn fas fa-edit" id="editButton"></i>';
         },
@@ -18,7 +21,7 @@ const columnDefs = [
         }
     },
     {
-        headerName: 'Delete', maxWidth: 150, sortable: false, filter: false,
+        headerName: 'Delete', maxWidth: 100, sortable: false, filter: false,
         cellRenderer: function () {
             return '<i class="btn fas fa-trash" id="trashButton"></i>';
         },
@@ -67,6 +70,9 @@ const Clear = () => {
     $('#hotel').val('');
     $('#singleBed').val('');
     $('#doubleBed').val('');
+    $('#bb').val('');
+    $('#ap').val('');
+    $('#map').val('');
 };
 
 //Function specifying rules for validating the form
@@ -90,6 +96,18 @@ const hotelRoomRateValidation = () => {
             extraBed: {
                 required: true,
                 digits: true
+            },
+            bb: {
+                required: true,
+                digits: true
+            },
+            ap: {
+                required: true,
+                digits: true
+            },
+            map: {
+                required: true,
+                digits: true
             }
         }
     });
@@ -104,6 +122,9 @@ const Edit = (data) => {
     $('#singleBed').val(data.singleBed);
     $('#doubleBed').val(data.doubleBed);
     $('#extraBed').val(data.extraBed);
+    $('#bb').val(data.bb);
+    $('#ap').val(data.ap);
+    $('#map').val(data.map);
     $('#hotelRoomRateForm').validate().destroy();
     hotelRoomRateValidation();
     $('#hotelRoomRateForm').validate().resetForm();
@@ -160,7 +181,10 @@ const Save = () => {
             HotelId: $('#hotel').val(),
             SingleBed: $('#singleBed').val(),
             DoubleBed: $('#doubleBed').val(),
-            ExtraBed: $('#extraBed').val()
+            ExtraBed: $('#extraBed').val(),
+            BB: $('#bb').val(),
+            AP: $('#ap').val(),
+            MAP: $('#map').val()
         };
 
         $.ajax({
