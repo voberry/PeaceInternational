@@ -184,6 +184,8 @@ namespace PeaceInternational.Web.Controllers
                 record.ClientName = invoice.ClientName;
                 record.Currency = invoice.Currency;
                 record.PAX = invoice.PAX;
+                record.Guide = invoice.Guide;
+                record.Vehicle = invoice.Vehicle;
                 record.TotalDue = invoice.TotalDue;
                 record.Discount = invoice.Discount;
                 record.NetAmount = invoice.NetAmount;
@@ -235,7 +237,7 @@ namespace PeaceInternational.Web.Controllers
 
             if(formattedFiscalYear == "7677")
             {
-                count = 168;
+                count = 170;
             }
 
             var invoiceNo = $"{formattedFiscalYear}/{(count + 1).ToString().PadLeft(4, '0')}";
