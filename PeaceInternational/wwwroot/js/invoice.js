@@ -231,6 +231,13 @@ const Edit = (data) => {
     console.log(data);
     $('#createInvoice').modal('toggle');
     $("#id").val(data.id);
+    $('#isTicket').prop('checked', data.isTicket);
+
+    if ($('#isTicket').is(":checked")) {
+        $('#fileCodeNoDiv').hide();
+        $('#fileCodeNo').val('');
+    }
+
     $('#date').val(data.createdDate.split('T')[0]);
     $("#fileCodeNo").val(data.fileCodeNo);
     $('#referenceNo').val(data.referenceNo);
@@ -258,6 +265,7 @@ const ClearInvoiceForm = () => {
     removeBorderClass();
     $("#id").val('');
     $('#date').val(new Date().toISOString().slice(0, 10));
+    $('#isTicket').prop('checked', false);
     $('#referenceNo').val('');
     $('#dr').val('');
     $('#fileCodeNo').val('');
@@ -285,8 +293,7 @@ const invoiceFormValidation = () => {
                 required: true,
                 maxlength: 100
             },
-            fileCodeNo: {
-                required: true,
+            fileCodeNo: {                
                 checkFileCodeNo: true
             },
             referenceNo: {
@@ -402,6 +409,7 @@ const Save = () => {
 
         var record = {
             Id: $('#id').val(),  
+            IsTicket: $('#isTicket').is(":checked"),
             FileCodeNo: $('#fileCodeNo').val(),
             ReferenceNo: $('#referenceNo').val(),
             Dr: $('#dr').val(),
@@ -460,6 +468,23 @@ $(document).ready(function () {
     $('#discount').on('keyup', () => { calcTotal(); });
 
     //getCurrentNepaliYear();
+
+    //if ($('#isTicket').is(":checked"))
+    //{
+    //    $('#fileCodeNoDiv').hide();
+    //    $('#fileCodeNo').val('');
+    //}
+
+    $('#isTicket').on('change', function () {
+        if ($('#isTicket').is(":checked")) {
+            $('#fileCodeNoDiv').hide();
+            $('#fileCodeNo').val('');
+        }
+        else {
+            $('#fileCodeNoDiv').show();
+        }
+    });
+
 
     $('#addInvoiceBtn').click(function () {
         ClearInvoiceForm();

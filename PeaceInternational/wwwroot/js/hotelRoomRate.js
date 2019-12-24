@@ -5,8 +5,7 @@ const columnDefs = [
     { headerName: 'Hotel', field: 'hotel.name', maxWidth: 400 },
     { headerName: 'Single Bed', field: 'singleBed', maxWidth: 120 },
     { headerName: 'Double Bed', field: 'doubleBed', maxWidth: 120 },
-    { headerName: 'Extra Bed', field: 'extraBed', maxWidth: 120 },
-    { headerName: 'BB', field: 'bb', maxWidth: 120 },
+    { headerName: 'Extra Bed', field: 'extraBed', maxWidth: 120 },    
     { headerName: 'AP', field: 'ap', maxWidth: 120 },
     { headerName: 'MAP', field: 'map', maxWidth: 120 },
     {
@@ -96,11 +95,7 @@ const hotelRoomRateValidation = () => {
             extraBed: {
                 required: true,
                 digits: true
-            },
-            bb: {
-                required: true,
-                digits: true
-            },
+            },            
             ap: {
                 required: true,
                 digits: true
@@ -121,8 +116,7 @@ const Edit = (data) => {
     $('#hotel').val(data.hotelId);
     $('#singleBed').val(data.singleBed);
     $('#doubleBed').val(data.doubleBed);
-    $('#extraBed').val(data.extraBed);
-    $('#bb').val(data.bb);
+    $('#extraBed').val(data.extraBed);   
     $('#ap').val(data.ap);
     $('#map').val(data.map);
     $('#hotelRoomRateForm').validate().destroy();
@@ -181,8 +175,7 @@ const Save = () => {
             HotelId: $('#hotel').val(),
             SingleBed: $('#singleBed').val(),
             DoubleBed: $('#doubleBed').val(),
-            ExtraBed: $('#extraBed').val(),
-            BB: $('#bb').val(),
+            ExtraBed: $('#extraBed').val(),         
             AP: $('#ap').val(),
             MAP: $('#map').val()
         };

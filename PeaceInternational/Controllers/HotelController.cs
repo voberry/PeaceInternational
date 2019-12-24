@@ -152,8 +152,7 @@ namespace PeaceInternational.Web.Controllers
                         HotelId = hotelRoomRate.HotelId,
                         SingleBed = hotelRoomRate.SingleBed,
                         DoubleBed = hotelRoomRate.DoubleBed,
-                        ExtraBed = hotelRoomRate.ExtraBed,        
-                        BB = hotelRoomRate.BB,
+                        ExtraBed = hotelRoomRate.ExtraBed,                      
                         AP = hotelRoomRate.AP,
                         MAP = hotelRoomRate.MAP,
                         CreatedBy = user.Id
@@ -243,8 +242,7 @@ namespace PeaceInternational.Web.Controllers
                 record.HotelId = hotelRoomRate.HotelId;
                 record.SingleBed = hotelRoomRate.SingleBed;
                 record.DoubleBed = hotelRoomRate.DoubleBed;
-                record.ExtraBed = hotelRoomRate.ExtraBed;
-                record.BB = hotelRoomRate.BB;
+                record.ExtraBed = hotelRoomRate.ExtraBed;               
                 record.AP = hotelRoomRate.AP;
                 record.MAP = hotelRoomRate.MAP;
                 record.ModifiedBy = user.Id;

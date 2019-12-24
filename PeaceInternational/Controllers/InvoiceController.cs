@@ -125,6 +125,7 @@ namespace PeaceInternational.Web.Controllers
                     int InvoiceId = await _invoiceCrudService.InsertAsync(new Invoice
                     {
                         InvoiceNo = GetInvoiceNo(currentFiscalYear),
+                        IsTicket = invoice.IsTicket,
                         FileCodeNo = invoice.FileCodeNo,
                         FiscalYearId = currentFiscalYear.Id,
                         ReferenceNo = invoice.ReferenceNo,
@@ -177,6 +178,7 @@ namespace PeaceInternational.Web.Controllers
 
                 var record = await _invoiceCrudService.GetAsync(invoice.Id);
 
+                record.IsTicket = invoice.IsTicket;
                 record.ReferenceNo = invoice.ReferenceNo;
                 record.Dr = invoice.Dr;
                 record.FileCodeNo = invoice.FileCodeNo;

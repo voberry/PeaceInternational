@@ -93,10 +93,6 @@
                             <input type="text" class="form-control" name="dr" id="dr" />
                         </div>
                         <div class="col-md-2">
-                            <label for="fileCodeNo"> File Code No. <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="fileCodeNo" id="fileCodeNo" />
-                        </div>
-                        <div class="col-md-2">
                             <label for="refrenceNo"> Reference No. <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="referenceNo" id="referenceNo" />
                         </div>
@@ -104,10 +100,18 @@
                             <label for="currency"> Currency <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="currency" id="currency" oninput="this.value = this.value.toUpperCase()" />
                         </div>
+                        <div class="col-md-1">
+                            <label for="isTicket"> Ticket <span class="text-danger">*</span></label>
+                            <input type="checkbox" class="form-control" name="isTicket" id="isTicket" />
+                        </div>
+                        <div class="col-md-2" id="fileCodeNoDiv">
+                            <label for="fileCodeNo"> File Code No. </label>
+                            <input type="text" class="form-control" name="fileCodeNo" id="fileCodeNo" />
+                        </div>
                     </div>
                     <br />
                     <div class="form-row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="agentName"> Address <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="address" id="address" />
                         </div>

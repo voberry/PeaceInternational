@@ -3,12 +3,12 @@
 //Column Defination for the grid
 const columnDefs = [
     { headerName: 'Name', field: 'name' }, 
-    { headerName: 'Code', field: 'code' }, 
-    { headerName: 'Category', field: 'category' }, 
+    { headerName: 'Code', field: 'code', maxWidth: 100 }, 
+    { headerName: 'Category', field: 'category', maxWidth: 100 }, 
     { headerName: 'Address', field: 'address' },
-    { headerName: 'PhoneNo', field: 'phoneNo', sortable: false, filter: false },
+    { headerName: 'PhoneNo', field: 'phoneNo', maxWidth: 150, sortable: false, filter: false },
     {
-        headerName: 'Edit', maxWidth: 200, sortable: false, filter: false,
+        headerName: 'Edit', maxWidth: 150, sortable: false, filter: false,
         cellRenderer: function () {
             return '<i class="btn fas fa-edit" id="editButton"></i>';
         },
@@ -19,7 +19,7 @@ const columnDefs = [
         }
     },
     {
-        headerName: 'Delete', maxWidth: 200, sortable: false, filter: false,
+        headerName: 'Delete', maxWidth: 150, sortable: false, filter: false,
         cellRenderer: function () {
             return '<i class="btn fas fa-trash" id="trashButton"></i>';
         },

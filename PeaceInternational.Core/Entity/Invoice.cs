@@ -12,6 +12,7 @@ namespace PeaceInternational.Core.Entity
         }
        
         public string InvoiceNo { get; set; }
+        public bool IsTicket { get; set; }
         public string FileCodeNo { get; set; }
         public int FiscalYearId { get; set; }
         public string ReferenceNo { get; set; }
