@@ -176,7 +176,7 @@ namespace PeaceInternational.Web.Controllers
 
             if (formattedFiscalYear == "7677")
             {
-                count = 70;
+                count += 70;
             }
 
             var fileCodeNo = $"{formattedFiscalYear}/{(count + 1).ToString().PadLeft(4, '0')}";

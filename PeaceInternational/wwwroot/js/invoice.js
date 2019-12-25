@@ -266,6 +266,7 @@ const ClearInvoiceForm = () => {
     $("#id").val('');
     $('#date').val(new Date().toISOString().slice(0, 10));
     $('#isTicket').prop('checked', false);
+    $('#fileCodeNoDiv').show();
     $('#referenceNo').val('');
     $('#dr').val('');
     $('#fileCodeNo').val('');

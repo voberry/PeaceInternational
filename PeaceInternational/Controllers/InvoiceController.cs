@@ -239,7 +239,7 @@ namespace PeaceInternational.Web.Controllers
 
             if(formattedFiscalYear == "7677")
             {
-                count = 170;
+                count += 170;
             }
 
             var invoiceNo = $"{formattedFiscalYear}/{(count + 1).ToString().PadLeft(4, '0')}";
