@@ -131,7 +131,7 @@ const GenerateInvoice = (invoiceData) => {
         method: 'GET',
         data: { id: invoiceData.id },
         success: (data) => {
-            data.invoice.fileCodeNo = data.invoice.fileCodeNo.split('/')[1];
+            data.invoice.fileCodeNo = data.invoice.fileCodeNo ? data.invoice.fileCodeNo.split('/')[1] : data.invoice.fileCodeNo;
             console.log(data);
             var source = document.getElementById("entry-template").innerHTML;
             var template = Handlebars.compile(source);
@@ -296,20 +296,11 @@ const invoiceFormValidation = () => {
             },
             fileCodeNo: {                
                 checkFileCodeNo: true
-            },
-            referenceNo: {
-                required: true
-            },
-            address: {
-                required: true
-            },
+            },            
             currency: {
                 required: true
             },
             clientName: {
-                required: true
-            },
-            pax: {
                 required: true
             }
         }

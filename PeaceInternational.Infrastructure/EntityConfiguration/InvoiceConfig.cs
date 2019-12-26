@@ -16,11 +16,10 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
 
             builder.Property(p => p.InvoiceNo)
                 .HasMaxLength(50)
-                .IsRequired();         
+                .IsRequired();
 
             builder.Property(p => p.ReferenceNo)
-               .HasMaxLength(255)
-               .IsRequired();
+               .HasMaxLength(255);             
 
             builder.Property(p => p.Dr)
                .HasMaxLength(255)
@@ -28,10 +27,7 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
 
             builder.Property(p => p.ClientName)
                .HasMaxLength(255)
-               .IsRequired();
-
-            builder.Property(p => p.PAX)
-               .IsRequired();
+               .IsRequired();         
 
             builder.Property(p => p.Currency)
                .HasMaxLength(255)
