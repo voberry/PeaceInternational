@@ -9,7 +9,7 @@ namespace PeaceInternational.Core.Entity
         public string Name { get; set; }
         public int MinPAX { get; set; }
         public int MaxPAX { get; set; }
-        public double FullDayRate { get; set; }
-        public double HalfDayRate { get; set; }
+
+        public ICollection<SectorTransport> SectorTransport { get; set; }
     }
 }

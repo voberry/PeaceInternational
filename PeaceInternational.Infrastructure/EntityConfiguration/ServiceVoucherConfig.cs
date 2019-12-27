@@ -40,7 +40,7 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
             builder.Property(p => p.Services);
 
             builder.HasOne(p => p.Hotel)
-                .WithMany(h => h.HotelReceipt)
+                .WithMany(h => h.ServiceVoucher)
                 .HasForeignKey(p => p.HotelId);
 
             builder.HasOne(p => p.Customer)

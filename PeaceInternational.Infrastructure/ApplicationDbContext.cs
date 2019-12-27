@@ -26,6 +26,9 @@ namespace PeaceInternational.Infrastructure
             builder.ApplyConfiguration(new HotelRoomRateConfig());
             builder.ApplyConfiguration(new SectorConfig());
             builder.ApplyConfiguration(new TransportConfig());
+            builder.ApplyConfiguration(new TourcostConfig());
+            builder.ApplyConfiguration(new TourcostDetailConfig());
+            builder.ApplyConfiguration(new SectorTransportConfig());
         }
     }
 }

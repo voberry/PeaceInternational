@@ -19,13 +19,17 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
 
             builder.Property(p => p.Code)
                 .IsRequired()
-                .HasMaxLength(10);
+                .HasMaxLength(10);            
 
-            builder.Property(p => p.FullDayRate)
-               .HasColumnType("Decimal(10,2)");
+            builder.HasMany(p => p.TourcostDetail1)
+                .WithOne(e => e.Sector1)
+                .HasForeignKey(e => e.Sector1Id)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
-            builder.Property(p => p.HalfDayRate)
-               .HasColumnType("Decimal(10,2)");
+            builder.HasMany(p => p.TourcostDetail2)
+             .WithOne(e => e.Sector2)
+             .HasForeignKey(e => e.Sector2Id)
+             .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

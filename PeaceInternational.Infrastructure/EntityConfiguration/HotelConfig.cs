@@ -31,7 +31,23 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
 
             builder.Property(p => p.Category)
                .IsRequired()
-               .HasColumnType("char(1)");              
+               .HasColumnType("char(1)");
+
+            builder.HasMany(p => p.TourcostDetailA)
+                .WithOne(e => e.HotelA)
+                .HasForeignKey(e => e.HotelAId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.HasMany(p => p.TourcostDetailB)
+              .WithOne(e => e.HotelB)
+              .HasForeignKey(e => e.HotelBId)
+              .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.HasMany(p => p.TourcostDetailC)
+              .WithOne(e => e.HotelC)
+              .HasForeignKey(e => e.HotelCId)
+              .OnDelete(DeleteBehavior.ClientSetNull);
+
         }
     }
 }

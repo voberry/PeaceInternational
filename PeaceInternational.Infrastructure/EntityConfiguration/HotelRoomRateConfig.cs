@@ -23,10 +23,7 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
                 .HasColumnType("Decimal(10,2)");
 
             builder.Property(p => p.ExtraBed)
-                .HasColumnType("Decimal(10,2)");
-
-            builder.Property(p => p.BB)
-               .HasColumnType("Decimal(10,2)");
+                .HasColumnType("Decimal(10,2)");           
 
             builder.Property(p => p.AP)
                .HasColumnType("Decimal(10,2)");

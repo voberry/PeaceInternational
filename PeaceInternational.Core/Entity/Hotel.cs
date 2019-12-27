@@ -8,7 +8,7 @@ namespace PeaceInternational.Core.Entity
     {
         public Hotel()
         {
-            this.HotelReceipt = new HashSet<ServiceVoucher>();
+            this.ServiceVoucher = new HashSet<ServiceVoucher>();
         }
 
         public string Name { get; set; }
@@ -18,6 +18,11 @@ namespace PeaceInternational.Core.Entity
         public char Category { get; set; }
 
         public HotelRoomRate HotelRoomRate { get; set; }
-        public ICollection<ServiceVoucher> HotelReceipt { get; set; }
+
+        public ICollection<ServiceVoucher> ServiceVoucher { get; set; }
+
+        public ICollection<TourcostDetail> TourcostDetailA { get; set; }
+        public ICollection<TourcostDetail> TourcostDetailB { get; set; }
+        public ICollection<TourcostDetail> TourcostDetailC { get; set; }
     }
 }

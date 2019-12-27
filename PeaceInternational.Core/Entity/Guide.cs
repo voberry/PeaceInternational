@@ -10,5 +10,7 @@ namespace PeaceInternational.Core.Entity
         public double FullDayRate { get; set; }
         public double HalfDayRate { get; set; }
         public double OverNight { get; set; }
+
+        public ICollection<Tourcost> Tourcost { get; set; }
     }
 }

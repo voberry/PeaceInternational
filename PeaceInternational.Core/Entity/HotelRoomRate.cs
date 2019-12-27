@@ -9,8 +9,7 @@ namespace PeaceInternational.Core.Entity
         public int HotelId { get; set; }
         public decimal SingleBed { get; set; }
         public decimal DoubleBed { get; set; }
-        public decimal ExtraBed { get; set; }
-        public decimal BB { get; set; }
+        public decimal ExtraBed { get; set; }       
         public decimal AP { get; set; }
         public decimal MAP { get; set; }
 

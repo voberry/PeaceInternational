@@ -8,7 +8,10 @@ namespace PeaceInternational.Core.Entity
     {
         public string Name { get; set; }
         public string Code { get; set; }
-        public decimal FullDayRate { get; set; }
-        public decimal HalfDayRate { get; set; }
+
+        public ICollection<SectorTransport> SectorTransport { get; set; }
+
+        public ICollection<TourcostDetail> TourcostDetail1 { get; set; }
+        public ICollection<TourcostDetail> TourcostDetail2 { get; set; }
     }
 }
