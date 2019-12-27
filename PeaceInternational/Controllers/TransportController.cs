@@ -73,8 +73,6 @@ namespace PeaceInternational.Web.Controllers
                         Name = transport.Name,
                         MinPAX = transport.MinPAX,
                         MaxPAX = transport.MaxPAX,
-                        FullDayRate = transport.FullDayRate,
-                        HalfDayRate = transport.HalfDayRate,
                         CreatedBy = user.Id
                     });
 
@@ -118,9 +116,7 @@ namespace PeaceInternational.Web.Controllers
 
                 record.Name = transport.Name;
                 record.MinPAX = transport.MinPAX;
-                record.MaxPAX = transport.MaxPAX;
-                record.FullDayRate = transport.FullDayRate;
-                record.HalfDayRate = transport.HalfDayRate;
+                record.MaxPAX = transport.MaxPAX;              
                 record.ModifiedBy = user.Id;
                 record.ModifiedDate = DateTime.Now;
 

@@ -5,8 +5,8 @@ const columnDefs = [
     { headerName: 'Name', field: 'name' },
     { headerName: 'Min PAX', field: 'minPAX' },
     { headerName: 'Max PAX', field: 'maxPAX' },
-    { headerName: 'Full Day Rate', field: 'fullDayRate' },
-    { headerName: 'Half Day Rate', field: 'halfDayRate', sortable: false, filter: false },
+    //{ headerName: 'Full Day Rate', field: 'fullDayRate' },
+    //{ headerName: 'Half Day Rate', field: 'halfDayRate', sortable: false, filter: false },
     {
         headerName: 'Edit', maxWidth: 200, sortable: false, filter: false,
         cellRenderer: function () {
@@ -68,8 +68,8 @@ const Clear = () => {
     $('#name').val('');
     $('#minPAX').val('');
     $('#maxPAX').val('');
-    $('#fullDayRate').val('');
-    $('#halfDayRate').val('');
+    //$('#fullDayRate').val('');
+    //$('#halfDayRate').val('');
 };
 
 //Function specifying rules for validating the form
@@ -89,15 +89,15 @@ const transportValidation = () => {
             maxPAX: {
                 required: true,
                 digits: true
-            },
-            fullDayRate: {
-                required: true,
-                digits: true
-            },
-            halfDayRate: {
-                required: true,
-                digits: true
-            }
+            }          
+            //fullDayRate: {
+            //    required: true,
+            //    digits: true
+            //},
+            //halfDayRate: {
+            //    required: true,
+            //    digits: true
+            //}
         }
     });
 };
@@ -110,8 +110,8 @@ const Edit = (data) => {
     $('#name').val(data.name);
     $('#minPAX').val(data.minPAX);
     $('#maxPAX').val(data.maxPAX);
-    $('#fullDayRate').val(data.fullDayRate);
-    $('#halfDayRate').val(data.halfDayRate);
+    //$('#fullDayRate').val(data.fullDayRate);
+    //$('#halfDayRate').val(data.halfDayRate);
     $('#transportForm').validate().destroy();
     transportValidation();
     $('#transportForm').validate().resetForm();
@@ -154,8 +154,8 @@ const Save = () => {
             Name: $('#name').val(),
             MinPAX: $('#minPAX').val(),
             MaxPAX: $('#maxPAX').val(),
-            FullDayRate: $('#fullDayRate').val(),
-            HalfDayRate: $('#halfDayRate').val()
+            //FullDayRate: $('#fullDayRate').val(),
+            //HalfDayRate: $('#halfDayRate').val()
         };
 
         $.ajax({
