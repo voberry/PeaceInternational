@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PeaceInternational.Core.Entity;
 using PeaceInternational.Core.IRepository;
 using PeaceInternational.Web.Models;
@@ -13,15 +14,22 @@ namespace PeaceInternational.Web.Controllers
     public class SectorController : Controller
     {
         private readonly ICrudService<Sector> _sectorCrudService;
+        private readonly ICrudService<SectorTransport> _sectorTransportCrudService;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUnitOfWork _unitOfWork;
         private Notification notification;
 
         public SectorController(
             ICrudService<Sector> sectorCrudService,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            ICrudService<SectorTransport> sectorTransportCrudService,
+            IUnitOfWork unitOfWork)
         {
             _sectorCrudService = sectorCrudService;
+            _sectorTransportCrudService = sectorTransportCrudService;
             _userManager = userManager;
+            _unitOfWork = unitOfWork;
+
         }
 
         // GET: /<controller>/
@@ -38,7 +46,10 @@ namespace PeaceInternational.Web.Controllers
             {
                 if (id == null)
                 {
-                    var result = await _sectorCrudService.GetAllAsync();
+                    var result =  await _sectorCrudService.GetAll().AsNoTracking()
+                        .Include(h => h.SectorTransport)
+                        .ToListAsync();                   
+
                     return Json(result);
                 }
                 else
@@ -54,37 +65,53 @@ namespace PeaceInternational.Web.Controllers
         }
         //Save Sector
         [HttpPost]
-        public async Task<IActionResult> Save(Sector sector)
+        public async Task<IActionResult> Save(SectorDTO sectorDTO)
         {
             try
             {
                 var user = _userManager.GetUserAsync(HttpContext.User).Result;
                 notification = new Notification();
 
-                if (sector.Id > 0)
+                _unitOfWork.BeginTransaction();
+
+                if (sectorDTO.Sector.Id > 0)
                 {
 
-                    notification = await EditSector(sector, user);
+                    notification = await EditSector(sectorDTO, user);
                 }
                 else
-                {
-                    await _sectorCrudService.InsertAsync(new Sector
+                {   
+
+                    int sectorId = await _sectorCrudService.InsertAsync(new Sector
                     {
-                        Name = sector.Name,
-                        Code = sector.Code,
-                        FullDayRate = sector.FullDayRate,
-                        HalfDayRate = sector.HalfDayRate,
+                        Name = sectorDTO.Sector.Name,
+                        Code = sectorDTO.Sector.Code,                     
                         CreatedBy = user.Id
                     });
+
+                    foreach(var sectorTransport in sectorDTO.SectorTransport)
+                    {
+                        await _sectorTransportCrudService.InsertAsync(new SectorTransport
+                        {
+                            SectorId = sectorId,
+                            TransportId = sectorTransport.TransportId,
+                            HalfDayCost = sectorTransport.HalfDayCost,
+                            FullDayCost = sectorTransport.FullDayCost,
+                            CreatedBy = user.Id
+                        });
+                    }
 
                     notification.Type = "success";
                     notification.Message = "Sector created successfully.";
                 }
 
+                _unitOfWork.Commit();
+
                 return Json(notification);
             }
             catch (Exception exception)
             {
+                _unitOfWork.Rollback();
                 notification.Type = "error";
                 notification.Message = "Sector creation failed.";
                 return Json(notification);
@@ -109,18 +136,28 @@ namespace PeaceInternational.Web.Controllers
             }
         }
 
-        private async Task<Notification> EditSector(Sector sector, IdentityUser user)
+        private async Task<Notification> EditSector(SectorDTO sectorDTO, IdentityUser user)
         {
             try
             {
-                var record = await _sectorCrudService.GetAsync(sector.Id);
+                var record = await _sectorCrudService.GetAsync(sectorDTO.Sector.Id);
 
-                record.Name = sector.Name;
-                record.Code = sector.Code;
-                record.FullDayRate = sector.FullDayRate;
-                record.HalfDayRate = sector.HalfDayRate;
+                record.Name = sectorDTO.Sector.Name;
+                record.Code = sectorDTO.Sector.Code;           
                 record.ModifiedBy = user.Id;
                 record.ModifiedDate = DateTime.Now;
+
+                foreach (var sectorTransport in sectorDTO.SectorTransport)
+                {
+                    var recordST = await _sectorTransportCrudService.GetAsync(p => p.SectorId == sectorDTO.Sector.Id && p.TransportId == sectorTransport.TransportId);
+
+                    recordST.HalfDayCost = sectorTransport.HalfDayCost;
+                    recordST.FullDayCost = sectorTransport.FullDayCost;
+                    recordST.ModifiedBy = user.Id;
+                    record.ModifiedDate = DateTime.Now;
+
+                    _sectorTransportCrudService.Update(recordST);
+                }
 
                 _sectorCrudService.Update(record);
 
@@ -137,6 +174,10 @@ namespace PeaceInternational.Web.Controllers
         {
             try
             {
+                var sectorTransport = _sectorTransportCrudService.GetAll(p => p.SectorId == id);
+
+                _sectorTransportCrudService.Delete(sectorTransport);
+
                 var record = _sectorCrudService.Get(id);
                 _sectorCrudService.Delete(record);
 

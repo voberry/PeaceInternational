@@ -2,10 +2,8 @@
 
 //Column Defination for the grid
 const columnDefs = [
-    { headerName: 'Name', field: 'name', maxWidth: 300 },
-    { headerName: 'Code', field: 'code', maxWidth: 200 },
-    { headerName: 'Full Day Rate', field: 'fullDayRate' },
-    { headerName: 'Half Day Rate', field: 'halfDayRate', sortable: false, filter: false },
+    { headerName: 'Name', field: 'name', maxWidth: 500 },
+    { headerName: 'Code', field: 'code', maxWidth: 200 },  
     {
         headerName: 'Edit', maxWidth: 200, sortable: false, filter: false,
         cellRenderer: function () {
@@ -65,9 +63,19 @@ const Clear = () => {
     removeBorderClass();
     $("#id").val('');
     $('#name').val('');
-    $('#code').val('');
-    $('#fullDayRate').val('');
-    $('#halfDayRate').val('');
+    $('#code').val('');   
+    $('#t1fdcost').val('');   
+    $('#t1hdcost').val('');
+    $('#t2fdcost').val('');
+    $('#t2hdcost').val('');
+    $('#t3fdcost').val('');
+    $('#t3hdcost').val('');
+    $('#t4fdcost').val('');
+    $('#t4hdcost').val('');
+    $('#t5fdcost').val('');
+    $('#t5hdcost').val('');
+    $('#t6fdcost').val('');
+    $('#t6hdcost').val('');   
 };
 
 //Function specifying rules for validating the form
@@ -84,11 +92,51 @@ const sectorValidation = () => {
                 required: true,
                 maxlength: 15
             },
-            fullDayRate: {
+            t1fdcost: {
                 required: true,
                 digits: true
             },
-            halfDayRate: {
+            t1hdcost: {
+                required: true,
+                digits: true
+            },
+            t2fdcost: {
+                required: true,
+                digits: true
+            },
+            t2hdcost: {
+                required: true,
+                digits: true
+            },
+            t3fdcost: {
+                required: true,
+                digits: true
+            },
+            t3hdcost: {
+                required: true,
+                digits: true
+            },
+            t4fdcost: {
+                required: true,
+                digits: true
+            },
+            t4hdcost: {
+                required: true,
+                digits: true
+            },
+            t5fdcost: {
+                required: true,
+                digits: true
+            },
+            t5hdcost: {
+                required: true,
+                digits: true
+            },
+            t6fdcost: {
+                required: true,
+                digits: true
+            },
+            t6hdcost: {
                 required: true,
                 digits: true
             }
@@ -102,9 +150,19 @@ const Edit = (data) => {
     $('#sectorTitle').html("Edit Sector");
     $('#id').val(data.id);
     $('#name').val(data.name);
-    $('#code').val(data.code);
-    $('#fullDayRate').val(data.fullDayRate);
-    $('#halfDayRate').val(data.halfDayRate);
+    $('#code').val(data.code);   
+    $('#t1fdcost').val(data.sectorTransport[0].fullDayCost);   
+    $('#t1hdcost').val(data.sectorTransport[0].halfDayCost);   
+    $('#t2fdcost').val(data.sectorTransport[1].fullDayCost);
+    $('#t2hdcost').val(data.sectorTransport[1].halfDayCost);   
+    $('#t3fdcost').val(data.sectorTransport[2].fullDayCost);
+    $('#t3hdcost').val(data.sectorTransport[2].halfDayCost);   
+    $('#t4fdcost').val(data.sectorTransport[3].fullDayCost);
+    $('#t4hdcost').val(data.sectorTransport[3].halfDayCost);   
+    $('#t5fdcost').val(data.sectorTransport[4].fullDayCost);
+    $('#t5hdcost').val(data.sectorTransport[4].halfDayCost);   
+    $('#t6fdcost').val(data.sectorTransport[5].fullDayCost);
+    $('#t6hdcost').val(data.sectorTransport[5].halfDayCost);   
     $('#sectorForm').validate().destroy();
     sectorValidation();
     $('#sectorForm').validate().resetForm();
@@ -142,18 +200,57 @@ const Save = () => {
 
         e.preventDefault();
 
-        var record = {
+        var sector = {
             Id: $('#id').val(),
             Name: $('#name').val(),
-            Code: $('#code').val(),
-            FullDayRate: $('#fullDayRate').val(),
-            HalfDayRate: $('#halfDayRate').val()
+            Code: $('#code').val()           
         };
+
+        var sectorTransport = [
+            {
+                TransportId: 1,
+                HalfDayCost: $('#t1hdcost').val(), 
+                FullDayCost: $('#t1fdcost').val() 
+                
+            },
+            {
+                TransportId: 2,
+                HalfDayCost: $('#t2hdcost').val(),
+                FullDayCost: $('#t2fdcost').val()
+
+            },
+            {
+                TransportId: 3,
+                HalfDayCost: $('#t3hdcost').val(),
+                FullDayCost: $('#t3fdcost').val()
+
+            },
+            {
+                TransportId: 4,
+                HalfDayCost: $('#t4hdcost').val(),
+                FullDayCost: $('#t4fdcost').val()
+
+            },
+            {
+                TransportId: 5,
+                HalfDayCost: $('#t5hdcost').val(),
+                FullDayCost: $('#t5fdcost').val()
+
+            },
+            {
+                TransportId: 6,
+                HalfDayCost: $('#t6hdcost').val(),
+                FullDayCost: $('#t6fdcost').val()
+
+            }
+        ];
+
+        var record = { sector, sectorTransport };
 
         $.ajax({
             url: 'Sector/Save',
             method: 'POST',
-            data: { sector: record },
+            data: { sectorDTO: record },
             success: function (data) {
                 console.log(data);
                 noty({

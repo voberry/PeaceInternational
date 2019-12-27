@@ -81,7 +81,8 @@ const guideValidation = () => {
                 isOnlyWhiteSpace: true
             },
             fullDayRate: {
-                required: true
+                required: true,
+                digits: true
             },
             halfDayRate: {
                 required: true,

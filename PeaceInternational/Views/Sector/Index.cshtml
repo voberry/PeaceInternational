@@ -40,28 +40,90 @@
                         <label for="code"> Code <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="code" id="code" oninput="this.value = this.value.toUpperCase()" />
                     </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="fullDayRate"> Full Day Rate <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="fullDayRate" id="fullDayRate" />
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <label for="code"> T1 (03-05) PAX <span class="text-danger">*</span></label>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="halfDayRate"> Half Day Rate <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="halfDayRate" id="halfDayRate" />
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t1hdcost" id="t1hdcost" placeholder="Half Day Cost" />
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t1fdcost" id="t1fdcost" placeholder="Full Day Cost" />
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <label for="code"> T2 (06-09) PAX <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t2hdcost" id="t2hdcost" placeholder="Half Day Cost" />
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t2fdcost" id="t2fdcost" placeholder="Full Day Cost" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <label for="code"> T3 (10-14) PAX <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t3hdcost" id="t3hdcost" placeholder="Half Day Cost" />
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t3fdcost" id="t3fdcost" placeholder="Full Day Cost" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <label for="code"> T4 (15-19) PAX <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t4hdcost" id="t4hdcost" placeholder="Half Day Cost" />
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t4fdcost" id="t4fdcost" placeholder="Full Day Cost" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <label for="code"> T5 (20-24) PAX <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t5hdcost" id="t5hdcost" placeholder="Half Day Cost" />
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t5fdcost" id="t5fdcost" placeholder="Full Day Cost" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <label for="code"> T6 (25) PAX <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t6hdcost" id="t6hdcost" placeholder="Half Day Cost" />
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" class="form-control" name="t6fdcost" id="t6fdcost" placeholder="Full Day Cost" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
 
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-
-            </div>
         </form>
     </div>
 </div>
