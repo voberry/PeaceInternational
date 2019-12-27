@@ -15,7 +15,8 @@ namespace PeaceInternational.Core.Entity
         public string Category4 { get; set; }
         public string Category5 { get; set; }
         public int GuideId { get; set; }
-        public bool IsGuideFullDay { get; set; }
+        public bool IsMealAP { get; set; }
+        public int  GuideType { get; set; }
         public decimal GrossAmountTransportation { get; set; }
         public decimal GrossAmountAccomodation { get; set; }
         public int DiscountTransportation { get; set; }
