@@ -20,6 +20,7 @@ namespace PeaceInternational.Core.IRepository
         IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> expression);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> expression);
-        int Delete(TEntity entity);       
+        int Delete(TEntity entity);
+        void Delete(IEnumerable<TEntity> entities);
     }
 }

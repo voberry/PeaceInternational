@@ -25,6 +25,12 @@ namespace PeaceInternational.Infrastructure.Repository
             return result.Entity.Id;
         }
 
+        public void Delete(IEnumerable<TEntity> entities)
+        {
+            _context.Set<TEntity>().RemoveRange(entities);
+            _context.SaveChanges();
+        }
+
         public TEntity Get(int? id)
         {
             return _context.Set<TEntity>().Find(id);
