@@ -95,8 +95,7 @@ namespace PeaceInternational.Web.Controllers
                         {
                             SectorId = sectorId,
                             TransportId = sectorTransport.TransportId,
-                            HalfDayCost = sectorTransport.HalfDayCost,
-                            FullDayCost = sectorTransport.FullDayCost,
+                            Cost = sectorTransport.Cost,                          
                             CreatedBy = user.Id
                         });
                     }
@@ -151,8 +150,7 @@ namespace PeaceInternational.Web.Controllers
                 {
                     var recordST = await _sectorTransportCrudService.GetAsync(p => p.SectorId == sectorDTO.Sector.Id && p.TransportId == sectorTransport.TransportId);
 
-                    recordST.HalfDayCost = sectorTransport.HalfDayCost;
-                    recordST.FullDayCost = sectorTransport.FullDayCost;
+                    recordST.Cost = sectorTransport.Cost;                  
                     recordST.ModifiedBy = user.Id;
                     record.ModifiedDate = DateTime.Now;
 

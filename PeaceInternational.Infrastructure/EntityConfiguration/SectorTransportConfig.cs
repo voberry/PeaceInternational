@@ -13,11 +13,8 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
         {
             base.Configure(builder);
 
-            builder.Property(p => p.HalfDayCost)
-              .HasColumnType("Decimal(10,2)");
-
-            builder.Property(p => p.FullDayCost)
-             .HasColumnType("Decimal(10,2)");
+            builder.Property(p => p.Cost)
+              .HasColumnType("Decimal(10,2)");          
 
             builder.HasOne(p => p.Sector)
                 .WithMany(e => e.SectorTransport)
