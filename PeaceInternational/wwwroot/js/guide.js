@@ -104,7 +104,7 @@ const Edit = (data) => {
     $('#name').val(data.name);
     $('#fullDayRate').val(data.fullDayRate);
     $('#halfDayRate').val(data.halfDayRate);
-    $('#overnight').val(data.overnight);
+    $('#overnight').val(data.overNight);
     $('#guideForm').validate().destroy();
     guideValidation();
     $('#guideForm').validate().resetForm();

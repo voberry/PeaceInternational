@@ -1,0 +1,785 @@
+﻿@model PeaceInternational.Core.Entity.Tourcost
+
+@{
+    ViewData["Title"] = "Tourcost";
+}
+
+<style type="text/css">
+    p {
+        margin-bottom: 2px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    }
+
+    th {
+        text-align: center;
+        font-size: 12px;
+    }
+
+    td {
+        text-align: center;
+        font-size: 14px;
+        padding: 0.5rem !important;
+    }
+
+    .wrap {
+        text-wrap: normal;
+        word-wrap: break-word;
+    }
+
+    .float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 40px;
+        right: 40px;
+        background-color: #0C9;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 2px 2px 3px #999;
+    }
+
+    .floate {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 140px;
+        right: 40px;
+        background-color: cadetblue;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 2px 2px 3px #999;
+    }
+
+    .loader {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<div id="tourcostTemplate"></div>
+<hr />
+<div id="pppTemplate"></div>
+<button class="btn floate" id="printTourcost"><i class="fa fa-print fa-2x"></i></button>
+<button class="btn float" id="printPPPcost"><i class="fa fa-print fa-2x"></i></button>
+<div id="loader"></div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script id="tourcost-template" type="text/x-handlebars-template">
+        <div class="card">
+            <div class="card-header bg-white">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="h5 text-monospace"> {{clientName}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="h5 float-right">Peace International Pvt. Ltd.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <p><label class="font-weight-bold">PAX:</label> {{minPAX}} - {{maxPAX}}</p>
+                    </div>
+                    <div class="col">
+                        <p><label class="font-weight-bold">Days:</label> {{days}}</p>
+                    </div>
+                    <div class="col">
+                        <p><label class="font-weight-bold">Guide:</label> {{guide.name}} ({{guideType}}) </p>
+                    </div>
+                    <div class="col">
+                        <p><label class="font-weight-bold">Meal:</label> AP</p>
+                    </div>
+                    <div class="col">
+                        <p><label class="font-weight-bold">Luxury:</label> {{isLuxury}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-white">
+                <div class="row">
+                    <div class="col">
+                        <p>Discount (T) : {{discountTransportation}}  % </p>
+                    </div>
+                    <div class="col">
+                        <p>Discount (A) : {{discountAccomodation}} % </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th rowspan="3">Days</th>
+                        <th rowspan="3" class="wrap">Sector</th>
+                        <th colspan="6" rowspan="2">Transport</th>
+                        <th colspan="12">Accomodation</th>
+                    </tr>
+                    <tr>
+
+                        <th colspan="4">CAT A</th>
+                        <th colspan="4">CAT B</th>
+                        <th colspan="4">CAT C</th>
+                    </tr>
+                    <tr>
+                        <th>T1</th>
+                        <th>T2</th>
+                        <th>T3</th>
+                        <th>T4</th>
+                        <th>T5</th>
+                        <th>T6</th>
+                        <th>NAME</th>
+                        <th>X BED</th>
+                        <th>XX BED</th>
+                        <th>E BED</th>
+                        <th>NAME</th>
+                        <th>X BED</th>
+                        <th>XX BED</th>
+                        <th>E BED</th>
+                        <th>NAME</th>
+                        <th>X BED</th>
+                        <th>XX BED</th>
+                        <th>E BED</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tourcostDetail}}
+                    <tr>
+                        <td>{{this.day}}</td>
+                        <td class="wrap">{{this.sector1.code}} / {{this.sector2.code}} / {{this.sector3.code}}</td>
+                        <td>{{this.t1cost}}</td>
+                        <td>{{this.t2cost}}</td>
+                        <td>{{this.t3cost}}</td>
+                        <td>{{this.t4cost}}</td>
+                        <td>{{this.t5cost}}</td>
+                        <td>{{this.t6cost}}</td>
+                        <td>{{this.hotelA.code}}</td>
+                        <td>{{this.hotelA.hotelRoomRate.singleBed}}</td>
+                        <td>{{this.hotelA.hotelRoomRate.doubleBed}}</td>
+                        <td>{{this.hotelA.hotelRoomRate.extraBed}}</td>
+                        <td>{{this.hotelB.code}}</td>
+                        <td>{{this.hotelB.hotelRoomRate.singleBed}}</td>
+                        <td>{{this.hotelB.hotelRoomRate.doubleBed}}</td>
+                        <td>{{this.hotelB.hotelRoomRate.extraBed}}</td>
+                        <td>{{this.hotelC.code}}</td>
+                        <td>{{this.hotelC.hotelRoomRate.singleBed}}</td>
+                        <td>{{this.hotelC.hotelRoomRate.doubleBed}}</td>
+                        <td>{{this.hotelC.hotelRoomRate.extraBed}}</td>
+                    </tr>
+                    {{/each}}
+                    <tr>
+                        <td colspan="2" class="font-weight-bold">Gross Total</td>
+                        <td>{{t1total}}</td>
+                        <td>{{t2total}}</td>
+                        <td>{{t3total}}</td>
+                        <td>{{t4total}}</td>
+                        <td>{{t5total}}</td>
+                        <td>{{t6total}}</td>
+                        <td></td>
+                        <td>{{catAXTotal}}</td>
+                        <td>{{catAXXTotal}}</td>
+                        <td>{{catAETotal}}</td>
+                        <td></td>
+                        <td>{{catBXTotal}}</td>
+                        <td>{{catBXXTotal}}</td>
+                        <td>{{catBETotal}}</td>
+                        <td></td>
+                        <td>{{catCXTotal}}</td>
+                        <td>{{catCXXTotal}}</td>
+                        <td>{{catCETotal}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="font-weight-bold">Net Total</td>
+                        <td>{{percentage t1total discountTransportation }}</td>
+                        <td>{{percentage t2total discountTransportation }}</td>
+                        <td>{{percentage t3total discountTransportation }}</td>
+                        <td>{{percentage t4total discountTransportation }}</td>
+                        <td>{{percentage t5total discountTransportation }}</td>
+                        <td>{{percentage t6total discountTransportation }}</td>
+                        <td></td>
+                        <td>{{percentage catAXTotal discountAccomodation }}</td>
+                        <td>{{percentage catAXXTotal discountAccomodation }}</td>
+                        <td>{{percentage catAETotal discountAccomodation }}</td>
+                        <td></td>
+                        <td>{{percentage catBXTotal discountAccomodation }}</td>
+                        <td>{{percentage catBXXTotal discountAccomodation }}</td>
+                        <td>{{percentage catBETotal discountAccomodation }}</td>
+                        <td></td>
+                        <td>{{percentage catCXTotal discountAccomodation }}</td>
+                        <td>{{percentage catCXXTotal discountAccomodation }}</td>
+                        <td>{{percentage catCETotal discountAccomodation }}</td>
+                    </tr>
+
+                    <tr>
+                        {{#if category1}}
+                        <td colspan="2" class="font-weight-bold">{{category1}}</td>
+                        <td colspan="2">{{category1Total}}</td>
+                        {{/if}}
+                        {{#if category2}}
+                        <td colspan="2" class="font-weight-bold">{{category2}}</td>
+                        <td colspan="2">{{category2Total}}</td>
+                        {{/if}}
+                        {{#if category3}}
+                        <td colspan="2" class="font-weight-bold">{{category3}}</td>
+                        <td colspan="2">{{category3Total}}</td>
+                        {{/if}}
+                        {{#if category4}}
+                        <td colspan="2" class="font-weight-bold">{{category4}}</td>
+                        <td colspan="2">{{category4Total}}</td>
+                        {{/if}}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </script>
+    <script id="ppp-template" type="text/x-handlebars-template">
+
+        <div class="row">
+            <div class="col-md-6">
+                <p class="h5 text-center">Individual Transport Cost</p>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Transport</th>
+                            <th>PAX</th>
+                            <th>Total Price</th>
+                            <th>Per Person</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>T1</td>
+                            <td>03-05</td>
+                            <td>{{percentage t1total discountTransportation }}</td>
+                            <td>{{customDivision t1total discountTransportation 3}}</td>
+                        </tr>
+                        <tr>
+                            <td>T2</td>
+                            <td>06-09</td>
+                            <td>{{percentage t2total discountTransportation }}</td>
+                            <td>{{customDivision t2total discountTransportation 6}}</td>
+                        </tr>
+                        <tr>
+                            <td>T3</td>
+                            <td>10-14</td>
+                            <td>{{percentage t3total discountTransportation }}</td>
+                            <td>{{customDivision t3total discountTransportation 10}}</td>
+                        </tr>
+                        <tr>
+                            <td>T4</td>
+                            <td>15-19</td>
+                            <td>{{percentage t4total discountTransportation }}</td>
+                            <td>{{customDivision t4total discountTransportation 15}}</td>
+                        </tr>
+                        <tr>
+                            <td>T5</td>
+                            <td>20-24</td>
+                            <td>{{percentage t5total discountTransportation }}</td>
+                            <td>{{customDivision t5total discountTransportation 20}}</td>
+                        </tr>
+                        <tr>
+                            <td>T6</td>
+                            <td>25</td>
+                            <td>{{percentage t6total discountTransportation }}</td>
+                            <td>{{customDivision t6total discountTransportation 25}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <p class="h5 text-center">Individual Hotel Cost</p>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>XX Bed</th>
+                            <th>X Bed</th>
+                            <th>Half Twin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CAT A</td>
+                            <td>{{percentage catAXXTotal discountAccomodation}}</td>
+                            <td>{{percentage catAXTotal discountAccomodation}}</td>
+                            <td>{{customDivision catAXXTotal discountAccomodation 2}}</td>
+                        </tr>
+                        <tr>
+                            <td>CAT B</td>
+                            <td>{{percentage catBXXTotal discountAccomodation}}</td>
+                            <td>{{percentage catBXTotal discountAccomodation}}</td>
+                            <td>{{customDivision catBXXTotal discountAccomodation 2}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>CAT C</td>
+                            <td>{{percentage catCXXTotal discountAccomodation}}</td>
+                            <td>{{percentage catCXTotal discountAccomodation}}</td>
+                            <td>{{customDivision catCXXTotal discountAccomodation 2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p class="h5 text-center">Per Person Price</p>
+        <table class="table table-bordered" id="pppTable">
+            <thead>
+                <tr>
+                    <th>Bracket</th>
+                    <th>Transport</th>
+                    <th>Hotel</th>
+                    <th>Guide</th>
+                    {{#if category1}}
+                    <th>{{category1}}</th>
+                    {{/if}}
+                    {{#if category2}}
+                    <th>{{category2}}</th>
+                    {{/if}}
+                    {{#if category3}}
+                    <th>{{category3}}</th>
+                    {{/if}}
+                    {{#if category4}}
+                    <th>{{category4}}</th>
+                    {{/if}}
+                    <th>Total</th>
+                    <th>After VAT (13%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="3">03-05</td>
+                    <td rowspan="3">{{customDivision t1total discountTransportation 3}}</td>
+                    <td>{{customDivision catAXXTotal discountAccomodation 2}}</td>
+                    <td rowspan="3">{{guideTotalCost}}</td>
+                    {{#if category1}}
+                    <td rowspan="3">{{category1Total}}</td>
+                    {{/if}}
+                    {{#if category2}}
+                    <td rowspan="3">{{category2Total}}</td>
+                    {{/if}}
+                    {{#if category3}}
+                    <td rowspan="3">{{category3Total}}</td>
+                    {{/if}}
+                    {{#if category4}}
+                    <td rowspan="3">{{category4Total}}</td>
+                    {{/if}}
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catBXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catCXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">06-09</td>
+                    <td rowspan="3">{{customDivision t2total discountTransportation 6}}</td>
+                    <td>{{customDivision catAXXTotal discountAccomodation 2}}</td>
+                    <td rowspan="3">{{guideTotalCost}}</td>
+                    {{#if category1}}
+                    <td rowspan="3">{{category1Total}}</td>
+                    {{/if}}
+                    {{#if category2}}
+                    <td rowspan="3">{{category2Total}}</td>
+                    {{/if}}
+                    {{#if category3}}
+                    <td rowspan="3">{{category3Total}}</td>
+                    {{/if}}
+                    {{#if category4}}
+                    <td rowspan="3">{{category4Total}}</td>
+                    {{/if}}
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catBXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catCXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">10-14</td>
+                    <td rowspan="3">{{customDivision t3total discountTransportation 10}}</td>
+                    <td>{{customDivision catAXXTotal discountAccomodation 2}}</td>
+                    <td rowspan="3">{{guideTotalCost}}</td>
+                    {{#if category1}}
+                    <td rowspan="3">{{category1Total}}</td>
+                    {{/if}}
+                    {{#if category2}}
+                    <td rowspan="3">{{category2Total}}</td>
+                    {{/if}}
+                    {{#if category3}}
+                    <td rowspan="3">{{category3Total}}</td>
+                    {{/if}}
+                    {{#if category4}}
+                    <td rowspan="3">{{category4Total}}</td>
+                    {{/if}}
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catBXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catCXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">15-19</td>
+                    <td rowspan="3">{{customDivision t4total discountTransportation 15}}</td>
+                    <td>{{customDivision catAXXTotal discountAccomodation 2}}</td>
+                    <td rowspan="3">{{guideTotalCost}}</td>
+                    {{#if category1}}
+                    <td rowspan="3">{{category1Total}}</td>
+                    {{/if}}
+                    {{#if category2}}
+                    <td rowspan="3">{{category2Total}}</td>
+                    {{/if}}
+                    {{#if category3}}
+                    <td rowspan="3">{{category3Total}}</td>
+                    {{/if}}
+                    {{#if category4}}
+                    <td rowspan="3">{{category4Total}}</td>
+                    {{/if}}
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catBXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catCXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">20-24</td>
+                    <td rowspan="3">{{customDivision t5total discountTransportation 20}}</td>
+                    <td>{{customDivision catAXXTotal discountAccomodation 2}}</td>
+                    <td rowspan="3">{{guideTotalCost}}</td>
+                    {{#if category1}}
+                    <td rowspan="3">{{category1Total}}</td>
+                    {{/if}}
+                    {{#if category2}}
+                    <td rowspan="3">{{category2Total}}</td>
+                    {{/if}}
+                    {{#if category3}}
+                    <td rowspan="3">{{category3Total}}</td>
+                    {{/if}}
+                    {{#if category4}}
+                    <td rowspan="3">{{category4Total}}</td>
+                    {{/if}}
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catBXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catCXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">25</td>
+                    <td rowspan="3">{{customDivision t6total discountTransportation 25}}</td>
+                    <td>{{customDivision catAXXTotal discountAccomodation 2}}</td>
+                    <td rowspan="3">{{guideTotalCost}}</td>
+                    {{#if category1}}
+                    <td rowspan="3">{{category1Total}}</td>
+                    {{/if}}
+                    {{#if category2}}
+                    <td rowspan="3">{{category2Total}}</td>
+                    {{/if}}
+                    {{#if category3}}
+                    <td rowspan="3">{{category3Total}}</td>
+                    {{/if}}
+                    {{#if category4}}
+                    <td rowspan="3">{{category4Total}}</td>
+                    {{/if}}
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catBXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{customDivision catCXXTotal discountAccomodation 2}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="card">
+            <div class="card-body">
+                <p class="h5"><span class="font-weight-bold">Comment: </span>{{comment}}</p>
+            </div>
+        </div>
+    </script>
+    <script type="text/javascript">
+
+        var data =  @Html.Raw(Json.Serialize(Model));
+        console.log(data);
+
+        tippy('#printTourcost', {
+            content: "Print Tourcost"          
+        });
+
+        tippy('#printPPPcost', {
+            content: "Print Per Person Cost"
+        });
+
+        data.guideTotalCost = 0;
+
+        if (data.guideType == 1) {
+            data.guideTotalCost = data.guide.halfDayRate * data.days;
+        }
+        else {
+            if (data.guideType == 2) {
+                data.guideTotalCost = data.guide.fullDayRate * data.days;
+            }
+            else {
+                data.guideTotalCost = data.guide.overNight * data.days;
+            }
+        }
+
+        data.guideType = data.guideType == 1 ? "Half Day" : data.guideType == 2 ? "Full Day" : "Escort";
+        data.isMealAP = data.isMealAP ? "AP" : "MAP";
+        data.isLuxury = data.isLuxury ? "Yes" : "No";
+        data.t1total = 0;
+        data.t2total = 0;
+        data.t3total = 0;
+        data.t4total = 0;
+        data.t5total = 0;
+        data.t6total = 0;
+        data.catAXTotal = 0;
+        data.catAXXTotal = 0;
+        data.catAETotal = 0;
+        data.catBXTotal = 0;
+        data.catBXXTotal = 0;
+        data.catBETotal = 0;
+        data.catCXTotal = 0;
+        data.catCXXTotal = 0;
+        data.catCETotal = 0;
+        data.category1Total = 0;
+        data.category2Total = 0;
+        data.category3Total = 0;
+        data.category4Total = 0;
+
+        $.each(data.tourcostDetail, function (idx, item) {
+
+            item.t1cost = item.sector1.sectorTransport[0].cost + item.sector2.sectorTransport[0].cost ? item.sector2.sectorTransport[0].cost : 0 + item.sector3.sectorTransport[0].cost ? item.sector3.sectorTransport[0].cost : 0;
+            data.t1total += item.t1cost;
+            item.t2cost = item.sector1.sectorTransport[1].cost + item.sector2.sectorTransport[1].cost ? item.sector2.sectorTransport[1].cost : 0 + item.sector3.sectorTransport[1].cost ? item.sector3.sectorTransport[1].cost : 0;
+            data.t2total += item.t2cost;
+            item.t3cost = item.sector1.sectorTransport[2].cost + item.sector2.sectorTransport[2].cost ? item.sector2.sectorTransport[2].cost : 0 + item.sector3.sectorTransport[2].cost ? item.sector3.sectorTransport[2].cost : 0;
+            data.t3total += item.t3cost;
+            item.t4cost = item.sector1.sectorTransport[3].cost + item.sector2.sectorTransport[3].cost ? item.sector2.sectorTransport[3].cost : 0 + item.sector3.sectorTransport[3].cost ? item.sector3.sectorTransport[3].cost : 0;
+            data.t4total += item.t4cost;
+            item.t5cost = item.sector1.sectorTransport[4].cost + item.sector2.sectorTransport[4].cost ? item.sector2.sectorTransport[4].cost : 0 + item.sector3.sectorTransport[4].cost ? item.sector3.sectorTransport[4].cost : 0;
+            data.t5total += item.t5cost;
+            item.t6cost = item.sector1.sectorTransport[5].cost + item.sector2.sectorTransport[5].cost ? item.sector2.sectorTransport[5].cost : 0 + item.sector3.sectorTransport[5].cost ? item.sector3.sectorTransport[5].cost : 0;
+            data.t6total += item.t6cost;
+
+            if (data.isMealAP == 'AP') {
+
+                item.hotelA.hotelRoomRate.singleBed += item.hotelA.hotelRoomRate.ap;
+                item.hotelA.hotelRoomRate.doubleBed += item.hotelA.hotelRoomRate.ap * 2;
+                item.hotelA.hotelRoomRate.extraBed += item.hotelA.hotelRoomRate.ap * 3;
+                item.hotelB.hotelRoomRate.singleBed += item.hotelB.hotelRoomRate.ap;
+                item.hotelB.hotelRoomRate.doubleBed += item.hotelB.hotelRoomRate.ap * 2;
+                item.hotelB.hotelRoomRate.extraBed += item.hotelB.hotelRoomRate.ap * 3;
+                item.hotelC.hotelRoomRate.singleBed += item.hotelC.hotelRoomRate.ap;
+                item.hotelC.hotelRoomRate.doubleBed += item.hotelC.hotelRoomRate.ap * 2;
+                item.hotelC.hotelRoomRate.extraBed += item.hotelC.hotelRoomRate.ap * 3;
+            }
+            else {
+
+                item.hotelA.hotelRoomRate.singleBed += item.hotelA.hotelRoomRate.map;
+                item.hotelA.hotelRoomRate.doubleBed += item.hotelA.hotelRoomRate.map * 2;
+                item.hotelA.hotelRoomRate.extraBed += item.hotelA.hotelRoomRate.map * 3;
+                item.hotelB.hotelRoomRate.singleBed += item.hotelB.hotelRoomRate.map;
+                item.hotelB.hotelRoomRate.doubleBed += item.hotelB.hotelRoomRate.map * 2;
+                item.hotelB.hotelRoomRate.extraBed += item.hotelB.hotelRoomRate.map * 3;
+                item.hotelC.hotelRoomRate.singleBed += item.hotelC.hotelRoomRate.map;
+                item.hotelC.hotelRoomRate.doubleBed += item.hotelC.hotelRoomRate.map * 2;
+                item.hotelC.hotelRoomRate.extraBed += item.hotelC.hotelRoomRate.map * 3;
+
+            }
+
+            data.catAXTotal += item.hotelA.hotelRoomRate.singleBed;
+            data.catAXXTotal += item.hotelA.hotelRoomRate.doubleBed;
+            data.catAETotal += item.hotelA.hotelRoomRate.extraBed;
+            data.catBXTotal += item.hotelB.hotelRoomRate.singleBed;
+            data.catBXXTotal += item.hotelB.hotelRoomRate.doubleBed;
+            data.catBETotal += item.hotelB.hotelRoomRate.extraBed;
+            data.catCXTotal += item.hotelC.hotelRoomRate.singleBed;
+            data.catCXXTotal += item.hotelC.hotelRoomRate.doubleBed;
+            data.catCETotal += item.hotelC.hotelRoomRate.extraBed;
+
+
+            data.category1Total += item.category1Cost;
+            data.category2Total += item.category2Cost;
+            data.category3Total += item.category3Cost;
+            data.category4Total += item.category4Cost;
+
+        });
+
+        var source = document.getElementById("tourcost-template").innerHTML;
+        var template = Handlebars.compile(source);
+        var result = template(data);
+
+        $('#tourcostTemplate').html(result);
+
+        var source1 = document.getElementById("ppp-template").innerHTML;
+        var template1 = Handlebars.compile(source1);
+        var result1 = template1(data);
+
+        $('#pppTemplate').html(result1);
+
+        let flag = 0;
+        data.category1 != null ? flag++ : '';
+        data.category2 != null ? flag++ : '';
+        data.category3 != null ? flag++ : '';
+        data.category4 != null ? flag++ : '';
+
+        console.log(flag);
+
+        //For first calc
+        for (let i = 0; i < 16; i = i + 3) {
+
+            let val =   parseFloat($(`#pppTable tr:nth-child(${i + 1}) td:nth-child(2)`)[0].innerText) +
+                parseFloat($(`#pppTable tr:nth-child(${i + 1}) td:nth-child(3)`)[0].innerText) +
+                parseFloat($(`#pppTable tr:nth-child(${i + 1}) td:nth-child(4)`)[0].innerText);
+
+            val += flag >= 1 ? parseFloat($(`#pppTable tr:nth-child(${i + 1}) td:nth-child(5)`)[0].innerText) : 0;
+            val += flag >= 2 ? parseFloat($(`#pppTable tr:nth-child(${i + 1}) td:nth-child(6)`)[0].innerText) : 0;
+            val += flag >= 3 ? parseFloat($(`#pppTable tr:nth-child(${i + 1}) td:nth-child(7)`)[0].innerText) : 0;
+            val += flag >= 4 ? parseFloat($(`#pppTable tr:nth-child(${i + 1}) td:nth-child(8)`)[0].innerText) : 0;
+
+            $(`#pppTable tr:nth-child(${i + 1}) td:nth-child(${flag + 5})`)[0].innerText = val
+
+
+            $(`#pppTable tr:nth-child(${i + 1}) td:nth-child(${flag + 6})`)[0].innerText = (1.13 * val).toFixed(2);
+        };
+
+        //For second calc
+        for (let i = 1; i < 17; i = i + 3) {
+
+            let val = parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(2)`)[0].innerText) +
+                parseFloat($(`#pppTable tr:nth-child(${i + 1}) td:nth-child(1)`)[0].innerText) +
+                parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(4)`)[0].innerText);
+
+            val += flag >= 1 ? parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(5)`)[0].innerText) : 0;
+            val += flag >= 2 ? parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(6)`)[0].innerText) : 0;
+            val += flag >= 3 ? parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(7)`)[0].innerText) : 0;
+            val += flag >= 4 ? parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(8)`)[0].innerText) : 0;
+
+
+            $(`#pppTable tr:nth-child(${i + 1}) td:nth-child(2)`)[0].innerText = val;
+
+
+            $(`#pppTable tr:nth-child(${i + 1}) td:nth-child(3)`)[0].innerText = (1.13 * val).toFixed(2);
+        };
+
+        //For third calc
+        for (let i = 1; i < 18; i = i + 3) {
+
+            let val = parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(2)`)[0].innerText) +
+                parseFloat($(`#pppTable tr:nth-child(${i + 2}) td:nth-child(1)`)[0].innerText) +
+                parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(4)`)[0].innerText);
+
+            val += flag >= 1 ? parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(5)`)[0].innerText) : 0;
+            val += flag >= 2 ? parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(6)`)[0].innerText) : 0;
+            val += flag >= 3 ? parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(7)`)[0].innerText) : 0;
+            val += flag >= 4 ? parseFloat($(`#pppTable tr:nth-child(${i}) td:nth-child(8)`)[0].innerText) : 0;
+
+            $(`#pppTable tr:nth-child(${i + 2}) td:nth-child(2)`)[0].innerText = val;
+
+
+            $(`#pppTable tr:nth-child(${i + 2}) td:nth-child(3)`)[0].innerText = (1.13 * val).toFixed(2);
+        };
+
+        $('#printTourcost').off('click').on('click', function () {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            $('#loader').addClass('loader');
+            html2canvas($("#tourcostTemplate")[0], {
+               scale: 5
+            }).then(function (canvas) {
+
+                var myImage = canvas.toDataURL("image/png");
+                var tWindow = window.open("");
+                $(tWindow.document.body)
+                    .html("<img id='Image' src=" + myImage + " style='width:100%;'></img>")
+                    .ready(function () {
+                        $('#loader').removeClass('loader');
+                        tWindow.focus();
+                        tWindow.print();
+                    });
+            });
+
+        });
+
+
+        $('#printPPPcost').off('click').on('click', function () {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            $('#loader').addClass('loader');
+            html2canvas($("#pppTemplate")[0], {
+                scale: 5
+            }).then(function (canvas) {
+
+                var myImage = canvas.toDataURL("image/png");
+                var tWindow = window.open("");
+                $(tWindow.document.body)
+                    .html("<img id='Image' src=" + myImage + " style='width:100%;'></img>")
+                    .ready(function () {
+                        $('#loader').removeClass('loader');
+                        tWindow.focus();
+                        tWindow.print();
+                    });
+            });
+
+        });
+
+    </script>
+}

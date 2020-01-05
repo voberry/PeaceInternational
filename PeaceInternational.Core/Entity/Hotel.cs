@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -21,8 +22,11 @@ namespace PeaceInternational.Core.Entity
 
         public ICollection<ServiceVoucher> ServiceVoucher { get; set; }
 
+        [JsonIgnore]
         public ICollection<TourcostDetail> TourcostDetailA { get; set; }
+        [JsonIgnore]
         public ICollection<TourcostDetail> TourcostDetailB { get; set; }
+        [JsonIgnore]
         public ICollection<TourcostDetail> TourcostDetailC { get; set; }
     }
 }

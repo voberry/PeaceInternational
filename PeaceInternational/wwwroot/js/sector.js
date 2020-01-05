@@ -63,19 +63,13 @@ const Clear = () => {
     removeBorderClass();
     $("#id").val('');
     $('#name').val('');
-    $('#code').val('');   
-    $('#t1fdcost').val('');   
-    $('#t1hdcost').val('');
-    $('#t2fdcost').val('');
-    $('#t2hdcost').val('');
-    $('#t3fdcost').val('');
-    $('#t3hdcost').val('');
-    $('#t4fdcost').val('');
-    $('#t4hdcost').val('');
-    $('#t5fdcost').val('');
-    $('#t5hdcost').val('');
-    $('#t6fdcost').val('');
-    $('#t6hdcost').val('');   
+    $('#code').val('');       
+    $('#t1cost').val('');   
+    $('#t2cost').val(''); 
+    $('#t3cost').val('');   
+    $('#t4cost').val('');  
+    $('#t5cost').val('');  
+    $('#t6cost').val('');   
 };
 
 //Function specifying rules for validating the form
@@ -91,52 +85,28 @@ const sectorValidation = () => {
             code: {
                 required: true,
                 maxlength: 15
-            },
-            t1fdcost: {
+            },          
+            t1cost: {
                 required: true,
                 digits: true
-            },
-            t1hdcost: {
+            },           
+            t2cost: {
                 required: true,
                 digits: true
-            },
-            t2fdcost: {
+            },           
+            t3cost: {
                 required: true,
                 digits: true
-            },
-            t2hdcost: {
+            },          
+            t4cost: {
                 required: true,
                 digits: true
-            },
-            t3fdcost: {
+            },           
+            t5cost: {
                 required: true,
                 digits: true
-            },
-            t3hdcost: {
-                required: true,
-                digits: true
-            },
-            t4fdcost: {
-                required: true,
-                digits: true
-            },
-            t4hdcost: {
-                required: true,
-                digits: true
-            },
-            t5fdcost: {
-                required: true,
-                digits: true
-            },
-            t5hdcost: {
-                required: true,
-                digits: true
-            },
-            t6fdcost: {
-                required: true,
-                digits: true
-            },
-            t6hdcost: {
+            },           
+            t6cost: {
                 required: true,
                 digits: true
             }
@@ -150,19 +120,13 @@ const Edit = (data) => {
     $('#sectorTitle').html("Edit Sector");
     $('#id').val(data.id);
     $('#name').val(data.name);
-    $('#code').val(data.code);   
-    $('#t1fdcost').val(data.sectorTransport[0].fullDayCost);   
-    $('#t1hdcost').val(data.sectorTransport[0].halfDayCost);   
-    $('#t2fdcost').val(data.sectorTransport[1].fullDayCost);
-    $('#t2hdcost').val(data.sectorTransport[1].halfDayCost);   
-    $('#t3fdcost').val(data.sectorTransport[2].fullDayCost);
-    $('#t3hdcost').val(data.sectorTransport[2].halfDayCost);   
-    $('#t4fdcost').val(data.sectorTransport[3].fullDayCost);
-    $('#t4hdcost').val(data.sectorTransport[3].halfDayCost);   
-    $('#t5fdcost').val(data.sectorTransport[4].fullDayCost);
-    $('#t5hdcost').val(data.sectorTransport[4].halfDayCost);   
-    $('#t6fdcost').val(data.sectorTransport[5].fullDayCost);
-    $('#t6hdcost').val(data.sectorTransport[5].halfDayCost);   
+    $('#code').val(data.code);      
+    $('#t1cost').val(data.sectorTransport[0].cost); 
+    $('#t2cost').val(data.sectorTransport[1].cost); 
+    $('#t3cost').val(data.sectorTransport[2].cost); 
+    $('#t4cost').val(data.sectorTransport[3].cost); 
+    $('#t5cost').val(data.sectorTransport[4].cost);  
+    $('#t6cost').val(data.sectorTransport[5].cost);   
     $('#sectorForm').validate().destroy();
     sectorValidation();
     $('#sectorForm').validate().resetForm();
@@ -209,39 +173,27 @@ const Save = () => {
         var sectorTransport = [
             {
                 TransportId: 1,
-                HalfDayCost: $('#t1hdcost').val(), 
-                FullDayCost: $('#t1fdcost').val() 
-                
+                Cost: $('#t1cost').val()                
             },
             {
                 TransportId: 2,
-                HalfDayCost: $('#t2hdcost').val(),
-                FullDayCost: $('#t2fdcost').val()
-
+                Cost: $('#t2cost').val()
             },
             {
                 TransportId: 3,
-                HalfDayCost: $('#t3hdcost').val(),
-                FullDayCost: $('#t3fdcost').val()
-
+                Cost: $('#t3cost').val()  
             },
             {
                 TransportId: 4,
-                HalfDayCost: $('#t4hdcost').val(),
-                FullDayCost: $('#t4fdcost').val()
-
+                Cost: $('#t4cost').val()
             },
             {
                 TransportId: 5,
-                HalfDayCost: $('#t5hdcost').val(),
-                FullDayCost: $('#t5fdcost').val()
-
+                Cost: $('#t5cost').val()
             },
             {
                 TransportId: 6,
-                HalfDayCost: $('#t6hdcost').val(),
-                FullDayCost: $('#t6fdcost').val()
-
+                Cost: $('#t6cost').val()
             }
         ];
 

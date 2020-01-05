@@ -9,6 +9,6 @@ namespace PeaceInternational.Web.Models
     public class TourcostDTO
     {        
         public Tourcost Tourcost { get; set; }
-        public IEnumerable<TourcostDetail> TourcostDetail { get; set; }
+        public IList<TourcostDetail> TourcostDetail { get; set; }
     }
 }

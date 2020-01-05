@@ -30,6 +30,9 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
              .WithMany(e => e.TourcostDetail2)
              .HasForeignKey(p => p.Sector2Id);
 
+            builder.HasOne(p => p.Sector3)
+            .WithMany(e => e.TourcostDetail3)
+            .HasForeignKey(p => p.Sector3Id);
 
             builder.Property(p => p.Category1Cost)
                .HasColumnType("Decimal(10,2)");

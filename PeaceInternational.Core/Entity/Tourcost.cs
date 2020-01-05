@@ -6,6 +6,7 @@ namespace PeaceInternational.Core.Entity
 {
     public class Tourcost : BaseEntity
     {
+        public string ClientName { get; set; }
         public int MinPAX { get; set; }
         public int MaxPAX { get; set; }
         public int Days { get; set; }
@@ -16,13 +17,10 @@ namespace PeaceInternational.Core.Entity
         public string Category5 { get; set; }
         public int GuideId { get; set; }
         public bool IsMealAP { get; set; }
-        public int  GuideType { get; set; }
-        public decimal GrossAmountTransportation { get; set; }
-        public decimal GrossAmountAccomodation { get; set; }
+        public bool IsLuxury { get; set; }
+        public int  GuideType { get; set; }        
         public int DiscountTransportation { get; set; }
-        public int DiscountAccomodation { get; set; }
-        public decimal NetAmountTransportation { get; set; }
-        public decimal NetAmountAccomodation { get; set; }
+        public int DiscountAccomodation { get; set; }        
         public string Comment { get; set; }
 
         public Guide Guide { get; set; }

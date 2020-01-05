@@ -69,6 +69,7 @@ const Clear = () => {
     $('#hotel').val('');
     $('#singleBed').val('');
     $('#doubleBed').val('');
+    $('#extraBed').val('');
     $('#bb').val('');
     $('#ap').val('');
     $('#map').val('');

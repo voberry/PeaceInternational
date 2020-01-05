@@ -98,5 +98,17 @@ Handlebars.registerHelper('chain', function () {
     return value;
 });
 
+Handlebars.registerHelper('percentage', function (a, b) {
+
+    return (100 - b) / 100 * a;
+
+})
+
+Handlebars.registerHelper('customDivision', function (a, b, c) {
+
+    let result = (100 - b) / 100 * a;
+    return Math.ceil(result/c);
+
+})
 
 

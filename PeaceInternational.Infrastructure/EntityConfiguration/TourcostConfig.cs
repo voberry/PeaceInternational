@@ -14,6 +14,10 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
         {
             base.Configure(builder);
 
+            builder.Property(p => p.ClientName)
+                .HasMaxLength(150)
+                .IsRequired();
+
             builder.Property(p => p.Category1)
                 .HasMaxLength(50);
 
@@ -27,19 +31,7 @@ namespace PeaceInternational.Infrastructure.EntityConfiguration
                 .HasMaxLength(50);
 
             builder.Property(p => p.Category5)
-                .HasMaxLength(50);            
-
-            builder.Property(p => p.GrossAmountAccomodation)
-               .HasColumnType("Decimal(10,2)");
-
-            builder.Property(p => p.GrossAmountTransportation)
-               .HasColumnType("Decimal(10,2)");
-
-            builder.Property(p => p.NetAmountAccomodation)
-               .HasColumnType("Decimal(10,2)");
-
-            builder.Property(p => p.NetAmountTransportation)
-              .HasColumnType("Decimal(10,2)");
+                .HasMaxLength(50);   
 
             builder.HasOne(p => p.Guide)
                 .WithMany(e => e.Tourcost)

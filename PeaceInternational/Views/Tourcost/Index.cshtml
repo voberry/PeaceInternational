@@ -1,0 +1,101 @@
+﻿@model IEnumerable<PeaceInternational.Core.Entity.Tourcost>
+
+@{
+    ViewData["Title"] = "Tourcost";
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <h1 class="display-4">Tourcost</h1>
+    </div>
+    <div class="col-md-2">
+        <a class="btn btn-info mt-4 w-100" asp-action="AddEdit">Add Tourcost</a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <input type="text" class="form-control" id="searchField" placeholder="Client Name" />
+    </div>
+</div>
+<div style="height: 100%; box-sizing: border-box; padding-top:20px;">
+    <div id="tourcostGrid" style="width:100%; height:450px" class="ag-theme-balham"></div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        const columnDefs = [
+            { headerName: 'Client Name', field: 'clientName' },
+            {
+                headerName: 'Date', field: 'createdDate', tooltipField: 'Date', maxWidth: 220,
+                cellRenderer: function (data) {
+                    return data.value.split('T')[0];
+                }
+            },
+            {
+                headerName: 'Edit', maxWidth: 150, sortable: false, filter: false,
+                cellRenderer: function () {
+                    return '<i class="btn fas fa-edit"></i>';
+                },
+                onCellClicked(params) {                  
+                    window.open(`Tourcost/AddEdit?id=${params.data.id}`, '_self')
+                }
+            },
+            {
+                headerName: 'View', maxWidth: 150, sortable: false, filter: false,
+                cellRenderer: function () {
+                    return '<i class="btn fas fa-eye"></i>';
+                },
+                onCellClicked(params) {
+                    window.open(`Tourcost/View?id=${params.data.id}`, '_self')
+                }
+            }
+            //{
+            //    headerName: 'Delete', maxWidth: 150, sortable: false, filter: false,
+            //    cellRenderer: function () {
+            //        return '<i class="btn fas fa-trash" id="trashButton"></i>';
+            //    },
+            //    onCellClicked(params) {
+            //        console.log(params.data);
+            //        Delete(params.data);
+
+            //    }
+            //}
+        ];
+
+        let gridOptions = {
+            columnDefs: columnDefs,
+            rowHeight: 40,
+            defaultColDef: {
+                sortable: true,
+                filter: true
+            },
+            paginationAutoPageSize: true,
+            pagination: true,
+            accentedSort: true,
+            onGridSizeChanged: (params) => {
+                params.api.sizeColumnsToFit();
+            }
+        };
+
+        $(document).ready(function () {
+            var tourcostGrid = document.querySelector('#tourcostGrid');
+
+            new agGrid.Grid(tourcostGrid, gridOptions);
+
+            var data = @Html.Raw(Json.Serialize(Model));
+            console.log(data);
+            gridOptions.api.setRowData(data);
+
+            $('#searchField').on('keyup', function () {
+                var filter;
+                filter = {
+                    clientName: { type: 'contains', filter: $('#searchField').val() }
+                };
+                gridOptions.api.setFilterModel(filter);
+                gridOptions.api.onFilterChanged();
+            });
+            
+        });
+    </script>
+}
