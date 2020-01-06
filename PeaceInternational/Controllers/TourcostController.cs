@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PeaceInternational.Core.Entity;
 using PeaceInternational.Core.IRepository;
 using PeaceInternational.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PeaceInternational.Web.Controllers
 {
+    [Authorize]
     public class TourcostController : Controller
     {
         private readonly ICrudService<Tourcost> _tourcostCrudService;
@@ -54,11 +56,15 @@ namespace PeaceInternational.Web.Controllers
         }
 
 
-        public IActionResult View(int id)
+        public async Task<IActionResult> View(int id)
         {
             try
             {
                 Tourcost tourcost = _tourcostCrudService.Get(id);
+
+                var user = await _userManager.FindByIdAsync(tourcost.CreatedBy);
+                tourcost.CreatedBy = user.UserName;
+
                 tourcost.TourcostDetail = _tourcostDetailCrudService.GetAll(p => p.TourcostId == id).ToList();
                 tourcost.Guide = _guideCrudService.Get(p => p.Id == tourcost.GuideId);
 
@@ -129,7 +135,7 @@ namespace PeaceInternational.Web.Controllers
                 else
                 {
 
-
+                    tourcostDTO.Tourcost.MealType = tourcostDTO.Tourcost.MealType ?? "None";
                     tourcostDTO.Tourcost.CreatedBy = user.Id;
                     var tourCostId = await _tourcostCrudService.InsertAsync(tourcostDTO.Tourcost);
 
@@ -164,7 +170,7 @@ namespace PeaceInternational.Web.Controllers
             tourcost.MaxPAX = tourcostDTO.Tourcost.MaxPAX;
             tourcost.Guide = tourcostDTO.Tourcost.Guide;
             tourcost.IsLuxury = tourcostDTO.Tourcost.IsLuxury;
-            tourcost.IsMealAP = tourcostDTO.Tourcost.IsMealAP;
+            tourcost.MealType = tourcostDTO.Tourcost.MealType;
             tourcost.Category1 = tourcostDTO.Tourcost.Category1;
             tourcost.Category2 = tourcostDTO.Tourcost.Category2;
             tourcost.Category3 = tourcostDTO.Tourcost.Category3;
@@ -195,6 +201,7 @@ namespace PeaceInternational.Web.Controllers
                 {
                     var record = _tourcostDetailCrudService.Get(tourcostDetail.Id);
 
+                    record.Day = tourcostDetail.Day;
                     record.Sector1Id = tourcostDetail.Sector1Id;
                     record.Sector2Id = tourcostDetail.Sector2Id;
                     record.Sector3Id = tourcostDetail.Sector3Id;

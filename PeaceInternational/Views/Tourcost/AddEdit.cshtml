@@ -45,11 +45,11 @@
                         <h5 class="card-title">Meal Plan</h5>
                         <div class="form-group">
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="mealRadioInline2" name="Tourcost.IsMealAP" class="custom-control-input" checked value="true">
+                                <input type="radio" id="mealRadioInline2" name="Tourcost.MealType" class="custom-control-input" value="AP">
                                 <label class="custom-control-label" for="mealRadioInline2">AP</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="mealRadioInline3" name="Tourcost.IsMealAP" class="custom-control-input" value="false">
+                                <input type="radio" id="mealRadioInline3" name="Tourcost.MealType" class="custom-control-input" value="MAP">
                                 <label class="custom-control-label" for="mealRadioInline3">MAP</label>
                             </div>
                         </div>
@@ -278,9 +278,8 @@
             for (let i = 0; i < days; i++) {
                 html += `<div class="form-row" id="detailRow${i}">
                             <input type="hidden" id="TourcostDetail_${i}__Id" name="TourcostDetail[${i}].Id" class="form-control"/>
-                            <div class="col-md-1">
-                                <label>D${i + 1}</label>
-                                <input type="hidden" id="TourcostDetail_${i}__Day" name="TourcostDetail[${i}].Day" class="form-control" value="D${i + 1}"/>
+                            <div class="col-md-1">                               
+                                <input id="TourcostDetail_${i}__Day" name="TourcostDetail[${i}].Day" class="form-control" value="D${i + 1}"/>
                             </div>
                             <div class="col">
                                 <select id="TourcostDetail_${i}__Sector1Id" name="TourcostDetail[${i}].Sector1Id" class="form-control w-100">
@@ -325,8 +324,7 @@
             $('#tourCostDetailBody').html(html);
 
             for (let i = 0; i < days; i++) {
-                $(`#TourcostDetail_${i}__Sector1Id`).rules("add", "required");
-                $(`#TourcostDetail_${i}__Sector2Id`).rules("add", "required");
+                $(`#TourcostDetail_${i}__Sector1Id`).rules("add", "required");             
                 $(`#TourcostDetail_${i}__HotelAId`).rules("add", "required");
                 $(`#TourcostDetail_${i}__HotelBId`).rules("add", "required");
                 $(`#TourcostDetail_${i}__HotelCId`).rules("add", "required");
@@ -544,7 +542,8 @@
                 setData();
 
                 for (let i = 0; i < data.tourcost.days; i++) {
-                    $(`#TourcostDetail_${i}__Id`).val(data.tourcostDetail[i].id);
+                    $(`#TourcostDetail_${i}__Id`).val(data.tourcostDetail[i].id);       
+                    $(`#TourcostDetail_${i}__Day`).val(data.tourcostDetail[i].day);
                     $(`#TourcostDetail_${i}__Sector1Id`).val(data.tourcostDetail[i].sector1Id);
                     $(`#TourcostDetail_${i}__Sector2Id`).val(data.tourcostDetail[i].sector2Id);
                     $(`#TourcostDetail_${i}__Sector3Id`).val(data.tourcostDetail[i].sector3Id);

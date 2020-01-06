@@ -106,7 +106,7 @@
                         <p><label class="font-weight-bold">Guide:</label> {{guide.name}} ({{guideType}}) </p>
                     </div>
                     <div class="col">
-                        <p><label class="font-weight-bold">Meal:</label> AP</p>
+                        <p><label class="font-weight-bold">Meal:</label> {{mealType}}</p>
                     </div>
                     <div class="col">
                         <p><label class="font-weight-bold">Luxury:</label> {{isLuxury}}</p>
@@ -553,6 +553,17 @@
                 <p class="h5"><span class="font-weight-bold">Comment: </span>{{comment}}</p>
             </div>
         </div>
+        <br />
+        <div class="form-row">
+            <div class="col">
+                <p class="float-right h5 mr-5"><span class="font-weight-bold">Date : </span>{{splitDate createdDate}}</p>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <p class="float-right h5 mr-5"><span class="font-weight-bold">Prepared By : </span>{{createdBy}}</p>
+            </div>
+        </div>
     </script>
     <script type="text/javascript">
 
@@ -581,8 +592,7 @@
             }
         }
 
-        data.guideType = data.guideType == 1 ? "Half Day" : data.guideType == 2 ? "Full Day" : "Escort";
-        data.isMealAP = data.isMealAP ? "AP" : "MAP";
+        data.guideType = data.guideType == 1 ? "Half Day" : data.guideType == 2 ? "Full Day" : "Escort";      
         data.isLuxury = data.isLuxury ? "Yes" : "No";
         data.t1total = 0;
         data.t2total = 0;
@@ -606,20 +616,50 @@
 
         $.each(data.tourcostDetail, function (idx, item) {
 
-            item.t1cost = item.sector1.sectorTransport[0].cost + item.sector2.sectorTransport[0].cost ? item.sector2.sectorTransport[0].cost : 0 + item.sector3.sectorTransport[0].cost ? item.sector3.sectorTransport[0].cost : 0;
-            data.t1total += item.t1cost;
-            item.t2cost = item.sector1.sectorTransport[1].cost + item.sector2.sectorTransport[1].cost ? item.sector2.sectorTransport[1].cost : 0 + item.sector3.sectorTransport[1].cost ? item.sector3.sectorTransport[1].cost : 0;
-            data.t2total += item.t2cost;
-            item.t3cost = item.sector1.sectorTransport[2].cost + item.sector2.sectorTransport[2].cost ? item.sector2.sectorTransport[2].cost : 0 + item.sector3.sectorTransport[2].cost ? item.sector3.sectorTransport[2].cost : 0;
-            data.t3total += item.t3cost;
-            item.t4cost = item.sector1.sectorTransport[3].cost + item.sector2.sectorTransport[3].cost ? item.sector2.sectorTransport[3].cost : 0 + item.sector3.sectorTransport[3].cost ? item.sector3.sectorTransport[3].cost : 0;
-            data.t4total += item.t4cost;
-            item.t5cost = item.sector1.sectorTransport[4].cost + item.sector2.sectorTransport[4].cost ? item.sector2.sectorTransport[4].cost : 0 + item.sector3.sectorTransport[4].cost ? item.sector3.sectorTransport[4].cost : 0;
-            data.t5total += item.t5cost;
-            item.t6cost = item.sector1.sectorTransport[5].cost + item.sector2.sectorTransport[5].cost ? item.sector2.sectorTransport[5].cost : 0 + item.sector3.sectorTransport[5].cost ? item.sector3.sectorTransport[5].cost : 0;
-            data.t6total += item.t6cost;
+            if (item.sector2 && item.sector3) {
+                item.t1cost = item.sector1.sectorTransport[0].cost + item.sector2.sectorTransport[0].cost + item.sector3.sectorTransport[0].cost;
+                data.t1total += item.t1cost;
+                item.t2cost = item.sector1.sectorTransport[1].cost + item.sector2.sectorTransport[1].cost + item.sector3.sectorTransport[1].cost;
+                data.t2total += item.t2cost;
+                item.t3cost = item.sector1.sectorTransport[2].cost + item.sector2.sectorTransport[2].cost + item.sector3.sectorTransport[2].cost;
+                data.t3total += item.t3cost;
+                item.t4cost = item.sector1.sectorTransport[3].cost + item.sector2.sectorTransport[3].cost + item.sector3.sectorTransport[3].cost;
+                data.t4total += item.t4cost;
+                item.t5cost = item.sector1.sectorTransport[4].cost + item.sector2.sectorTransport[4].cost + item.sector3.sectorTransport[4].cost;
+                data.t5total += item.t5cost;
+                item.t6cost = item.sector1.sectorTransport[5].cost + item.sector2.sectorTransport[5].cost + item.sector3.sectorTransport[5].cost;
+                data.t6total += item.t6cost;
+            }
+            else if (item.sector2) {
+                item.t1cost = item.sector1.sectorTransport[0].cost + item.sector2.sectorTransport[0].cost;
+                data.t1total += item.t1cost;
+                item.t2cost = item.sector1.sectorTransport[1].cost + item.sector2.sectorTransport[1].cost;
+                data.t2total += item.t2cost;
+                item.t3cost = item.sector1.sectorTransport[2].cost + item.sector2.sectorTransport[2].cost;
+                data.t3total += item.t3cost;
+                item.t4cost = item.sector1.sectorTransport[3].cost + item.sector2.sectorTransport[3].cost;
+                data.t4total += item.t4cost;
+                item.t5cost = item.sector1.sectorTransport[4].cost + item.sector2.sectorTransport[4].cost;
+                data.t5total += item.t5cost;
+                item.t6cost = item.sector1.sectorTransport[5].cost + item.sector2.sectorTransport[5].cost;
+                data.t6total += item.t6cost;
+            }
+            else {
+                item.t1cost = item.sector1.sectorTransport[0].cost;
+                data.t1total += item.t1cost;
+                item.t2cost = item.sector1.sectorTransport[1].cost;
+                data.t2total += item.t2cost;
+                item.t3cost = item.sector1.sectorTransport[2].cost;
+                data.t3total += item.t3cost;
+                item.t4cost = item.sector1.sectorTransport[3].cost;
+                data.t4total += item.t4cost;
+                item.t5cost = item.sector1.sectorTransport[4].cost;
+                data.t5total += item.t5cost;
+                item.t6cost = item.sector1.sectorTransport[5].cost;
+                data.t6total += item.t6cost;
+            };           
 
-            if (data.isMealAP == 'AP') {
+            if (data.mealType == 'AP') {
 
                 item.hotelA.hotelRoomRate.singleBed += item.hotelA.hotelRoomRate.ap;
                 item.hotelA.hotelRoomRate.doubleBed += item.hotelA.hotelRoomRate.ap * 2;
@@ -631,7 +671,7 @@
                 item.hotelC.hotelRoomRate.doubleBed += item.hotelC.hotelRoomRate.ap * 2;
                 item.hotelC.hotelRoomRate.extraBed += item.hotelC.hotelRoomRate.ap * 3;
             }
-            else {
+            else if (data.mealType == 'MAP'){
 
                 item.hotelA.hotelRoomRate.singleBed += item.hotelA.hotelRoomRate.map;
                 item.hotelA.hotelRoomRate.doubleBed += item.hotelA.hotelRoomRate.map * 2;
@@ -744,7 +784,7 @@
             $('#loader').addClass('loader');
             html2canvas($("#tourcostTemplate")[0], {
                 scale: 5,
-                width: 1130               
+                width: 1200               
             }).then(function (canvas) {
 
                 var myImage = canvas.toDataURL("image/png");
