@@ -18,7 +18,7 @@
     td {
         text-align: center;
         font-size: 14px;
-        padding: 0.5rem !important;
+        padding: 0.3rem !important;
     }
 
     .wrap {
@@ -50,6 +50,14 @@
         box-shadow: 2px 2px 3px #999;
     }
 
+    img {
+        position: relative;
+        max-height: 30%;
+        max-width: 30%;
+        margin-left: 10px;
+        top: -70px;
+    }
+
     .loader {
         position: fixed;
         left: 50%;
@@ -74,7 +82,10 @@
 </style>
 <div id="tourcostTemplate"></div>
 <hr />
-<div id="pppTemplate"></div>
+<div id="backPage">
+    <div id="pppTemplate"></div>
+    <img src="~/img/logo2.jpg" />
+</div>
 <button class="btn floate" id="printTourcost"><i class="fa fa-print fa-2x"></i></button>
 <button class="btn float" id="printPPPcost"><i class="fa fa-print fa-2x"></i></button>
 <div id="loader"></div>
@@ -82,49 +93,29 @@
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
 
-    <script id="tourcost-template" type="text/x-handlebars-template">
-        <div class="card">
-            <div class="card-header bg-white">
-                <div class="row">
-                    <div class="col-md-8">
-                        <p class="h5 text-monospace"> {{clientName}}</p>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="h5 float-right">Peace International Pvt. Ltd.</p>
-                    </div>
+    <script id="tourcost-template" type="text/x-handlebars-template">       
+        <div class="border border-secondary p-2">
+            <div class="row">
+                <div class="col">
+                    <p class="h5 text-monospace"> {{clientName}}</p>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <p><label class="font-weight-bold">PAX:</label> {{minPAX}} - {{maxPAX}}</p>
-                    </div>
-                    <div class="col">
-                        <p><label class="font-weight-bold">Days:</label> {{days}}</p>
-                    </div>
-                    <div class="col">
-                        <p><label class="font-weight-bold">Guide:</label> {{guide.name}} ({{guideType}}) </p>
-                    </div>
-                    <div class="col">
-                        <p><label class="font-weight-bold">Meal:</label> {{mealType}}</p>
-                    </div>
-                    <div class="col">
-                        <p><label class="font-weight-bold">Luxury:</label> {{isLuxury}}</p>
-                    </div>
+            <div class="row">
+                <div class="col">
+                    <p><label class="font-weight-bold">PAX :</label> {{minPAX}} - {{maxPAX}}</p>
+                </div>
+                <div class="col">
+                    <p><label class="font-weight-bold">Days :</label> {{days}}</p>
+                </div>
+                <div class="col">
+                    <p><label class="font-weight-bold">Discount (T) :</label> {{discountTransportation}}  % </p>
+                </div>
+                <div class="col">
+                    <p><label class="font-weight-bold">Discount (A) :</label> {{discountAccomodation}} % </p>
                 </div>
             </div>
-            <div class="card-footer bg-white">
-                <div class="row">
-                    <div class="col">
-                        <p>Discount (T) : {{discountTransportation}}  % </p>
-                    </div>
-                    <div class="col">
-                        <p>Discount (A) : {{discountAccomodation}} % </p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+        </div>
         <br />
         <div>
             <table class="table table-bordered">
@@ -166,7 +157,7 @@
                     {{#each tourcostDetail}}
                     <tr>
                         <td>{{this.day}}</td>
-                        <td class="wrap">{{this.sector1.code}} / {{this.sector2.code}} / {{this.sector3.code}}</td>
+                        <td class="wrap">{{this.sector1.code}}/{{this.sector2.code}}/{{this.sector3.code}}</td>
                         <td>{{this.t1cost}}</td>
                         <td>{{this.t2cost}}</td>
                         <td>{{this.t3cost}}</td>
@@ -555,15 +546,14 @@
         </div>
         <br />
         <div class="form-row">
-            <div class="col">
+            <div class="col-md-8" id="imgDiv">
+               
+            </div>
+            <div class="col-md-4">
                 <p class="float-right h5 mr-5"><span class="font-weight-bold">Date : </span>{{splitDate createdDate}}</p>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="col">
                 <p class="float-right h5 mr-5"><span class="font-weight-bold">Prepared By : </span>{{createdBy}}</p>
-            </div>
-        </div>
+            </div>           
+        </div>        
     </script>
     <script type="text/javascript">
 
@@ -592,6 +582,7 @@
             }
         }
 
+        data.image = "img/logo2.jpg";
         data.guideType = data.guideType == 1 ? "Half Day" : data.guideType == 2 ? "Full Day" : "Escort";      
         data.isLuxury = data.isLuxury ? "Yes" : "No";
         data.t1total = 0;
@@ -713,7 +704,7 @@
         var template1 = Handlebars.compile(source1);
         var result1 = template1(data);
 
-        $('#pppTemplate').html(result1);
+        $('#pppTemplate').html(result1);        
 
         let flag = 0;
         data.category1 != null ? flag++ : '';
@@ -805,7 +796,7 @@
             document.body.scrollTop = 0; // For Safari
             document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
             $('#loader').addClass('loader');
-            html2canvas($("#pppTemplate")[0], {
+            html2canvas($("#backPage")[0], {
                 scale: 5
             }).then(function (canvas) {
 
