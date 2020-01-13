@@ -87,9 +87,9 @@
                         <h5 class="card-title">Guide</h5>
                         <div class="form-row">
                             <div class="form-group w-100">
-                                <label asp-for="Tourcost.GuideId"> Name <span class="text-danger">*</span></label>
+                                <label asp-for="Tourcost.GuideId"> Name </label>
                                 <select asp-for="Tourcost.GuideId" class="form-control w-100" asp-items="ViewBag.Guide">
-                                    <option selected disabled>Select</option>
+                                    <option selected value="">Select</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -220,6 +220,22 @@
     <partial name="_ValidationScriptsPartial" />
     <script type="text/javascript">
 
+        $('input[name="Tourcost.MealType"]').click(function (e) {
+           
+            if (e.ctrlKey) {
+               
+                $(this).prop('checked', false);
+            }           
+        });
+
+        $('input[name="Tourcost.GuideType"]').click(function (e) {
+
+            if (e.ctrlKey) {
+
+                $(this).prop('checked', false);
+            }
+        });
+
         function setData() {
 
              let sector = @Html.Raw(Json.Serialize(ViewBag.Sector));
@@ -325,9 +341,9 @@
 
             for (let i = 0; i < days; i++) {
                 $(`#TourcostDetail_${i}__Sector1Id`).rules("add", "required");             
-                $(`#TourcostDetail_${i}__HotelAId`).rules("add", "required");
-                $(`#TourcostDetail_${i}__HotelBId`).rules("add", "required");
-                $(`#TourcostDetail_${i}__HotelCId`).rules("add", "required");
+                //$(`#TourcostDetail_${i}__HotelAId`).rules("add", "required");
+                //$(`#TourcostDetail_${i}__HotelBId`).rules("add", "required");
+                //$(`#TourcostDetail_${i}__HotelCId`).rules("add", "required");
             }
 
             if ($('#Tourcost_Category1').val()) {

@@ -97,7 +97,10 @@
         <div class="border border-secondary p-2">
             <div class="row">
                 <div class="col">
-                    <p class="h5 text-monospace"> {{clientName}}</p>
+                    <p class="h6 text-monospace"><label class="font-weight-bold">Name of Group/FIT :</label>{{clientName}}</p>
+                </div>
+                <div class="col">
+                    <p class="h6 text-monospace"><label class="font-weight-bold">Peace International Tours & Travel Pvt. Ltd.</label></p>
                 </div>
             </div>
             <div class="row">
@@ -157,7 +160,7 @@
                     {{#each tourcostDetail}}
                     <tr>
                         <td>{{this.day}}</td>
-                        <td class="wrap">{{this.sector1.code}}/{{this.sector2.code}}/{{this.sector3.code}}</td>
+                        <td class="wrap">{{this.sector1.code}}{{this.sector2.code}}{{this.sector3.code}}</td>
                         <td>{{this.t1cost}}</td>
                         <td>{{this.t2cost}}</td>
                         <td>{{this.t3cost}}</td>
@@ -178,6 +181,30 @@
                         <td>{{this.hotelC.hotelRoomRate.extraBed}}</td>
                     </tr>
                     {{/each}}
+                    {{#for tourcostDetail.length 15 1}}
+                    <tr>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                        <td height="32"></td>
+                    </tr>
+                    {{/for}}
                     <tr>
                         <td colspan="2" class="font-weight-bold">Gross Total</td>
                         <td>{{t1total}}</td>
@@ -620,6 +647,9 @@
                 data.t5total += item.t5cost;
                 item.t6cost = item.sector1.sectorTransport[5].cost + item.sector2.sectorTransport[5].cost + item.sector3.sectorTransport[5].cost;
                 data.t6total += item.t6cost;
+
+                item.sector2.code = `/${item.sector2.code}`
+                item.sector3.code = `/${item.sector3.code}`
             }
             else if (item.sector2) {
                 item.t1cost = item.sector1.sectorTransport[0].cost + item.sector2.sectorTransport[0].cost;
@@ -634,6 +664,8 @@
                 data.t5total += item.t5cost;
                 item.t6cost = item.sector1.sectorTransport[5].cost + item.sector2.sectorTransport[5].cost;
                 data.t6total += item.t6cost;
+
+                item.sector2.code = `/${item.sector2.code}`
             }
             else {
                 item.t1cost = item.sector1.sectorTransport[0].cost;
@@ -647,7 +679,7 @@
                 item.t5cost = item.sector1.sectorTransport[4].cost;
                 data.t5total += item.t5cost;
                 item.t6cost = item.sector1.sectorTransport[5].cost;
-                data.t6total += item.t6cost;
+                data.t6total += item.t6cost;               
             };           
 
             if (data.mealType == 'AP') {

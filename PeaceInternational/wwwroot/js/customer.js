@@ -116,7 +116,7 @@ const customerValidation = () => {
             },
             departureDate: {
                 required: true,
-                greaterDate: '#arrivalDate'
+                greaterDate: '#arrivalDate'               
             }
         }
     });

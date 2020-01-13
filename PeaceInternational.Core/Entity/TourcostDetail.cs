@@ -11,9 +11,9 @@ namespace PeaceInternational.Core.Entity
         public int Sector1Id { get; set; }
         public int? Sector2Id { get; set; }
         public int? Sector3Id { get; set; }
-        public int HotelAId { get; set; }
-        public int HotelBId { get; set; }
-        public int HotelCId { get; set; }
+        public int? HotelAId { get; set; }
+        public int? HotelBId { get; set; }
+        public int? HotelCId { get; set; }
         public decimal? Category1Cost { get; set; }
         public decimal? Category2Cost { get; set; }
         public decimal? Category3Cost { get; set; }

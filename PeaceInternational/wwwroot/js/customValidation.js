@@ -62,14 +62,14 @@ $(document).ready(function () {
 
     $.validator.addMethod("greaterDate", function (value, element, params) {
         var startDate = $(params).val();
-        return value > startDate;
+        return value >= startDate;
     }, "End date must be greater than Start date");
 
     $.validator.addMethod("lesserDate", function (value, element, params) {
 
         var endDate = $(params).val();
         if (endDate) {
-            return value < endDate;
+            return value <= endDate;
         }
         else {
             return true;
