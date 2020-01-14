@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PeaceInternational.Core.Entity;
 using PeaceInternational.Core.IRepository;
 using PeaceInternational.Web.Models;
-using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,7 +24,7 @@ namespace PeaceInternational.Web.Controllers
         private readonly ICrudService<SectorTransport> _sectorTransportCrudService;
         private readonly ICrudService<HotelRoomRate> _hotelRoomRateCrudService;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<IdentityUser> _userManager;        
+        private readonly UserManager<IdentityUser> _userManager;
 
         public TourcostController(
             ICrudService<Tourcost> tourcostCrudService,
@@ -68,7 +67,7 @@ namespace PeaceInternational.Web.Controllers
                 tourcost.TourcostDetail = _tourcostDetailCrudService.GetAll(p => p.TourcostId == id).ToList();
                 tourcost.Guide = _guideCrudService.Get(p => p.Id == tourcost.GuideId);
 
-                foreach(var tourdetail in tourcost.TourcostDetail)
+                foreach (var tourdetail in tourcost.TourcostDetail)
                 {
                     tourdetail.Sector1 = _sectorCrudService.Get(tourdetail.Sector1Id);
                     tourdetail.Sector1.SectorTransport = _sectorTransportCrudService.GetAll(p => p.SectorId == tourdetail.Sector1Id).ToList();
@@ -84,18 +83,30 @@ namespace PeaceInternational.Web.Controllers
                         tourdetail.Sector3 = _sectorCrudService.Get(tourdetail.Sector3Id);
                     }
 
-                    tourdetail.HotelA = _hotelCrudService.Get(tourdetail.HotelAId);
-                    tourdetail.HotelB = _hotelCrudService.Get(tourdetail.HotelBId);
-                    tourdetail.HotelC = _hotelCrudService.Get(tourdetail.HotelCId);
+                    if (tourdetail.HotelAId != null)
+                    {
+                        tourdetail.HotelA = _hotelCrudService.Get(tourdetail.HotelAId);
+                        tourdetail.HotelA.HotelRoomRate = _hotelRoomRateCrudService.Get(p => p.HotelId == tourdetail.HotelAId);
 
-                    tourdetail.HotelA.HotelRoomRate = _hotelRoomRateCrudService.Get(p => p.HotelId == tourdetail.HotelAId);
-                    tourdetail.HotelB.HotelRoomRate = _hotelRoomRateCrudService.Get(p => p.HotelId == tourdetail.HotelBId);
-                    tourdetail.HotelC.HotelRoomRate = _hotelRoomRateCrudService.Get(p => p.HotelId == tourdetail.HotelCId);
+                    }
+
+                    if (tourdetail.HotelBId != null)
+                    {
+                        tourdetail.HotelB = _hotelCrudService.Get(tourdetail.HotelBId);
+                        tourdetail.HotelB.HotelRoomRate = _hotelRoomRateCrudService.Get(p => p.HotelId == tourdetail.HotelBId);
+                    }
+
+                    if (tourdetail.HotelCId != null)
+                    {
+                        tourdetail.HotelC = _hotelCrudService.Get(tourdetail.HotelCId);
+                        tourdetail.HotelC.HotelRoomRate = _hotelRoomRateCrudService.Get(p => p.HotelId == tourdetail.HotelCId);
+                    }
+
                 }
 
                 return View(tourcost);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 throw exception;
             }
@@ -197,7 +208,7 @@ namespace PeaceInternational.Web.Controllers
             foreach (TourcostDetail tourcostDetail in tourcostDTO.TourcostDetail)
             {
 
-                if(tourcostDetail.Id > 0)
+                if (tourcostDetail.Id > 0)
                 {
                     var record = _tourcostDetailCrudService.Get(tourcostDetail.Id);
 

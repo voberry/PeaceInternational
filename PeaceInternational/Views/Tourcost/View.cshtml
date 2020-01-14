@@ -597,15 +597,17 @@
 
         data.guideTotalCost = 0;
 
-        if (data.guideType == 1) {
-            data.guideTotalCost = data.guide.halfDayRate * data.days;
-        }
-        else {
-            if (data.guideType == 2) {
-                data.guideTotalCost = data.guide.fullDayRate * data.days;
+        if (data.guideType != null) {
+            if (data.guideType == 1) {
+                data.guideTotalCost = data.guide.halfDayRate * data.days;
             }
             else {
-                data.guideTotalCost = data.guide.overNight * data.days;
+                if (data.guideType == 2) {
+                    data.guideTotalCost = data.guide.fullDayRate * data.days;
+                }
+                else {
+                    data.guideTotalCost = data.guide.overNight * data.days;
+                }
             }
         }
 
@@ -708,16 +710,23 @@
 
             }
 
-            data.catAXTotal += item.hotelA.hotelRoomRate.singleBed;
-            data.catAXXTotal += item.hotelA.hotelRoomRate.doubleBed;
-            data.catAETotal += item.hotelA.hotelRoomRate.extraBed;
-            data.catBXTotal += item.hotelB.hotelRoomRate.singleBed;
-            data.catBXXTotal += item.hotelB.hotelRoomRate.doubleBed;
-            data.catBETotal += item.hotelB.hotelRoomRate.extraBed;
-            data.catCXTotal += item.hotelC.hotelRoomRate.singleBed;
-            data.catCXXTotal += item.hotelC.hotelRoomRate.doubleBed;
-            data.catCETotal += item.hotelC.hotelRoomRate.extraBed;
+            if (item.hotelA) {
+                data.catAXTotal += item.hotelA.hotelRoomRate.singleBed;
+                data.catAXXTotal += item.hotelA.hotelRoomRate.doubleBed;
+                data.catAETotal += item.hotelA.hotelRoomRate.extraBed;
+            }
 
+            if (item.hotelB) {
+                data.catBXTotal += item.hotelB.hotelRoomRate.singleBed;
+                data.catBXXTotal += item.hotelB.hotelRoomRate.doubleBed;
+                data.catBETotal += item.hotelB.hotelRoomRate.extraBed;
+            }
+
+            if (item.hotelC) {
+                data.catCXTotal += item.hotelC.hotelRoomRate.singleBed;
+                data.catCXXTotal += item.hotelC.hotelRoomRate.doubleBed;
+                data.catCETotal += item.hotelC.hotelRoomRate.extraBed;
+            }          
 
             data.category1Total += item.category1Cost;
             data.category2Total += item.category2Cost;
