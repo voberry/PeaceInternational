@@ -23,6 +23,7 @@ namespace PeaceInternational.Web.Controllers
         private readonly ICrudService<Hotel> _hotelCrudService;
         private readonly ICrudService<SectorTransport> _sectorTransportCrudService;
         private readonly ICrudService<HotelRoomRate> _hotelRoomRateCrudService;
+        private readonly ICrudService<Transport> _transportCrudService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<IdentityUser> _userManager;
 
@@ -34,6 +35,7 @@ namespace PeaceInternational.Web.Controllers
             ICrudService<Hotel> hotelCrudService,
             ICrudService<SectorTransport> sectorTransportCrudService,
             ICrudService<HotelRoomRate> hotelRoomRateCrudService,
+            ICrudService<Transport> transportCrudService,
             IUnitOfWork unitOfWork,
             UserManager<IdentityUser> userManager)
         {
@@ -44,6 +46,7 @@ namespace PeaceInternational.Web.Controllers
             _hotelCrudService = hotelCrudService;
             _sectorTransportCrudService = sectorTransportCrudService;
             _hotelRoomRateCrudService = hotelRoomRateCrudService;
+            _transportCrudService = transportCrudService;
             _userManager = userManager;
             _unitOfWork = unitOfWork;
         }
@@ -67,6 +70,9 @@ namespace PeaceInternational.Web.Controllers
                 tourcost.TourcostDetail = _tourcostDetailCrudService.GetAll(p => p.TourcostId == id).ToList();
                 tourcost.Guide = _guideCrudService.Get(p => p.Id == tourcost.GuideId);
 
+                tourcost.LowerTransport = _transportCrudService.Get(p => p.MinPAX <= tourcost.MinPAX && p.MaxPAX >= tourcost.MinPAX).Name;
+                tourcost.UpperTransport = _transportCrudService.Get(p => p.MinPAX <= tourcost.MaxPAX && p.MaxPAX >= tourcost.MaxPAX).Name;
+
                 foreach (var tourdetail in tourcost.TourcostDetail)
                 {
                     tourdetail.Sector1 = _sectorCrudService.Get(tourdetail.Sector1Id);
@@ -77,10 +83,11 @@ namespace PeaceInternational.Web.Controllers
                         tourdetail.Sector2 = _sectorCrudService.Get(tourdetail.Sector2Id);
                         tourdetail.Sector2.SectorTransport = _sectorTransportCrudService.GetAll(p => p.SectorId == tourdetail.Sector2Id).ToList();
                     }
+
                     if (tourdetail.Sector3Id != null)
                     {
-                        tourdetail.Sector3.SectorTransport = _sectorTransportCrudService.GetAll(p => p.SectorId == tourdetail.Sector3Id).ToList();
                         tourdetail.Sector3 = _sectorCrudService.Get(tourdetail.Sector3Id);
+                        tourdetail.Sector3.SectorTransport = _sectorTransportCrudService.GetAll(p => p.SectorId == tourdetail.Sector3Id).ToList();                    
                     }
 
                     if (tourdetail.HotelAId != null)
@@ -187,6 +194,7 @@ namespace PeaceInternational.Web.Controllers
             tourcost.Category3 = tourcostDTO.Tourcost.Category3;
             tourcost.Category4 = tourcostDTO.Tourcost.Category4;
             tourcost.GuideType = tourcostDTO.Tourcost.GuideType;
+            tourcost.GuideDays = tourcostDTO.Tourcost.GuideDays;
             tourcost.DiscountAccomodation = tourcostDTO.Tourcost.DiscountAccomodation;
             tourcost.DiscountTransportation = tourcostDTO.Tourcost.DiscountTransportation;
             tourcost.Comment = tourcostDTO.Tourcost.Comment;

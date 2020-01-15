@@ -275,7 +275,7 @@
         <div class="row">
             <div class="col-md-6">
                 <p class="h5 text-center">Individual Transport Cost</p>
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="itcTable">
                     <thead>
                         <tr>
                             <th>Transport</th>
@@ -317,7 +317,7 @@
                         </tr>
                         <tr>
                             <td>T6</td>
-                            <td>25</td>
+                            <td>25+</td>
                             <td>{{percentage t6total discountTransportation }}</td>
                             <td>{{customDivision t6total discountTransportation 25}}</td>
                         </tr>
@@ -535,7 +535,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td rowspan="3">25</td>
+                    <td rowspan="3">25+</td>
                     <td rowspan="3">{{customDivision t6total discountTransportation 25}}</td>
                     <td>{{customDivision catAXXTotal discountAccomodation 2}}</td>
                     <td rowspan="3">{{guideTotalCost}}</td>
@@ -599,14 +599,14 @@
 
         if (data.guideType != null) {
             if (data.guideType == 1) {
-                data.guideTotalCost = data.guide.halfDayRate * data.days;
+                data.guideTotalCost = data.guide.halfDayRate * data.guideDays;
             }
             else {
                 if (data.guideType == 2) {
-                    data.guideTotalCost = data.guide.fullDayRate * data.days;
+                    data.guideTotalCost = data.guide.fullDayRate * data.guideDays;
                 }
                 else {
-                    data.guideTotalCost = data.guide.overNight * data.days;
+                    data.guideTotalCost = data.guide.overNight * data.guideDays;
                 }
             }
         }
@@ -637,6 +637,7 @@
         $.each(data.tourcostDetail, function (idx, item) {
 
             if (item.sector2 && item.sector3) {
+
                 item.t1cost = item.sector1.sectorTransport[0].cost + item.sector2.sectorTransport[0].cost + item.sector3.sectorTransport[0].cost;
                 data.t1total += item.t1cost;
                 item.t2cost = item.sector1.sectorTransport[1].cost + item.sector2.sectorTransport[1].cost + item.sector3.sectorTransport[1].cost;
@@ -745,7 +746,70 @@
         var template1 = Handlebars.compile(source1);
         var result1 = template1(data);
 
-        $('#pppTemplate').html(result1);        
+        $('#pppTemplate').html(result1);     
+
+        let lowerTransportIterator = 0
+        let upperTransportIterator = 0
+
+        switch (data.lowerTransport) {
+            case "T1":
+                break;
+
+            case "T2":
+                lowerTransportIterator = 1;
+                break;
+
+            case "T3":
+                lowerTransportIterator = 2;
+                break;
+
+            case "T4":
+                lowerTransportIterator = 3;
+                break;
+
+            case "T5":
+                lowerTransportIterator = 4;
+                break;
+
+            case "T6":
+                lowerTransportIterator = 5;
+                break;
+        }
+
+        switch (data.upperTransport) {
+            case "T1":
+                upperTransportIterator = 5;
+                break;
+
+            case "T2":
+                upperTransportIterator = 4;
+                break;
+
+            case "T3":
+                upperTransportIterator = 3;
+                break;
+
+            case "T4":
+                upperTransportIterator = 2;
+                break;
+
+            case "T5":
+                upperTransportIterator = 1;
+                break;
+
+            case "T6":               
+                break;
+        }
+
+        console.log(lowerTransportIterator, upperTransportIterator);
+
+        for (let i = 0; i < upperTransportIterator; i++) {
+            $(`#itcTable tbody tr:eq(${5 - i})`).remove();
+        }
+
+        for (let i = 0; i < lowerTransportIterator; i++) {
+            $('#itcTable tbody tr:eq(0)').remove()
+        }
 
         let flag = 0;
         data.category1 != null ? flag++ : '';
@@ -809,6 +873,14 @@
 
             $(`#pppTable tr:nth-child(${i + 2}) td:nth-child(3)`)[0].innerText = (1.13 * val).toFixed(2);
         };
+
+          for (let i = 0; i < upperTransportIterator * 3; i++) {
+            $(`#pppTable tbody tr:eq(${15 - i})`).remove()
+        }
+
+        for (let i = 0; i < lowerTransportIterator * 3; i++) {
+            $('#pppTable tbody tr:eq(0)').remove()
+        }
 
         $('#printTourcost').off('click').on('click', function () {
             document.body.scrollTop = 0; // For Safari

@@ -45,11 +45,11 @@
                         <h5 class="card-title">Meal Plan</h5>
                         <div class="form-group">
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="mealRadioInline2" name="Tourcost.MealType" class="custom-control-input" value="AP">
+                                <input type="radio" id="mealRadioInline2" asp-for="Tourcost.MealType"  class="custom-control-input" value="AP">
                                 <label class="custom-control-label" for="mealRadioInline2">AP</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="mealRadioInline3" name="Tourcost.MealType" class="custom-control-input" value="MAP">
+                                <input type="radio" id="mealRadioInline3" asp-for="Tourcost.MealType" class="custom-control-input" value="MAP">
                                 <label class="custom-control-label" for="mealRadioInline3">MAP</label>
                             </div>
                         </div>
@@ -68,13 +68,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label asp-for="Tourcost.MinPAX"> Min PAX. <span class="text-danger">*</span></label>
-                                    <input asp-for="Tourcost.MinPAX" class="form-control" />
+                                    <input asp-for="Tourcost.MinPAX" class="form-control" min="3"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label asp-for="Tourcost.MaxPAX"> Max PAX. <span class="text-danger">*</span></label>
-                                    <input asp-for="Tourcost.MaxPAX" class="form-control" />
+                                    <input asp-for="Tourcost.MaxPAX" class="form-control" max="100" />
                                 </div>
                             </div>
                         </div>
@@ -92,18 +92,26 @@
                                     <option selected value="">Select</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="guideInline1" name="Tourcost.GuideType" class="custom-control-input" value=1>
-                                    <label class="custom-control-label" for="guideInline1">Half Day</label>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="guideInline1" asp-for="Tourcost.GuideType" class="custom-control-input" value=1>
+                                        <label class="custom-control-label" for="guideInline1">Half Day</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="guideInline2" asp-for="Tourcost.GuideType" class="custom-control-input" value=2>
+                                        <label class="custom-control-label" for="guideInline2">Full Day</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="guideInline3" name="Tourcost.GuideType" class="custom-control-input" value=3>
+                                        <label class="custom-control-label" for="guideInline3">Escort</label>
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="guideInline2" name="Tourcost.GuideType" class="custom-control-input" value=2>
-                                    <label class="custom-control-label" for="guideInline2">Full Day</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="guideInline3" name="Tourcost.GuideType" class="custom-control-input" value=3>
-                                    <label class="custom-control-label" for="guideInline3">Escort</label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Tourcost.GuideDays"> Days </label>
+                                    <input asp-for="Tourcost.GuideDays" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -218,15 +226,7 @@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
-    <script type="text/javascript">
-
-        $('input[name="Tourcost.MealType"]').click(function (e) {
-           
-            if (e.ctrlKey) {
-               
-                $(this).prop('checked', false);
-            }           
-        });
+    <script type="text/javascript">       
 
         $('input[name="Tourcost.GuideType"]').click(function (e) {
 
