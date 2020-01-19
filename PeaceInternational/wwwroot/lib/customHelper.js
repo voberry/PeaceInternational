@@ -100,7 +100,7 @@ Handlebars.registerHelper('chain', function () {
 
 Handlebars.registerHelper('percentage', function (a, b) {
 
-    return (100 - b) / 100 * a;
+    return parseFloat((100 - b) / 100 * a).toFixed(2);
 
 })
 
